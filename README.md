@@ -16,8 +16,8 @@ Web components library with native JavaScript.
 
 ```bash
 # Clone repository.
-git clone git@gitlab.com:naylalabs/web/vanillia-web-components.git
-cd vanillia-web-components
+git clone git@gitlab.com:naylalabs/web/vanilla-web-components.git
+cd vanilla-web-components
 
 # Install npm packages.
 npm install
