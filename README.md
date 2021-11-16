@@ -1,4 +1,4 @@
-# VANILLIA WEB COMPONENTS
+# VANILLA WEB COMPONENTS
 
 Web components library with native JavaScript.
 

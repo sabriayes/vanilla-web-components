@@ -1,0 +1,24 @@
+{
+    "name": "vanilla-web-components",
+    "version": "1.0.0",
+    "description": "Web components library with vanilla JavaScript.",
+    "repository": {
+        "type": "git",
+        "url": "git@gitlab.com:naylalabs/web/vanilla-web-components.git"
+    },
+    "main": "./dist/index.html",
+    "typings": "./dist",
+    "scripts": {
+        "start": "webpack-dev-server --mode development --open"
+    },
+    "keywords": [
+        "naylalabs",
+        "javascript",
+        "frontend",
+        "web components"
+    ],
+    "author": "Sabri Ayes <sabri@naylalabs.com>",
+    "license": "ISC",
+    "dependencies": {},
+    "devDependencies": {}
+}
