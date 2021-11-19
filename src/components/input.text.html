@@ -1,0 +1,34 @@
+<!-- TEMPLATE -->
+<div 
+    class="input-text-container" 
+    id="root-element">
+    <div 
+        class="inner-container" 
+        id="container-element">
+        <input 
+            type="text" 
+            id="input-element" 
+            name="input"/>
+    </div>
+</div>
+<!-- E:TEMPLATE -->
+<!-- STYLES -->
+<style>
+    :host * {
+        position: relative;
+        float: left;
+    }
+    .input-text-container {
+        width: 200px;
+        height: auto;
+    }
+    input[type="text"] {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        border: 1px solid var(--border-color, #EAEAEA);
+        border-radius: 6px;
+        color: var(--text-color, #000);
+    }
+</style>
+<!-- E:STYLES -->

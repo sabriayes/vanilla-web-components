@@ -11,37 +11,23 @@ const entries = glob.sync('./src/components/**.js').reduce(
 );
 
 module.exports = {
+    watch: true,
     entry: entries,
     output: {
-        path: path.resolve(__dirname, "./dist"),
-        filename: "[name].min.js",
+        path: path.resolve(__dirname, './dist'),
+        filename: '[name].min.js',
     },
     devServer: {
-        static: "./dist",
+        static: './',
         port: 3000,
-        open: true,
+        open: true
     },
     module: {
         rules: [
             {
-                test: /\.css$/i,
-                use: [
-                    'raw-loader', 
-                    {
-                        loader: 'string-replace-loader',
-                        options: {
-                            search: /^\n|\s+|\s+$|\s+(?=\s)/g, 
-                            replace: ''
-                        }
-                    }
-                ]
+                test: /\.html$/i,
+                use: ['html-loader']
             }
         ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: "index.html",
-            template: "./src/index.html",
-        })
-    ]
+    }
 };
