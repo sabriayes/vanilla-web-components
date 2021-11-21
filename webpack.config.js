@@ -1,6 +1,5 @@
 const path = require('path');
 const glob = require('glob');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entries = glob.sync('./src/components/**.js').reduce(
     function(obj, el){

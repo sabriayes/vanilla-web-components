@@ -1,3 +1,14 @@
+<!-- 
+    USAGE
+    <input-text>
+        <div slot="label" i18n>First Name</div>
+        <div slot="errors">
+            <label-error error="required">
+                <span i18n>This field is required!</span>    
+            </label-error>
+        </div>
+    </input-text>
+-->
 <!-- TEMPLATE -->
 <div 
     class="input-text-container" 
@@ -5,30 +16,105 @@
     <div 
         class="inner-container" 
         id="container-element">
-        <input 
-            type="text" 
-            id="input-element" 
-            name="input"/>
+        <div class="label-container">
+            <label for="input-element" id="label-element"></label>
+        </div>
+        <div class="input-container">
+            <div class="input-holder">
+                <input 
+                    type="text" 
+                    name="input-element"
+                    class="input-element" 
+                    id="input-element" 
+                    placeholder="Enter your name..."
+                    />
+            </div>
+        </div>
+        <div class="error-messages">
+            <slot name="errors" id="error-messages-slot">
+                <!-- LIST -->
+            </slot>
+        </div>
     </div>
 </div>
 <!-- E:TEMPLATE -->
 <!-- STYLES -->
 <style>
-    :host * {
+    :host { min-width: 15rem; }
+    :host *[class] {
         position: relative;
-        float: left;
+        font-family: inherit;
+        color: inherit;
+        box-sizing: border-box;
     }
     .input-text-container {
         width: 200px;
         height: auto;
+        background-color: var(--background-color, #FFF);
+        border: 1px solid var(--border-color, #E3E7E7);
+        border-radius: .3rem;
+        padding: .5rem .8rem;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .input-text-container > .inner-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .label-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .label-container > label {
+        width: 100%;
+        line-height: 1.2rem;
+        font-size: .9rem;
+        font-weight: 500;
+        color: var(--label-color, #7e7e7e);
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transform: translateY(.75rem);
+        transition: all 180ms ease-in-out;
+    }
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: stretch;
     }
     input[type="text"] {
         width: 100%;
         height: auto;
-        padding: 10px;
-        border: 1px solid var(--border-color, #EAEAEA);
-        border-radius: 6px;
-        color: var(--text-color, #000);
+        line-height: 1.4rem;
+        background-color: transparent;
+        color: inherit;
+        border: none;
+        font-size: 1rem;
+        border-radius: 0;
+        padding: 0;
+    }
+    input[type="text"]:hover,
+    input[type="text"]:focus,
+    input[type="text"]:active {
+        border: none;
+        outline: none;
+    }
+    .has-label input[type="text"]:placeholder-shown {
+        opacity: 0;
+        transition: opacity 180ms ease-in-out;
+        font-size: .9rem;
+    }
+    .has-label input[type="text"]:focus:placeholder-shown {
+        opacity: .75;
+    }
+    .has-value .label-container > label,
+    .input-text-container:focus-within .label-container > label {
+        transform: translateY(0);
+        font-size: 0.8rem;
     }
 </style>
 <!-- E:STYLES -->
