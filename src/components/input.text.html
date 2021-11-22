@@ -1,22 +1,11 @@
-<!-- 
-    USAGE
-    <input-text>
-        <div slot="label" i18n>First Name</div>
-        <div slot="errors">
-            <label-error error="required">
-                <span i18n>This field is required!</span>    
-            </label-error>
-        </div>
-    </input-text>
--->
 <!-- TEMPLATE -->
 <div 
     class="input-text-container" 
     id="root-element">
     <div 
         class="inner-container" 
-        id="container-element">
-        <div class="label-container">
+        id="inner-container-element">
+        <div class="label-container" id="label-container-element">
             <label for="input-element" id="label-element"></label>
         </div>
         <div class="input-container">
@@ -25,9 +14,7 @@
                     type="text" 
                     name="input-element"
                     class="input-element" 
-                    id="input-element" 
-                    placeholder="Enter your name..."
-                    />
+                    id="input-element"/>
             </div>
         </div>
         <div class="error-messages">
@@ -38,9 +25,14 @@
     </div>
 </div>
 <!-- E:TEMPLATE -->
+
 <!-- STYLES -->
 <style>
-    :host { min-width: 15rem; }
+    :host { 
+        display: flex;
+        flex-direction: column;
+        min-width: 15rem;
+    }
     :host *[class] {
         position: relative;
         font-family: inherit;
@@ -48,18 +40,17 @@
         box-sizing: border-box;
     }
     .input-text-container {
-        width: 200px;
-        height: auto;
-        background-color: var(--background-color, #FFF);
-        border: 1px solid var(--border-color, #E3E7E7);
-        border-radius: .3rem;
-        padding: .5rem .8rem;
-        margin: 0;
         display: flex;
         flex-direction: column;
     }
     .input-text-container > .inner-container {
         width: 100%;
+        height: auto;
+        background-color: var(--background-color, #FFF);
+        border: 1px solid var(--border-color, #E3E7E7);
+        border-radius: .3rem;
+        padding: .35rem .8rem;
+        margin: 0;
         display: flex;
         flex-direction: column;
     }
@@ -77,7 +68,7 @@
         white-space: nowrap; 
         overflow: hidden;
         text-overflow: ellipsis;
-        transform: translateY(.75rem);
+        transform: translateY(.7rem);
         transition: all 180ms ease-in-out;
     }
     .input-container {
@@ -88,8 +79,8 @@
     }
     input[type="text"] {
         width: 100%;
-        height: auto;
-        line-height: 1.4rem;
+        height: 1.4rem;
+        line-height: 2.45rem;
         background-color: transparent;
         color: inherit;
         border: none;
@@ -103,10 +94,17 @@
         border: none;
         outline: none;
     }
+    input[type="text"]:placeholder-shown {
+        font-size: .9rem;
+        opacity: .75;
+        line-height: 1.2rem;
+    }
+    .has-label input[type="text"] {
+        line-height: 1.2rem;
+    }
     .has-label input[type="text"]:placeholder-shown {
         opacity: 0;
         transition: opacity 180ms ease-in-out;
-        font-size: .9rem;
     }
     .has-label input[type="text"]:focus:placeholder-shown {
         opacity: .75;
@@ -115,6 +113,10 @@
     .input-text-container:focus-within .label-container > label {
         transform: translateY(0);
         font-size: 0.8rem;
+    }
+    .input-text-container:hover .label-container > label,
+    .input-text-container:focus-within .label-container > label {
+        color: var(--accent-color, #000);
     }
 </style>
 <!-- E:STYLES -->

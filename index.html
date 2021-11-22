@@ -16,17 +16,28 @@
                 font-size: 16px;
                 font-family: "Roboto", sans-serif;
                 display: flex;
+                flex-direction: column;
+                gap: 10px;
                 justify-content: center;
                 align-items: center;
                 height: 100%;
+            }
+            input-text {
+                width: 320px;
             }
         </style>
     </head>
     <body>
 
-        <input-text label="First Name" placeholder="Enter your name..."></input-text>
+        <input-text id="first-name" label="First Name" placeholder="Enter your name..."></input-text>
         <input-text label="Last Name" placeholder="Enter your surname..."></input-text>
+        <input-text label="E-mail Address" placeholder="Enter mail address..."></input-text>
 
     </body>
     <script src="dist/input.text.min.js"></script>
+    <script>
+        window.onload = function() {
+            const firtsNameInput = document.getElementById('first-name');
+        }
+    </script>
 </html>
