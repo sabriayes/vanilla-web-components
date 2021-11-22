@@ -28,10 +28,12 @@ const ATTRS = {
 /**
  * Event list.
  * @property {string} CHANGE - Change event alias.
+ * @property {string} CLICK  - Click event alias.
  * @readonly
  */
  const EVENTS = {
-     CHANGE: 'change'
+     CHANGE: 'change',
+     CLICK: 'click'
 }
 
 /**
@@ -135,6 +137,10 @@ class InputText extends HTMLElement {
             EVENTS.CHANGE, 
             this.eventInputChange.bind(this)
         );
+        this.$root?.removeEventListener(
+            EVENTS.CLICK,
+            this.eventClickToRoot.bind(this)
+        );
     }
 
     init() {
@@ -157,6 +163,10 @@ class InputText extends HTMLElement {
         this.$input.addEventListener(
             EVENTS.CHANGE, 
             this.eventInputChange.bind(this)
+        );
+        this.$root.addEventListener(
+            EVENTS.CLICK,
+            this.eventClickToRoot.bind(this)
         );
 
         this.shadowRoot.appendChild(this.$style);
@@ -206,6 +216,11 @@ class InputText extends HTMLElement {
         Boolean(value) ? 
             this.$root.classList.add(CLASS.HAS_VALUE) : 
             this.$root.classList.remove(CLASS.HAS_VALUE);
+    }
+
+    eventClickToRoot($event) {
+        $event.preventDefault();
+        this.$input.focus();
     }
 }
 
