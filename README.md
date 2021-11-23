@@ -3,9 +3,19 @@
 Web components library with native JavaScript.
 
 **Version**: 0.0.0.1\
-**Author**: Sabri Ayeş <sabri@naylalabs.com>
+**Author**: Sabri Ayeş <sabri@naylalabs.com>\
 **Email**: vanillia-web-component.project@naylalabs.com\
 **Email Pass**: N/A
+
+[screenshot]: https://"Screenshot"
+
+```html
+<!-- Add script tag. -->
+<script src="dist/input.text.min.js"></script>
+
+<!-- Add vanilla component tag. -->
+<input-text label="First Name" placeholder="Enter your name"></input-text>
+```
 
 #### Requirements
 
