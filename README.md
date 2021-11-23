@@ -7,7 +7,7 @@ Web components library with native JavaScript.
 **Email**: vanillia-web-component.project@naylalabs.com\
 **Email Pass**: N/A
 
-[screenshot]: https://gitlab.com/naylalabs/web/vanilla-web-components/-/blob/main/src/assets/img/cover.png "Screenshot"
+[screenshot]: https://gitlab.com/naylalabs/web/vanilla-web-components/-/raw/main/src/assets/img/cover.png "Screenshot"
 
 ```html
 <!-- Add script tag. -->
