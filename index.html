@@ -14,26 +14,63 @@
             html,
             body {
                 position: relative;
+                width: 100%;
                 font-size: 16px;
                 font-family: "Poppins", sans-serif;
                 display: flex;
                 flex-direction: column;
-                gap: 20px;
                 justify-content: center;
                 align-items: center;
                 height: 100%;
+                background: #f3f4f8;
             }
-            input-text {
-                width: 320px;
+            .content-wrapper {
+                position: relative;
+                height: auto;
+                padding: 80px 40px;
+                background: #fff;
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                box-shadow: -4px 9px 40px -6px rgb(0 0 0 / 10%);
+            }
+            .row {
+                position: relative;
+                width: 100%;
+                margin: 10px 0;
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
+            .column {
+                position: relative;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: stretch;
+                align-items: stretch;
+                flex: 1
             }
         </style>
     </head>
     <body>
-
-        <input-text id="first-name" label="First Name" placeholder="Enter your name..."></input-text>
-        <input-text label="Last Name" placeholder="Enter your surname..."></input-text>
-        <input-text label="E-mail Address" placeholder="Enter mail address..."></input-text>
-
+        
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="column">
+                    <input-text id="first-name" label="First Name" placeholder="Enter your name"></input-text>
+                </div>
+                <div class="column">
+                    <input-text label="Last Name" placeholder="Enter your surname"></input-text>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <input-text label="E-mail Address" placeholder="Enter mail address"></input-text>
+                </div>
+            </div>
+        </div>
+        
     </body>
     <script src="dist/input.text.min.js"></script>
     <script>

@@ -133,6 +133,7 @@ class InputText extends HTMLElement {
     }
 
     disconnectedCallback() {
+
         this.$input?.removeEventListener(
             EVENTS.CHANGE, 
             this.eventInputChange.bind(this)
@@ -160,6 +161,7 @@ class InputText extends HTMLElement {
 
         const _placeholder = this.getAttribute(ATTRS.PLACEHOLDER);
         this.$input.setAttribute(ATTRS.PLACEHOLDER, _placeholder);
+        
         this.$input.addEventListener(
             EVENTS.CHANGE, 
             this.eventInputChange.bind(this)
