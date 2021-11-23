@@ -33,6 +33,7 @@ cd vanilla-web-components
 npm install
 
 # Run development mode.
+npm run build:dev
+npm run start:dev
 #http://localhost:3000
-npm run start
 ```
