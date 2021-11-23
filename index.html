@@ -11,6 +11,9 @@
         <base href="/">
 
         <style>
+            * {
+                box-sizing: border-box;
+            }
             html,
             body {
                 position: relative;
@@ -27,7 +30,8 @@
             .content-wrapper {
                 position: relative;
                 height: auto;
-                padding: 80px 40px;
+                max-width: 520px;
+                padding: 40px;
                 background: #fff;
                 border-radius: 12px;
                 display: flex;
@@ -40,7 +44,7 @@
                 margin: 10px 0;
                 display: flex;
                 flex-direction: row;
-                gap: 20px;
+                margin: 10px 0;
             }
             .column {
                 position: relative;
@@ -49,13 +53,48 @@
                 flex-direction: column;
                 justify-content: stretch;
                 align-items: stretch;
-                flex: 1
+                flex: 1;
+                padding: 0 10px;
+            }
+            .logo-wrapper {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 20px 0;
+            }
+            .logo-wrapper > img {
+                width: 80px;
+                height: auto;
+                border-radius: 12px;
+                overflow: hidden;
+            }
+            h3 {
+                text-align: center;
+                font-size: 22px;
+                margin: 0;
+            }
+            p {
+                font-size: 14px;
+                color: #666;
+                line-height: 22px;
+                text-align: center;
+                padding: 0 10%;
+                margin-bottom: 40px;
             }
         </style>
     </head>
     <body>
         
         <div class="content-wrapper">
+            <div class="column">
+                <a href="#" class="logo-wrapper">
+                    <img src="src/assets/img/nayla-logo-orange.png" alt="Naylalabs" class="logo">
+                </a>
+                <h3>Vanilla Web Components ☕</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam ab molestiae rerum sint autem?</p>
+            </div>
             <div class="row">
                 <div class="column">
                     <input-text id="first-name" label="First Name" placeholder="Enter your name"></input-text>

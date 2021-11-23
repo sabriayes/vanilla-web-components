@@ -1,5 +1,9 @@
 import templateHTML from './input.text.html';
 
+/**
+ * Template contents.
+ * @var {HTMLElement} template
+ */
 const template = document.createElement('template');
 template.innerHTML = templateHTML;
 
@@ -37,7 +41,9 @@ const ATTRS = {
 }
 
 /**
- * Custom text input element class.
+ * Custom text input element class.\
+ * HTML tags is <input-text>\
+ * 
  * @class
  * @extends {HTMLElement}
  * @constructor
@@ -86,16 +92,36 @@ class InputText extends HTMLElement {
      */
     $label;
     
+    /**
+     * Get label property value.
+     * @return {string}
+     */
     get label() {
         return this.getAttribute(ATTRS.LABEL);
     }
+
+    /**
+     * Set label property value.
+     * @param {string} value
+     * @return {void}
+     */
     set label(value) {
         this.setAttribute(ATTRS.LABEL, value);
     }
 
+    /**
+     * Get placeholder property value.
+     * @return {string}
+     */
     get placeholder() {
         return this.getAttribute(ATTRS.PLACEHOLDER);
     }
+
+    /**
+     * Set placeholder property value.
+     * @param {string} value
+     * @return {void}
+     */
     set placeholder(value) {
         this.setAttribute(ATTRS.PLACEHOLDER, value);
     }
@@ -103,27 +129,34 @@ class InputText extends HTMLElement {
     static get observedAttributes() {
         return Object.values(ATTRS);
     }
-      
+    
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
-    connectedCallback() {
-        this.init();
-    }
-
+    /**
+     * Invoked when change/update attriubtes that defined
+     * at observedAttributes() function.
+     * 
+     * @param {string} name     - Attribute name.
+     * @param {string} value    - Attribute current value.
+     * @param {string} newValue - Attribute updated value.
+     * @return {void}
+     */
     attributeChangedCallback(name, value, newValue) {
 
         if(value === null) return;
 
-        switch (name) {
+        switch(name) {
 
             case ATTRS.LABEL:
+                // Invoke when change label attr/property value.
                 this.generateLabelElement(newValue);
             break;
-
+            
             case ATTRS.PLACEHOLDER:
+                // Invoke when change placeholder attr/property value.
                 this.$input.setAttribute(
                     ATTRS.PLACEHOLDER,
                     newValue
@@ -132,22 +165,27 @@ class InputText extends HTMLElement {
         }
     }
 
+    connectedCallback() {
+        this.init();
+    }
+
     disconnectedCallback() {
 
         this.$input?.removeEventListener(
             EVENTS.CHANGE, 
-            this.eventInputChange.bind(this)
+            this.eventChangedInputValue.bind(this)
         );
         this.$root?.removeEventListener(
             EVENTS.CLICK,
-            this.eventClickToRoot.bind(this)
+            this.eventClickedToRoot.bind(this)
         );
     }
 
     init() {
-        
+
         const clondedTemplate = template.content.cloneNode(true);
         
+        // Access cloned DOM elements.
         this.$style = clondedTemplate.querySelector('style');
         this.$root = clondedTemplate.getElementById('root-element');
         this.$innerContainer = clondedTemplate.getElementById('inner-container-element');
@@ -155,20 +193,23 @@ class InputText extends HTMLElement {
         this.$label = clondedTemplate.getElementById('label-element');
         this.$labelContainer = clondedTemplate.getElementById('label-container-element');
 
+        // Create label element.
         const _label = this.getAttribute(ATTRS.LABEL);
         this.$labelContainer.remove();
         this.generateLabelElement(_label);
 
+        // Update input placeholder attribute.
         const _placeholder = this.getAttribute(ATTRS.PLACEHOLDER);
         this.$input.setAttribute(ATTRS.PLACEHOLDER, _placeholder);
         
+        // Attach events.
         this.$input.addEventListener(
             EVENTS.CHANGE, 
-            this.eventInputChange.bind(this)
+            this.eventChangedInputValue.bind(this)
         );
         this.$root.addEventListener(
             EVENTS.CLICK,
-            this.eventClickToRoot.bind(this)
+            this.eventClickedToRoot.bind(this)
         );
 
         this.shadowRoot.appendChild(this.$style);
@@ -179,8 +220,9 @@ class InputText extends HTMLElement {
      * Update label container element state.
      * If value is falsy remove label conatiner
      * in root.
-     * @param {*} value - Label text value.
-     * @returns{void}
+     * 
+     * @param {string} value - Label text value.
+     * @returns {void}
      */
     generateLabelElement(value) {
 
@@ -205,14 +247,14 @@ class InputText extends HTMLElement {
     }
     
     /**
-     * Function run when input value change.
+     * Invoked when input value change.
      * If input has any content, add HAS_VALUE class
      * to container element.
      * 
-     * @param {*} $event 
+     * @param {Event} $event 
      * @return {void}
      */
-    eventInputChange($event) {
+    eventChangedInputValue($event) {
 
         const value = $event.target.value;
         Boolean(value) ? 
@@ -220,7 +262,14 @@ class InputText extends HTMLElement {
             this.$root.classList.remove(CLASS.HAS_VALUE);
     }
 
-    eventClickToRoot($event) {
+    /**
+     * Invoked run when click to root element.
+     * Focus to input element.
+     * 
+     * @param {Event} $event 
+     * @return {void}
+     */
+    eventClickedToRoot($event) {
         $event.preventDefault();
         this.$input.focus();
     }
