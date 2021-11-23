@@ -7,6 +7,8 @@ Web components library with native JavaScript.
 **Email**: vanillia-web-component.project@naylalabs.com\
 **Email Pass**: N/A
 
+[View DEMO](https://www.naylalabs.com/vanilla/)
+
 <img src="https://www.naylalabs.com/img/cover.png" alt="Screenshot"/>
 
 ```html
