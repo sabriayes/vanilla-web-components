@@ -9,7 +9,6 @@ Web components library with native JavaScript.
 
 <img src="https://www.naylalabs.com/img/cover.png" alt="Screenshot"/>
 
-```html
 <!-- Add script tag. -->
 <script src="dist/input.text.min.js"></script>
 
