@@ -15,7 +15,9 @@ template.innerHTML = templateHTML;
  */
 const CLASS = {
     HAS_LABEL: 'has-label',
-    HAS_VALUE: 'has-value'
+    HAS_VALUE: 'has-value',
+    PENDING_INIT: 'pending-init',
+    INIT: 'initialized'
 }
 
 /**
@@ -214,6 +216,9 @@ class InputText extends HTMLElement {
 
         this.shadowRoot.appendChild(this.$style);
         this.shadowRoot.appendChild(this.$root);
+
+        this.$root.classList.remove(CLASS.PENDING_INIT);
+        this.$root.classList.add(CLASS.INIT);
     }
 
     /**

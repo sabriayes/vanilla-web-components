@@ -19,7 +19,8 @@ module.exports = {
     devServer: {
         static: './',
         port: 3000,
-        open: true
+        open: true,
+        hot: true
     },
     module: {
         rules: [

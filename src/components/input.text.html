@@ -1,12 +1,17 @@
 <!-- TEMPLATE -->
 <div 
-    class="input-text-container" 
+    class="input-text-container pending-init" 
     id="root-element">
     <div 
         class="inner-container" 
         id="inner-container-element">
-        <div class="label-container" id="label-container-element">
-            <label for="input-element" id="label-element"></label>
+        <div 
+            class="label-container" 
+            id="label-container-element">
+            <label 
+                for="input-element" 
+                id="label-element">
+            </label>
         </div>
         <div class="input-container">
             <div class="input-holder">
@@ -17,11 +22,14 @@
                     id="input-element"/>
             </div>
         </div>
-        <div class="error-messages">
-            <slot name="errors" id="error-messages-slot">
-                <!-- LIST -->
-            </slot>
-        </div>
+    </div>
+    <div 
+        class="hints-container"
+        id="hints-container-element">
+        <slot name="errors" id="error-messages-slot">
+            <!-- LIST -->
+        </slot>
+        <slot name="hint"></slot>
     </div>
 </div>
 <!-- E:TEMPLATE -->
@@ -55,17 +63,16 @@
         flex-direction: column;
         transition: border 120ms ease-in-out;
         transition: background-color 120ms ease-in-out;
+        z-index: 2;
     }
     .input-text-container:focus-within > .inner-container {
         border: 1px solid var(--accent-color, #ffbeab);
         /*background-color: var(--accent-background-color, #f9f7fc);*/
     }
-    /*
-    .input-text-container:is(.has-value) > .inner-container,
-    .input-text-container:is(.has-value) :focus-within > .inner-container {
-        border: 1px solid var(--label-color, #a6a6ab);
+    :host([invalid]) .input-text-container > .inner-container {
+        border: 1px solid var(--danger-color, #dd8080);
     }
-    */
+
     .label-container {
         width: 100%;
         display: flex;
@@ -84,6 +91,11 @@
         transition: all 180ms ease-in-out;
         transform-origin: 0% 100%;
     }
+    :host([invalid]) .label-container > label { 
+        color: var(--danger-color, #dd8080);
+    }
+
+     /** INPUT **/
     .input-container {
         display: flex;
         flex-direction: column;
@@ -127,9 +139,64 @@
     .input-text-container:focus-within .label-container > label {
         transform: translateY(0) scale(.8);
     }
-    .input-text-container:hover .label-container > label,
-    .input-text-container:focus-within .label-container > label {
+    :host(:is(:not([invalid]))) .input-text-container:hover .label-container > label,
+    :host(:is(:not([invalid]))) .input-text-container:focus-within .label-container > label {
         color: var(--accent-color, #000);
+    }
+
+    /** HINTS **/
+    .hints-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        /* height: .75rem; */
+        margin-top: .2rem;
+        z-index: 1;
+        overflow: hidden;
+    }
+    .hints-container > slot {
+        display: inline-block;
+    }
+    .hints-container > slot[name="hint"] {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .hints-container > slot[name="errors"] {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+
+    /** :host[invalid] */
+    :host(:is(:not([invalid]))) .hints-container > slot[name="errors"],
+    :host([invalid]) .hints-container > slot[name="hint"] {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+    :host(:is(:not([invalid]))) .hints-container > slot[name="hint"],
+    :host([invalid]) .hints-container > slot[name="errors"] {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
+
+    .hints-container > slot[name="hint"],
+    .hints-container > slot[name="errors"] {
+        font-size: .65rem;
+        color: var(--label-color, #a6a6ab);
+        font-weight: 300;
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+    .hints-container > slot[name="errors"]::slotted([hidden]) {
+        display: none !important;
+    }
+    .hints-container > slot[name="errors"]::slotted(span) {
+        color: var(--danger-color, #dd8080);
+    }
+    .initialized .hints-container > slot {
+        transition-property: transform, opacity;
+        transition: 180ms linear;
     }
 </style>
 <!-- E:STYLES -->

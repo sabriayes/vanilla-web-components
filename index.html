@@ -98,10 +98,16 @@
             </div>
             <div class="row">
                 <div class="column">
-                    <input-text id="first-name" label="First Name" placeholder="Enter your name"></input-text>
+                    <input-text id="first-name" label="First Name" placeholder="Enter your name" invalid="sasd">
+                        <span slot="hint">Max. 20 char(s)</span>
+                        <span slot="errors">First name is required</span>
+                        <span slot="errors" hidden>First name must be longer than 20 chars</span>
+                    </input-text>
                 </div>
                 <div class="column">
-                    <input-text label="Last Name" placeholder="Enter your surname"></input-text>
+                    <input-text label="Last Name" placeholder="Enter your surname">
+                    <span slot="hint">Max. 20 char(s)</span>
+                    </input-text>
                 </div>
             </div>
             <div class="row">
