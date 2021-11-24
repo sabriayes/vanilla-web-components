@@ -84,6 +84,26 @@
                 padding: 0 10%;
                 margin-bottom: 40px;
             }
+            b {
+                color: #f74615;
+            }
+            .separator {
+                position: relative;
+                width: 100%;
+                padding: 15px;
+                margin-top: 20px;
+            }
+            .separator > span {
+                font-size: 16px;
+                font-weight: 500;
+                color: #000;
+                line-height: 22px;
+            }
+            .separator > p {
+                margin: 0;
+                padding: 0;
+                text-align: left;
+            }
         </style>
     </head>
     <body>
@@ -96,23 +116,54 @@
                 <h3>Vanilla Web Components ☕</h3>
                 <p>Web components library with native <u>JavaScript</u>.</p>
             </div>
+            
+            <!-- DEFAULT MODE -->
+            <div class="separator">
+                <span>Default Mode</span>
+                <p>Input elements default mode usage.</p>
+            </div>
             <div class="row">
                 <div class="column">
-                    <input-text id="first-name" label="First Name" placeholder="Enter your name" invalid="sasd">
-                        <span slot="hint">Max. 20 char(s)</span>
-                        <span slot="errors">First name is required</span>
-                        <span slot="errors" hidden>First name must be longer than 20 chars</span>
+                    <input-text id="first-name" label="First Name *" placeholder="Enter your name">
                     </input-text>
                 </div>
                 <div class="column">
                     <input-text label="Last Name" placeholder="Enter your surname">
-                    <span slot="hint">Max. 20 char(s)</span>
                     </input-text>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
                     <input-text label="E-mail Address" placeholder="Enter mail address"></input-text>
+                </div>
+            </div>
+            
+            <!-- PLACEHOLDER MODE -->
+            <div class="separator">
+                <span>Error Mode</span>
+                <p>Add <b>invalid</b> attributes for error mode.</p>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <input-text id="first-name" label="First Name *" placeholder="Enter your name">
+                        <span slot="hint">Max. 20 char(s)</span>
+                    </input-text>
+                </div>
+            </div>
+
+            <!-- ERROR MODE -->
+            <div class="separator">
+                <span>Error Mode</span>
+                <p>Add <b>invalid</b> attributes for error mode.</p>
+                <p>Add <b>span[slot="error"]</b> tag inside to <b>input-text</b></p>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <input-text id="first-name" label="First Name *" placeholder="Enter your name" invalid>
+                        <span slot="hint">Max. 20 char(s)</span>
+                        <span slot="errors">First name is required</span>
+                        <span slot="errors" hidden>First name must be longer than 20 chars</span>
+                    </input-text>
                 </div>
             </div>
         </div>
