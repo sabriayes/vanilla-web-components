@@ -11,7 +11,8 @@
     "scripts": {
         "build:prod": "webpack --mode production",
         "build:dev": "webpack --mode development",
-        "start:dev": "webpack-dev-server --mode development"
+        "start:dev": "webpack-dev-server --mode development",
+        "test": "karma start"
     },
     "keywords": [
         "naylalabs",

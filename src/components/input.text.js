@@ -51,9 +51,18 @@ const ATTRS = {
  * @constructor
  */
 class InputText extends HTMLElement {
+
+    /**
+     * Tag name of InputText
+     * @property {string} tagName
+     * @static
+     */
+    static get tagName() {
+        return 'vanilla-input';
+    }
     
     /**
-     * style tage element in template.
+     * Style tag element in template.
      * @property {CSSStyleSheet} $style
      * @public
      */
@@ -280,4 +289,4 @@ class InputText extends HTMLElement {
     }
 }
 
-window.customElements.define('input-text', InputText);
+window.customElements.define(InputText.tagName, InputText);

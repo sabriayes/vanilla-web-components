@@ -25,13 +25,13 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                height: 100%;
                 background: #f3f4f8;
             }
             .content-wrapper {
                 position: relative;
                 height: auto;
                 max-width: 520px;
+                min-width: 480px;
                 padding: 40px;
                 background: #fff;
                 border-radius: 12px;
@@ -89,15 +89,18 @@
             }
             .separator {
                 position: relative;
+                display: flex;
+                flex-direction: column;
                 width: 100%;
                 padding: 15px;
-                margin-top: 20px;
+                margin-top: 10px;
             }
             .separator > span {
                 font-size: 16px;
                 font-weight: 500;
                 color: #000;
                 line-height: 22px;
+                margin-bottom: 8px;
             }
             .separator > p {
                 margin: 0;
@@ -120,52 +123,54 @@
             <!-- DEFAULT MODE -->
             <div class="separator">
                 <span>Default Mode</span>
-                <p>Input elements default mode usage.</p>
+                <p>Add <b>label</b> and <b>placeholder</b> attributes</p>
             </div>
             <div class="row">
                 <div class="column">
-                    <input-text id="first-name" label="First Name *" placeholder="Enter your name">
-                    </input-text>
+                    <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name">
+                    </vanilla-input>
                 </div>
                 <div class="column">
-                    <input-text label="Last Name" placeholder="Enter your surname">
-                    </input-text>
+                    <vanilla-input label="Last Name" placeholder="Enter your surname">
+                    </vanilla-input>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <input-text label="E-mail Address" placeholder="Enter mail address"></input-text>
+                    <vanilla-input label="E-mail Address" placeholder="Enter mail address"></vanilla-input>
                 </div>
             </div>
             
             <!-- PLACEHOLDER MODE -->
             <div class="separator">
-                <span>Error Mode</span>
-                <p>Add <b>invalid</b> attributes for error mode.</p>
+                <span>Hint Text</span>
+                <p>Add <b>span[slot="hint"]</b> tag inside to <b>vanilla-input</b></p>
             </div>
             <div class="row">
                 <div class="column">
-                    <input-text id="first-name" label="First Name *" placeholder="Enter your name">
-                        <span slot="hint">Max. 20 char(s)</span>
-                    </input-text>
+                    <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name">
+                        <span slot="hint">Max. 20 chars</span>
+                    </vanilla-input>
                 </div>
             </div>
 
             <!-- ERROR MODE -->
             <div class="separator">
-                <span>Error Mode</span>
-                <p>Add <b>invalid</b> attributes for error mode.</p>
-                <p>Add <b>span[slot="error"]</b> tag inside to <b>input-text</b></p>
+                <span>Error Message</span>
+                <p>Add <b>invalid</b> attribute for error mode</p>
+                <p>Add <b>span[slot="error"]</b> tag inside to <b>vanilla-input</b></p>
             </div>
             <div class="row">
                 <div class="column">
-                    <input-text id="first-name" label="First Name *" placeholder="Enter your name" invalid>
-                        <span slot="hint">Max. 20 char(s)</span>
+                    <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name" invalid>
+                        <span slot="hint" class="mehaba">Max. 20 char(s)</span>
                         <span slot="errors">First name is required</span>
                         <span slot="errors" hidden>First name must be longer than 20 chars</span>
-                    </input-text>
+                    </vanilla-input>
                 </div>
             </div>
+
+
         </div>
         
     </body>

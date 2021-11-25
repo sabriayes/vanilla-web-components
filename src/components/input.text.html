@@ -2,34 +2,40 @@
 <div 
     class="input-text-container pending-init" 
     id="root-element">
-    <div 
-        class="inner-container" 
-        id="inner-container-element">
+    <div class="main-wrapper">
         <div 
-            class="label-container" 
-            id="label-container-element">
-            <label 
-                for="input-element" 
-                id="label-element">
-            </label>
-        </div>
-        <div class="input-container">
-            <div class="input-holder">
-                <input 
-                    type="text" 
-                    name="input-element"
-                    class="input-element" 
-                    id="input-element"/>
+            class="inner-container" 
+            id="inner-container-element">
+            <div 
+                class="label-container" 
+                id="label-container-element">
+                <label 
+                    for="input-element" 
+                    id="label-element">
+                </label>
+            </div>
+            <div class="input-container">
+                <div class="input-holder">
+                    <input 
+                        type="text" 
+                        name="input-element"
+                        class="input-element" 
+                        id="input-element"/>
+                </div>
             </div>
         </div>
-    </div>
+    </div>    
     <div 
         class="hints-container"
         id="hints-container-element">
-        <slot name="errors" id="error-messages-slot">
-            <!-- LIST -->
+        <slot 
+            name="errors" 
+            id="error-messages-slot">
         </slot>
-        <slot name="hint"></slot>
+        <slot 
+            name="hint"
+            id="hint-text-slot">
+        </slot>
     </div>
 </div>
 <!-- E:TEMPLATE -->
@@ -51,7 +57,9 @@
         display: flex;
         flex-direction: column;
     }
-    .input-text-container > .inner-container {
+    .input-text-container > .main-wrapper {
+        display: flex;
+        flex-direction: column;
         width: 100%;
         height: auto;
         background-color: var(--background-color, #fcfcfc);
@@ -65,11 +73,19 @@
         transition: background-color 120ms ease-in-out;
         z-index: 2;
     }
-    .input-text-container:focus-within > .inner-container {
+    .input-text-container .inner-container {
+        width: 100%;
+        height: auto;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .input-text-container:focus-within .main-wrapper {
         border: 1px solid var(--accent-color, #ffbeab);
         /*background-color: var(--accent-background-color, #f9f7fc);*/
     }
-    :host([invalid]) .input-text-container > .inner-container {
+    :host([invalid]) .input-text-container .main-wrapper {
         border: 1px solid var(--danger-color, #dd8080);
     }
 
@@ -160,6 +176,9 @@
     }
     .hints-container > slot {
         display: inline-block;
+    }
+    .hints-container:empty {
+        display: none;
     }
     .hints-container > slot[name="hint"] {
         transform: translateY(0);
