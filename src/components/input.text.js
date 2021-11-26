@@ -9,13 +9,17 @@ template.innerHTML = templateHTML;
 
 /**
  * CSS classes name.
- * @property {string} HAS_LABEL - Element has a label.
- * @property {string} HAS_VALUE - Input contains truly value.
+ * @property {string} HAS_LABEL     - Element has a label.
+ * @property {string} HAS_VALUE     - Input contains truly value.
+ * @property {string} HAS_ICON      - slot[name='icon'] has any element.
+ * @property {string} INIT          - Element init completed.
+ * @property {string} PENDING_INIT  - Element not initialized yet.
  * @readonly
  */
 const CLASS = {
     HAS_LABEL: 'has-label',
     HAS_VALUE: 'has-value',
+    HAS_ICON: 'has-icon',
     PENDING_INIT: 'pending-init',
     INIT: 'initialized'
 }
@@ -39,7 +43,8 @@ const ATTRS = {
  */
  const EVENTS = {
      CHANGE: 'change',
-     CLICK: 'click'
+     CLICK: 'click',
+     SLOT_CHANGE: 'slotchange'
 }
 
 /**
@@ -98,10 +103,17 @@ class InputText extends HTMLElement {
 
     /**
      * ID #label-element in template.
-     * @property {HTMLElement} $innerContainer
+     * @property {HTMLElement} $label
      * @public
      */
     $label;
+
+    /**
+     * ID #icon-slot in template.
+     * @property {HTMLSlotElement} $iconSlot
+     * @public
+     */
+     $iconSlot;
     
     /**
      * Get label property value.
@@ -190,6 +202,10 @@ class InputText extends HTMLElement {
             EVENTS.CLICK,
             this.eventClickedToRoot.bind(this)
         );
+        this.$iconSlot?.removeEventListener(
+            EVENTS.SLOT_CHANGE,
+            this.eventChangedIconSlot.bind(this)
+        );
     }
 
     init() {
@@ -203,6 +219,7 @@ class InputText extends HTMLElement {
         this.$input = clondedTemplate.getElementById('input-element');
         this.$label = clondedTemplate.getElementById('label-element');
         this.$labelContainer = clondedTemplate.getElementById('label-container-element');
+        this.$iconSlot = clondedTemplate.getElementById('icon-slot');
 
         // Create label element.
         const _label = this.getAttribute(ATTRS.LABEL);
@@ -221,6 +238,10 @@ class InputText extends HTMLElement {
         this.$root.addEventListener(
             EVENTS.CLICK,
             this.eventClickedToRoot.bind(this)
+        );
+        this.$iconSlot.addEventListener(
+            EVENTS.SLOT_CHANGE,
+            this.eventChangedIconSlot.bind(this)
         );
 
         this.shadowRoot.appendChild(this.$style);
@@ -286,6 +307,23 @@ class InputText extends HTMLElement {
     eventClickedToRoot($event) {
         $event.preventDefault();
         this.$input.focus();
+    }
+
+    /**
+     * Invoked run when changed icon slot content.
+     * Add .has-icon class to root element.
+     * 
+     * @param {Event} $event 
+     * @return {void}
+     */
+     eventChangedIconSlot($event) {
+
+        const slot = $event.target;
+        const icon = slot.querySelector('i');
+        
+        (icon) ?
+            this.$root.classList.remove(CLASS.HAS_ICON):
+            this.$root.classList.add(CLASS.HAS_ICON);
     }
 }
 

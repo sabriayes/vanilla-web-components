@@ -8,6 +8,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
         <base href="/">
         <title>Vanilla Web Components - Demo</title>
 
@@ -38,6 +39,7 @@
                 display: flex;
                 flex-direction: column;
                 box-shadow: -4px 9px 40px -6px rgb(0 0 0 / 10%);
+                margin: 40px 0;
             }
             .row {
                 position: relative;
@@ -66,8 +68,8 @@
                 margin: 20px 0;
             }
             .logo-wrapper > img {
-                width: 80px;
-                height: auto;
+                width: auto;
+                height: 80px;
                 border-radius: 12px;
                 overflow: hidden;
             }
@@ -114,7 +116,7 @@
         <div class="content-wrapper">
             <div class="column">
                 <a href="#" class="logo-wrapper">
-                    <img src="src/assets/img/nayla-logo-orange.png" alt="Naylalabs" class="logo">
+                    <img src="src/assets/img/vanilla-logo.png" alt="Vanilla Components" class="logo">
                 </a>
                 <h3>Vanilla Web Components ☕</h3>
                 <p>Web components library with native <u>JavaScript</u>.</p>
@@ -144,7 +146,7 @@
             <!-- PLACEHOLDER MODE -->
             <div class="separator">
                 <span>Hint Text</span>
-                <p>Add <b>span[slot="hint"]</b> tag inside to <b>vanilla-input</b></p>
+                <p>Add <b>span[slot="hint"]</b> tag to <b>vanilla-input</b></p>
             </div>
             <div class="row">
                 <div class="column">
@@ -163,7 +165,32 @@
             <div class="row">
                 <div class="column">
                     <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name" invalid>
-                        <span slot="hint" class="mehaba">Max. 20 char(s)</span>
+                        <span slot="hint">Max. 20 char(s)</span>
+                        <span slot="errors">First name is required</span>
+                        <span slot="errors" hidden>First name must be longer than 20 chars</span>
+                    </vanilla-input>
+                </div>
+            </div>
+
+            <!-- ICON MODE -->
+            <div class="separator">
+                <span>Left Icon</span>
+                <p>Add <b>span[slot="icon"]</b> tag to <b>vanilla-input</b></p>
+                <p>Add <b>i.fa.fa-user</b> tag to <b>span[slot="icon"]</b></p>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name">
+                        <span slot="icon">
+                            <i class="fa fa-user"></i>
+                        </span>
+                    </vanilla-input>
+                </div>
+                <div class="column">
+                    <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name" invalid>
+                        <span slot="icon">
+                            <i class="fa fa-user"></i>
+                        </span>
                         <span slot="errors">First name is required</span>
                         <span slot="errors" hidden>First name must be longer than 20 chars</span>
                     </vanilla-input>
