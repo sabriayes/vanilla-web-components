@@ -19,20 +19,19 @@ template.innerHTML = templateHTML;
 const CLASS = {
     HAS_LABEL: 'has-label',
     HAS_VALUE: 'has-value',
-    HAS_ICON: 'has-icon',
     PENDING_INIT: 'pending-init',
     INIT: 'initialized'
 }
 
 /**
  * Custom component attribues.
- * @property {string} LABEL         - Label attribute alias.
- * @property {string} PLACEHOLDER   - Placeholder attribute alias.
+ * @property {string} LABEL - Label attribute alias.
  * @readonly
  */
 const ATTRS = {
     LABEL: 'label',
-    PLACEHOLDER: 'placeholder'
+    PLACEHOLDER: 'placeholder',
+    VALUE: 'value'
 }
 
 /**
@@ -109,12 +108,29 @@ class InputText extends HTMLElement {
     $label;
 
     /**
-     * ID #icon-slot in template.
-     * @property {HTMLSlotElement} $iconSlot
+     * Input value.
+     * @property {string} _value
      * @public
      */
-     $iconSlot;
-    
+    _value
+
+    /**
+     * Get current value.
+     * @return {string}
+     */
+    get value() {
+        return this._value;
+    }
+
+    /**
+     * Set value.
+     * @return {void} 
+     */
+    set value(val) {
+        this._value = val;
+        this.$input.value = val;
+    }
+
     /**
      * Get label property value.
      * @return {string}
@@ -130,23 +146,6 @@ class InputText extends HTMLElement {
      */
     set label(value) {
         this.setAttribute(ATTRS.LABEL, value);
-    }
-
-    /**
-     * Get placeholder property value.
-     * @return {string}
-     */
-    get placeholder() {
-        return this.getAttribute(ATTRS.PLACEHOLDER);
-    }
-
-    /**
-     * Set placeholder property value.
-     * @param {string} value
-     * @return {void}
-     */
-    set placeholder(value) {
-        this.setAttribute(ATTRS.PLACEHOLDER, value);
     }
 
     static get observedAttributes() {
@@ -168,23 +167,37 @@ class InputText extends HTMLElement {
      * @return {void}
      */
     attributeChangedCallback(name, value, newValue) {
+        this.attributeChanged(name, value, newValue);
+    }
 
+    /**
+     * Helper function that called by init() and 
+     * attributeChangedCallback().
+     * 
+     * @param {string} name     - Attribute name.
+     * @param {string} value    - Attribute current value.
+     * @param {string} newValue - Attribute updated value.
+     * @return {void}
+     */
+     attributeChanged(name, value, newValue) {
+        
         if(value === null) return;
 
         switch(name) {
-
             case ATTRS.LABEL:
                 // Invoke when change label attr/property value.
                 this.generateLabelElement(newValue);
             break;
-            
-            case ATTRS.PLACEHOLDER:
-                // Invoke when change placeholder attr/property value.
-                this.$input.setAttribute(
-                    ATTRS.PLACEHOLDER,
-                    newValue
-                );
+
+            case ATTRS.VALUE:
+                // Dispatch change event with fake event.
+                const fakeEvent = new Event(EVENTS.CHANGE);
+                this.$input?.setAttribute(name, newValue);
+                this.$input?.dispatchEvent(fakeEvent);
             break;
+
+            default:
+                this.$input?.setAttribute(name, newValue);
         }
     }
 
@@ -202,10 +215,6 @@ class InputText extends HTMLElement {
             EVENTS.CLICK,
             this.eventClickedToRoot.bind(this)
         );
-        this.$iconSlot?.removeEventListener(
-            EVENTS.SLOT_CHANGE,
-            this.eventChangedIconSlot.bind(this)
-        );
     }
 
     init() {
@@ -219,17 +228,12 @@ class InputText extends HTMLElement {
         this.$input = clondedTemplate.getElementById('input-element');
         this.$label = clondedTemplate.getElementById('label-element');
         this.$labelContainer = clondedTemplate.getElementById('label-container-element');
-        this.$iconSlot = clondedTemplate.getElementById('icon-slot');
+        this.$labelContainer.remove();
 
         // Create label element.
-        const _label = this.getAttribute(ATTRS.LABEL);
-        this.$labelContainer.remove();
-        this.generateLabelElement(_label);
+        //const _label = this.getAttribute(ATTRS.LABEL);
+        //this.generateLabelElement(_label);
 
-        // Update input placeholder attribute.
-        const _placeholder = this.getAttribute(ATTRS.PLACEHOLDER);
-        this.$input.setAttribute(ATTRS.PLACEHOLDER, _placeholder);
-        
         // Attach events.
         this.$input.addEventListener(
             EVENTS.CHANGE, 
@@ -239,10 +243,11 @@ class InputText extends HTMLElement {
             EVENTS.CLICK,
             this.eventClickedToRoot.bind(this)
         );
-        this.$iconSlot.addEventListener(
-            EVENTS.SLOT_CHANGE,
-            this.eventChangedIconSlot.bind(this)
-        );
+        
+        const initialAttributes = this.attributes;
+        for(var node of initialAttributes) {
+            this.attributeChanged(node.name, node.value, node.value);
+        }
 
         this.shadowRoot.appendChild(this.$style);
         this.shadowRoot.appendChild(this.$root);
@@ -307,23 +312,6 @@ class InputText extends HTMLElement {
     eventClickedToRoot($event) {
         $event.preventDefault();
         this.$input.focus();
-    }
-
-    /**
-     * Invoked run when changed icon slot content.
-     * Add .has-icon class to root element.
-     * 
-     * @param {Event} $event 
-     * @return {void}
-     */
-     eventChangedIconSlot($event) {
-
-        const slot = $event.target;
-        const icon = slot.querySelector('i');
-        
-        (icon) ?
-            this.$root.classList.remove(CLASS.HAS_ICON):
-            this.$root.classList.add(CLASS.HAS_ICON);
     }
 }
 

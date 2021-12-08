@@ -31,6 +31,13 @@
                 </div>
             </div>
         </div>
+        <div
+            class="indicator-container"
+            id="indicator-container-element">
+            <slot 
+                name="indicator"
+                id="indicator-slot"></slot>
+        </div>
     </div>    
     <div 
         class="hints-container"
@@ -74,21 +81,24 @@
         border-radius: .4rem;
         margin: 0;
         padding: .35rem 0;
-        padding-inline-start: 1rem;
-        padding-inline-end: 1rem;
+        padding-inline-start: 0rem;
+        padding-inline-end: 0rem;
         transition: border 120ms ease-in-out;
         transition: background-color 120ms ease-in-out;
         z-index: 2;
         
-    }
-    .input-text-container:is(.has-icon) > .main-wrapper {
-        padding-inline-start: 0 !important;
     }
 
     .icon-container {
         display: flex;
         align-items: stretch;
         justify-content: stretch;
+    }
+    .icon-container > slot[name="icon"] {
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        min-width: 1rem;
     }
     .icon-container > slot[name="icon"]::slotted(span) {
         display: flex;
@@ -99,6 +109,36 @@
         color: var(--icon-color, #a6a6ab);
     }
 
+    .indicator-container {
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        text-decoration: none;
+    }
+    .indicator-container > slot[name="indicator"] {
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        min-width: 1rem;
+    }
+    .indicator-container > slot[name="indicator"]::slotted(span) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        width: 2.5rem;
+        color: var(--icon-color, #a6a6ab);
+    }
+    .indicator-container > slot[name="indicator"]::slotted(.success) {
+        color: var(--success-color, #68ca8e);
+    }
+    .indicator-container > slot[name="indicator"]::slotted(.info) {
+        color: var(--info-color, #62aeda);
+    }
+    .indicator-container > slot[name="indicator"]::slotted(.danger) {
+        color: var(--danger-color, #dd8080);
+    }
+    
     .input-text-container .inner-container {
         width: 100%;
         height: auto;
