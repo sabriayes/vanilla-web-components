@@ -2,7 +2,7 @@
 
 Web components library with native JavaScript.
 
-## Vanilla Web Components
+## Vanilla Web Components
 
 |Component|Description|
 |---|---|
