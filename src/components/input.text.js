@@ -112,7 +112,7 @@ class InputText extends HTMLElement {
      * @property {string} _value
      * @public
      */
-    _value = 'sss';
+    _value = '';
 
     /**
      * Get current value.
