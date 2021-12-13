@@ -1,4 +1,4 @@
-<img width="280" src="http://localhost:3000/src/assets/img/vanilla-logo.png" alt="Screenshot"/>
+<img width="280" src="https://www.naylalabs.com/vanilla/src/assets/img/vanilla-logo.png" alt="Screenshot"/>
 
 Web components library with native JavaScript.
 
