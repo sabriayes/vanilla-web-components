@@ -223,7 +223,11 @@
             </div>
             <div class="row">
                 <div class="column">
-                    <vanilla-input id="identity-no" label="Identiy Number" placeholder="Your ID number" maxlength="13">
+                    <vanilla-input 
+                        id="identity-no" 
+                        label="Identiy Number" 
+                        placeholder="Your ID number" 
+                        maxlength="13">
                         <span slot="indicator">
                             <i class="fa fa-circle-notch fa-spin"></i>
                         </span>
@@ -239,6 +243,8 @@
     <script>
         window.onload = function() {
             const firtsNameInput = document.getElementById('first-name');
+            console.log(firtsNameInput.value);
+            firtsNameInput.addEventListener('keyup', (e) => console.log(e.target.value));
         }
     </script>
 </html>

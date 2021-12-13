@@ -112,7 +112,7 @@ class InputText extends HTMLElement {
      * @property {string} _value
      * @public
      */
-    _value
+    _value = 'sss';
 
     /**
      * Get current value.
@@ -154,7 +154,7 @@ class InputText extends HTMLElement {
     
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' });
+        this.attachShadow({ mode: 'open', composed: true });
     }
 
     /**
@@ -230,10 +230,6 @@ class InputText extends HTMLElement {
         this.$labelContainer = clondedTemplate.getElementById('label-container-element');
         this.$labelContainer.remove();
 
-        // Create label element.
-        //const _label = this.getAttribute(ATTRS.LABEL);
-        //this.generateLabelElement(_label);
-
         // Attach events.
         this.$input.addEventListener(
             EVENTS.CHANGE, 
@@ -297,6 +293,7 @@ class InputText extends HTMLElement {
     eventChangedInputValue($event) {
 
         const value = $event.target.value;
+        this._value = value;
         Boolean(value) ? 
             this.$root.classList.add(CLASS.HAS_VALUE) : 
             this.$root.classList.remove(CLASS.HAS_VALUE);
