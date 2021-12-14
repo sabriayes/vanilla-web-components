@@ -108,18 +108,11 @@ class InputText extends HTMLElement {
     $label;
 
     /**
-     * Input value.
-     * @property {string} _value
-     * @public
-     */
-    _value = '';
-
-    /**
      * Get current value.
      * @return {string}
      */
     get value() {
-        return this._value;
+        return this.$input.value || '';
     }
 
     /**
@@ -127,8 +120,8 @@ class InputText extends HTMLElement {
      * @return {void} 
      */
     set value(val) {
-        this._value = val;
-        this.$input.value = val;
+        if(this.$input)
+            this.$input.value = val;
     }
 
     /**

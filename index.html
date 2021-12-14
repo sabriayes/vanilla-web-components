@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
-        <base href="/vanilla/">
+        <base href="/">
         <title>Vanilla Web Components - Demo</title>
 
         <style>
@@ -94,7 +94,7 @@
                 display: flex;
                 flex-direction: column;
                 width: 100%;
-                padding: 15px;
+                padding: 0 15px;
                 margin-top: 10px;
             }
             .separator > span {
@@ -125,7 +125,6 @@
             <!-- DEFAULT MODE -->
             <div class="separator">
                 <span>Default Mode</span>
-                <p>Add <b>label</b> and <b>placeholder</b> attributes</p>
             </div>
             <div class="row">
                 <div class="column">
@@ -146,7 +145,6 @@
             <!-- PLACEHOLDER MODE -->
             <div class="separator">
                 <span>Hint Text</span>
-                <p>Add <b>span[slot="hint"]</b> tag to <b>vanilla-input</b></p>
             </div>
             <div class="row">
                 <div class="column">
@@ -159,8 +157,6 @@
             <!-- ERROR MODE -->
             <div class="separator">
                 <span>Error Message</span>
-                <p>Add <b>invalid</b> attribute for error mode</p>
-                <p>Add <b>span[slot="error"]</b> tag inside to <b>vanilla-input</b></p>
             </div>
             <div class="row">
                 <div class="column">
@@ -175,8 +171,6 @@
             <!-- ICON MODE -->
             <div class="separator">
                 <span>Left Icon</span>
-                <p>Add <b>span[slot="icon"]</b> tag to <b>vanilla-input</b></p>
-                <p>Add <b>i.fa.fa-user</b> tag to <b>span[slot="icon"]</b></p>
             </div>
             <div class="row">
                 <div class="column">
@@ -199,9 +193,7 @@
 
             <!-- ICON MODE -->
             <div class="separator">
-                <span>Left Icon</span>
-                <p>Add <b>span[slot="icon"]</b> tag to <b>vanilla-input</b></p>
-                <p>Add <b>i.fa.fa-user</b> tag to <b>span[slot="icon"]</b></p>
+                <span>Indicator Icon</span>
             </div>
             <div class="row">
                 <div class="column">

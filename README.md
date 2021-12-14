@@ -92,7 +92,7 @@ Use `indicator` slot for right icon.
     console.log(component.value);
 
     // Add event listener.
-    component.addEventListener('change', function($event) {
+    component.$input.addEventListener('change', function($event) {
         console.log($event.target.value);
     });
 </script>
