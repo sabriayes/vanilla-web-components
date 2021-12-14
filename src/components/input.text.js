@@ -112,7 +112,7 @@ class InputText extends HTMLElement {
      * @return {string}
      */
     get value() {
-        return this.$input.value || '';
+        return this.$input?.value || '';
     }
 
     /**
@@ -120,7 +120,7 @@ class InputText extends HTMLElement {
      * @return {void} 
      */
     set value(val) {
-        if(this.$input)
+        if(this.$input) 
             this.$input.value = val;
     }
 
@@ -286,7 +286,6 @@ class InputText extends HTMLElement {
     eventChangedInputValue($event) {
 
         const value = $event.target.value;
-        this._value = value;
         Boolean(value) ? 
             this.$root.classList.add(CLASS.HAS_VALUE) : 
             this.$root.classList.remove(CLASS.HAS_VALUE);
