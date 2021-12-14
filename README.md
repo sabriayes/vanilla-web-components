@@ -9,7 +9,7 @@ Web components library with native JavaScript.
 |`vanilla-input`|Text input element with animated label. [View demo](https://www.naylalabs.com/vanilla/)|
 
 ### Input Component
-Use `vanilla-input` tag. See attributes list and example codes.\
+Use `vanilla-input` tag. See attributes list and example codes.
 
 ***All native input attributes is available.***
 
