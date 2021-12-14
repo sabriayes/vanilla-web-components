@@ -9,7 +9,7 @@ Web components library with native JavaScript.
 |`vanilla-input`|Text input element with animated label. [View demo](https://www.naylalabs.com/vanilla/)|
 
 ### Input Component
-Use `vanilla-input` tag. See attributes list and example codes.
+Use `vanilla-input` tag. See attributes list and example codes.\
 
 ***All native input attributes is available.***
 
@@ -43,7 +43,7 @@ Use `vanilla-input` tag. See attributes list and example codes.
 ````
 
 ##### With Error Message
-You can use multiple `errors` slot elements.
+You can use multiple `errors` slot elements.\
 `invalid` attribute set error mode.
 ````html
 <vanilla-input 
@@ -59,9 +59,9 @@ You can use multiple `errors` slot elements.
 ````
 
 ##### With Icon
-You can use iconic font library or SVG graphic.
-Use `icon` slot for left icon.
-Use `indicator` slot for right icon.
+You can use iconic font library or SVG graphic.\
+Use `icon` slot for left icon.\
+Use `indicator` slot for right icon.\
 `success|danger|info` classes set indicator color.
 ````html
 <vanilla-input 
