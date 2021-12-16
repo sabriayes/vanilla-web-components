@@ -6,9 +6,10 @@ You can see all input types at ***component list***.
 
 ### Component List
 
-|Component|Description|
-|---|---|
-|`vanilla-input`|Text field element with animated label, hint, icon and indicator. [View demo](https://www.naylalabs.com/vanilla/)|
+||Component|Description|
+|---|---|---|
+|✅|`vanilla-input`|Text field element with animated label, hint, icon and indicator. [View demo](https://www.naylalabs.com/vanilla/)|
+|⌛|`vanilla-number`|Customized `vanilla-input` element for numeric values *(etc. number, currency)*.|
 
 ---
 
