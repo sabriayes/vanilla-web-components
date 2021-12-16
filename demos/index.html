@@ -5,118 +5,23 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="theme-color" content="#fff"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Roboto:wght@300;400;500&display=swap">
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
-        <base href="/">
+        <link rel="stylesheet" href="assets/css/default.css">
+     
         <title>Vanilla Web Components - Demo</title>
 
-        <style>
-            * {
-                box-sizing: border-box;
-            }
-            html,
-            body {
-                position: relative;
-                width: 100%;
-                font-size: 16px;
-                font-family: "Poppins", sans-serif;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                background: #f3f4f8;
-            }
-            .content-wrapper {
-                position: relative;
-                height: auto;
-                max-width: 520px;
-                min-width: 480px;
-                padding: 40px;
-                background: #fff;
-                border-radius: 12px;
-                display: flex;
-                flex-direction: column;
-                box-shadow: -4px 9px 40px -6px rgb(0 0 0 / 10%);
-                margin: 40px 0;
-            }
-            .row {
-                position: relative;
-                width: 100%;
-                margin: 10px 0;
-                display: flex;
-                flex-direction: row;
-                margin: 10px 0;
-            }
-            .column {
-                position: relative;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: stretch;
-                align-items: stretch;
-                flex: 1;
-                padding: 0 10px;
-            }
-            .logo-wrapper {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                margin: 20px 0;
-            }
-            .logo-wrapper > img {
-                width: auto;
-                height: 80px;
-                border-radius: 12px;
-                overflow: hidden;
-            }
-            h3 {
-                text-align: center;
-                font-size: 22px;
-                margin: 0;
-            }
-            p {
-                font-size: 14px;
-                color: #666;
-                line-height: 22px;
-                text-align: center;
-                padding: 0 10%;
-                margin-bottom: 40px;
-            }
-            b {
-                color: #f74615;
-            }
-            .separator {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                padding: 0 15px;
-                margin-top: 10px;
-            }
-            .separator > span {
-                font-size: 16px;
-                font-weight: 500;
-                color: #000;
-                line-height: 22px;
-                margin-bottom: 8px;
-            }
-            .separator > p {
-                margin: 0;
-                padding: 0;
-                text-align: left;
-            }
-        </style>
+        <script src="assets/js/input.min.js"></script>
     </head>
     <body>
         
         <div class="content-wrapper">
             <div class="column">
                 <a href="#" class="logo-wrapper">
-                    <img src="src/assets/img/vanilla-logo.png" alt="Vanilla Components" class="logo">
+                    <img src="assets/img/vanilla-logo.png" alt="Vanilla Components" class="logo">
                 </a>
                 <h3>Vanilla Web Components ☕</h3>
                 <p>Web components library with native <u>JavaScript</u>.</p>
@@ -231,10 +136,4 @@
         </div>
         
     </body>
-    <script src="dist/input.text.min.js"></script>
-    <script>
-        window.onload = function() {
-            const firtsNameInput = document.getElementById('first-name');
-        }
-    </script>
 </html>

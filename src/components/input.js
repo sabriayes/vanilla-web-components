@@ -1,4 +1,4 @@
-import templateHTML from './input.text.html';
+import templateHTML from './input.html';
 
 /**
  * Template contents.
@@ -47,17 +47,17 @@ const ATTRS = {
 }
 
 /**
- * Custom text input element class.\
- * HTML tags is <input-text>\
+ * Custom text input element class.
+ * HTML tags is <vanilla-input>
  * 
  * @class
  * @extends {HTMLElement}
  * @constructor
  */
-class InputText extends HTMLElement {
+class VanillaInput extends HTMLElement {
 
     /**
-     * Tag name of InputText
+     * Tag name of VanillaInput
      * @property {string} tagName
      * @static
      */
@@ -106,13 +106,13 @@ class InputText extends HTMLElement {
      * @public
      */
     $label;
-
+    
     /**
      * Get current value.
      * @return {string}
      */
     get value() {
-        return this.$input?.value || '';
+        return this.$input.value || '';
     }
 
     /**
@@ -303,5 +303,5 @@ class InputText extends HTMLElement {
         this.$input.focus();
     }
 }
-
-window.customElements.define(InputText.tagName, InputText);
+//
+window.customElements.define(VanillaInput.tagName, VanillaInput);

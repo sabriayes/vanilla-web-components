@@ -1,5 +1,6 @@
 const path = require('path');
 const glob = require('glob');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 const entries = glob.sync('./src/components/**.js').reduce(
     function(obj, el){
@@ -9,6 +10,13 @@ const entries = glob.sync('./src/components/**.js').reduce(
     {}
 );
 
+const copyPaths = [
+    {
+        source: 'dist',
+        destination: 'demos/assets/js/'
+    }
+];
+
 module.exports = {
     watch: true,
     entry: entries,
@@ -17,7 +25,7 @@ module.exports = {
         filename: '[name].min.js',
     },
     devServer: {
-        static: './',
+        static: './demos/',
         port: 3000,
         open: true,
         hot: true
@@ -29,5 +37,12 @@ module.exports = {
                 use: ['html-loader']
             }
         ]
-    }
+    },
+    plugins: [
+        new FileManagerPlugin({
+            events: {
+                onEnd: { copy: copyPaths }
+            }
+        })
+    ]
 };

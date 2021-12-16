@@ -22,7 +22,9 @@
     ],
     "author": "Sabri Ayes <sabri@naylalabs.com>",
     "license": "ISC",
-    "dependencies": {},
+    "dependencies": {
+        "filemanager-webpack-plugin": "^6.1.7"
+    },
     "devDependencies": {
         "glob": "^7.2.0",
         "html-loader": "^3.0.1",

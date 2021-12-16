@@ -1,24 +1,30 @@
 <img width="280" src="https://www.naylalabs.com/vanilla/src/assets/img/vanilla-logo.png" alt="Screenshot"/>
 
-Web components library with native JavaScript.
+This is a library of web components with some useful input elements. 
+It developed with vanilla `JavaScript` and embeded `CSS` for high performance.
+You can see all input types at ***component list***.
 
-## Vanilla Web Components
+### Component List
 
 |Component|Description|
 |---|---|
-|`vanilla-input`|Text input element with animated label. [View demo](https://www.naylalabs.com/vanilla/)|
+|`vanilla-input`|Text field element with animated label, hint, icon and indicator. [View demo](https://www.naylalabs.com/vanilla/)|
+
+---
 
 ### Input Component
-Use `vanilla-input` tag. See attributes list and example codes.
+####`<vanilla-input>`
 
-***All native input attributes is available.***
+`vanilla-input` is custom text field element. It is support all native HTML text input attributes and it has **animated label, errors hint, hint text, icon and indicator**.\
+You can see all custom attributes at **attributes list** with description.
 
 |Custom Attr|Description|
 |---|---|
-|**label**|Set label text. *optional*|
-|**placeholder**|Set input element placeholder text. *optional - native attr*|
+|**label**|Sets label text. *(optional)*|
+|**placeholder**|Sets placeholder text for input element . *(optional - native attr)*|
+***All native HTML text input attributes is available.***
 
-##### Default Usage
+##### Usage
 ````html
 <!-- Add script tag. -->
 <script src="dist/input.text.min.js"></script>
@@ -44,7 +50,7 @@ Use `vanilla-input` tag. See attributes list and example codes.
 
 ##### With Error Message
 You can use multiple `errors` slot elements.\
-`invalid` attribute set error mode.
+Add `invalid` attribute for error mode.
 ````html
 <vanilla-input 
     invalid
@@ -60,8 +66,8 @@ You can use multiple `errors` slot elements.\
 
 ##### With Icon
 You can use iconic font library or SVG graphic.\
-Use `icon` slot for left icon.\
-Use `indicator` slot for right icon.\
+Add `icon` slot for left icon.\
+Add `indicator` slot for right icon.\
 `success|danger|info` classes set indicator color.
 ````html
 <vanilla-input 
@@ -92,16 +98,18 @@ Use `indicator` slot for right icon.\
     console.log(component.value);
 
     // Add event listener.
+    // $input - Ref to input text element in shadow DOM.
     component.$input.addEventListener('change', function($event) {
         console.log($event.target.value);
     });
 </script>
 ````
-
-##### Styling
+---
+### Styling
+This library use global CSS varaibales for themes.
 ````scss
 :root {
-    // Default Theme
+    // Default theme
     --background-color: #fcfcfc;
     --border-color: #e6e7e9;
     --label-color: #a6a6ab;
@@ -113,11 +121,29 @@ Use `indicator` slot for right icon.\
 }
 ````
 ---
-### Run in Development Mode
+### Development Mode
 #### Requirements
 
 - **NodeJs** (v12.9.1)
 - **NPM** (v6.14.8)
+
+#### Folder Structer
+
+- `src` is root folder. `src/components` contains component files.
+- Each component consists of two files. (`.html` and `.js`)
+- `.html` file contains DOM and style codes.
+- `.js` file contains some logic.
+
+```bash
+├── src
+│   ├── components
+│   │   ├── {component-name}.html
+│   │   ├── {component-name}.js
+├── demos
+│   ├── assets
+│   ├── index.html
+├── dist (for build)
+```
 
 ```bash
 # Clone repository.
