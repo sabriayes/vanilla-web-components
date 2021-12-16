@@ -13,7 +13,7 @@ You can see all input types at ***component list***.
 ---
 
 ### Input Component
-####`<vanilla-input>`
+#### `<vanilla-input>`
 
 `vanilla-input` is custom text field element. It is support all native HTML text input attributes and it has **animated label, errors hint, hint text, icon and indicator**.\
 You can see all custom attributes at **attributes list** with description.
