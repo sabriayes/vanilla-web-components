@@ -147,7 +147,7 @@ class VanillaInput extends HTMLElement {
     
     constructor() {
         super();
-        this.attachShadow({ mode: 'open', composed: true });
+        this.attachShadow({ mode: 'open' });
     }
 
     /**
@@ -303,5 +303,5 @@ class VanillaInput extends HTMLElement {
         this.$input.focus();
     }
 }
-//
+
 window.customElements.define(VanillaInput.tagName, VanillaInput);
