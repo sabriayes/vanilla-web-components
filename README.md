@@ -22,6 +22,7 @@ You can see all custom attributes at **attributes list** with description.
 |---|---|
 |**label**|Sets label text. *(optional)*|
 |**placeholder**|Sets placeholder text for input element . *(optional - native attr)*|
+
 ***All native HTML text input attributes is available.***
 
 ##### Usage
