@@ -1,7 +1,7 @@
 <img width="280" src="https://www.naylalabs.com/vanilla/src/assets/img/vanilla-logo.png" alt="Screenshot"/>
 
-This is a library of web components with some useful input elements. 
-It developed with vanilla `JavaScript` and embeded `CSS` for high performance.
+Library of web components with some useful input elements. 
+It is developed with vanilla `JavaScript` and embedded `CSS` for high performance.
 You can see all input types at ***component list***.
 
 ### Component List
@@ -10,13 +10,20 @@ You can see all input types at ***component list***.
 |---|---|---|
 |✅|`vanilla-input`|Text field element with animated label, hint, icon and indicator. [View demo](https://www.naylalabs.com/vanilla/)|
 |⌛|`vanilla-number`|Customized `vanilla-input` element for numeric values *(etc. number, currency)*.|
+|⌛|`vanilla-email`|Customized `vanilla-input` element for email.|
+|⌛|`vanilla-tel`|Customized `vanilla-input` element for phone number with country codes.|
+|⌛|`vanilla-search`|Customized `vanilla-input` for searching.|
+|⌛|`vanilla-select`|Dropdown menu element with search field.|
+|⌛|`vanilla-checkbox`|Checkbox element.|
+|⌛|`vanilla-radio-btn`|Radio button element.|
+|⌛|`vanilla-toggle`|Toggle option element.|
 
 ---
 
 ### Input Component
 #### `<vanilla-input>`
 
-`vanilla-input` is custom text field element. It is support all native HTML text input attributes and it has **animated label, errors hint, hint text, icon and indicator**.\
+`vanilla-input` is custom text field element. It supports all native HTML text input attributes and it has **animated label, errors hint, hint text, icon and indicator**.\
 You can see all custom attributes at **attributes list** with description.
 
 |Custom Attr|Description|
@@ -24,7 +31,7 @@ You can see all custom attributes at **attributes list** with description.
 |**label**|Sets label text. *(optional)*|
 |**placeholder**|Sets placeholder text for input element . *(optional - native attr)*|
 
-***All native HTML text input attributes is available.***
+***All native HTML text input attributes are available.***
 
 ##### Usage
 ````html
