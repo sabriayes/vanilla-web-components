@@ -12,6 +12,8 @@ You can see all input types at ***component list***.
 |⌛|`vanilla-number`|Customized `vanilla-input` element for numeric values *(etc. number, currency)*.|
 |⌛|`vanilla-email`|Customized `vanilla-input` element for email.|
 |⌛|`vanilla-tel`|Customized `vanilla-input` element for phone number with country codes.|
+|⌛|`vanilla-currency`|Customized `vanilla-input` element for currency value.|
+|⌛|`vanilla-quantity`|Customized `vanilla-input` element for qantity value.|
 |⌛|`vanilla-search`|Customized `vanilla-input` for searching.|
 |⌛|`vanilla-select`|Dropdown menu element with search field.|
 |⌛|`vanilla-checkbox`|Checkbox element.|
