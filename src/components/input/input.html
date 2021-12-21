@@ -1,0 +1,53 @@
+<div 
+    class="input-text-container pending-init" 
+    id="root-element">
+    <div class="main-wrapper">
+        <div 
+            class="icon-container"
+            id="icon-container-element">
+            <slot 
+                name="icon"
+                id="icon-slot"></slot>
+        </div>
+        <div 
+            class="inner-container" 
+            id="inner-container-element">
+            <div 
+                class="label-container" 
+                id="label-container-element">
+                <label 
+                    for="input-element" 
+                    id="label-element">
+                </label>
+            </div>
+            <div class="input-container">
+                <div class="input-holder">
+                    <input 
+                        type="text" 
+                        name="input-element"
+                        class="input-element" 
+                        id="input-element"/>
+                </div>
+            </div>
+        </div>
+        <div
+            class="indicator-container"
+            id="indicator-container-element">
+            <slot 
+                name="indicator"
+                id="indicator-slot"></slot>
+        </div>
+    </div>    
+    <div 
+        class="hints-container"
+        id="hints-container-element">
+        <slot 
+            name="errors" 
+            id="error-messages-slot">
+        </slot>
+        <slot 
+            name="hint"
+            id="hint-text-slot">
+        </slot>
+    </div>
+</div>

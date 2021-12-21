@@ -2,7 +2,7 @@ const path = require('path');
 const glob = require('glob');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
 
-const entries = glob.sync('./src/components/**.js').reduce(
+const entries = glob.sync('./src/components/**/**.js').reduce(
     function(obj, el){
         obj[path.parse(el).name] = el;
         return obj
@@ -12,7 +12,7 @@ const entries = glob.sync('./src/components/**.js').reduce(
 
 const copyPaths = [
     {
-        source: 'dist',
+        source: 'dist/**.js',
         destination: 'demos/assets/js/'
     }
 ];
@@ -35,6 +35,14 @@ module.exports = {
             {
                 test: /\.html$/i,
                 use: ['html-loader']
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    'sass-to-string',
+                    'postcss-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },

@@ -1,0 +1,20 @@
+.input-text-container {
+    display: flex;
+    flex-direction: column;
+    & > .main-wrapper {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: auto;
+        background-color: var(--background-color, #fcfcfc);
+        border: 1px solid var(--border-color, #e6e7e9);
+        border-radius: .4rem;
+        margin: 0;
+        padding: .35rem 0;
+        padding-inline-start: 0rem;
+        padding-inline-end: 0rem;
+        transition: border 120ms ease-in-out;
+        transition: background-color 120ms ease-in-out;
+        z-index: 2;
+    }
+}

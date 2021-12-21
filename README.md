@@ -138,7 +138,7 @@ This library use global CSS varaibales for themes.
 - **NodeJs** (v12.9.1)
 - **NPM** (v6.14.8)
 
-#### Folder Structer
+#### Folder Structure
 
 - `src` is root folder. `src/components` contains component files.
 - Each component consists of two files. (`.html` and `.js`)

@@ -1,0 +1,213 @@
+@import './../../partials/scss/_input';
+
+:host { 
+    display: flex;
+    flex-direction: column;
+    min-width: 10rem;
+}
+:host *[class] {
+    position: relative;
+    font-family: inherit;
+    color: inherit;
+    box-sizing: border-box;
+}
+
+.icon-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+.icon-container > slot[name="icon"] {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    min-width: 1rem;
+}
+.icon-container > slot[name="icon"]::slotted(span) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    color: var(--icon-color, #a6a6ab);
+}
+
+.indicator-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    text-decoration: none;
+}
+.indicator-container > slot[name="indicator"] {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    min-width: 1rem;
+}
+.indicator-container > slot[name="indicator"]::slotted(span) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    color: var(--icon-color, #a6a6ab);
+}
+.indicator-container > slot[name="indicator"]::slotted(.success) {
+    color: var(--success-color, #68ca8e);
+}
+.indicator-container > slot[name="indicator"]::slotted(.info) {
+    color: var(--info-color, #62aeda);
+}
+.indicator-container > slot[name="indicator"]::slotted(.danger) {
+    color: var(--danger-color, #dd8080);
+}
+
+.input-text-container .inner-container {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-text-container:focus-within .main-wrapper {
+    border: 1px solid var(--accent-color, #222);
+    /*background-color: var(--accent-background-color, #f9f7fc);*/
+}
+:host([invalid]) .input-text-container .main-wrapper {
+    border: 1px solid var(--danger-color, #dd8080);
+}
+
+.label-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.label-container > label {
+    width: 100%;
+    line-height: 1.2rem;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--label-color, #a6a6ab);
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform: translateY(.75rem);
+    transition: all 180ms ease-in-out;
+    transform-origin: 0% 100%;
+}
+:host([invalid]) .label-container > label,
+:host([invalid]) .icon-container > slot[name="icon"]::slotted(span) { 
+    color: var(--danger-color, #dd8080);
+}
+
+ /** INPUT **/
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+input[type="text"] {
+    width: 100%;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    border-radius: 0;
+    padding: 0;
+    font-weight: 400;
+}
+input[type="text"]:hover,
+input[type="text"]:focus,
+input[type="text"]:active {
+    border: none;
+    outline: none;
+}
+input[type="text"]:placeholder-shown {
+    font-size: 1rem;
+    opacity: .75;
+    line-height: 1.2rem;
+    height: 1.4rem;
+}
+.has-label input[type="text"] {
+    line-height: 1.4rem;
+    height: 1.6rem;
+}
+.has-label input[type="text"]:placeholder-shown {
+    opacity: 0;
+    transition: opacity 180ms ease-in-out;
+}
+.has-label input[type="text"]:focus:placeholder-shown {
+    opacity: .75;
+}
+.has-value .label-container > label,
+.input-text-container:focus-within .label-container > label {
+    transform: translateY(0) scale(.8);
+}
+:host(:is(:not([invalid]))) .input-text-container:hover .label-container > label,
+:host(:is(:not([invalid]))).input-text-container:focus-within .label-container > label {
+    color: var(--accent-color, #000);
+}
+
+/** HINTS **/
+.hints-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* height: .75rem; */
+    margin-top: .2rem;
+    z-index: 1;
+    overflow: hidden;
+}
+.hints-container > slot {
+    display: inline-block;
+}
+.hints-container:empty {
+    display: none;
+}
+.hints-container > slot[name="hint"] {
+    transform: translateY(0);
+    opacity: 1;
+}
+.hints-container > slot[name="errors"] {
+    transform: translateY(-1rem);
+    opacity: 0;
+}
+
+/** :host[invalid] */
+:host(:is(:not([invalid]))) .hints-container > slot[name="errors"],
+:host([invalid]) .hints-container > slot[name="hint"] {
+    transform: translateY(-1rem);
+    opacity: 0;
+}
+:host(:is(:not([invalid]))) .hints-container > slot[name="hint"],
+:host([invalid]) .hints-container > slot[name="errors"] {
+    transform: translateY(0rem);
+    opacity: 1;
+}
+
+.hints-container > slot[name="hint"],
+.hints-container > slot[name="errors"] {
+    font-size: .65rem;
+    color: var(--label-color, #a6a6ab);
+    font-weight: 300;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+.hints-container > slot[name="errors"]::slotted([hidden]) {
+    display: none !important;
+}
+.hints-container > slot[name="errors"]::slotted(span) {
+    color: var(--danger-color, #dd8080);
+}
+.initialized .hints-container > slot {
+    transition-property: transform, opacity;
+    transition: 180ms linear;
+}

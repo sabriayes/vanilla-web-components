@@ -1,11 +1,12 @@
-import templateHTML from './input.html';
+import HTML from './input.html';
+import CSS from './input.scss';
 
 /**
  * Template contents.
  * @var {HTMLElement} template
  */
 const template = document.createElement('template');
-template.innerHTML = templateHTML;
+template.innerHTML = HTML;
 
 /**
  * CSS classes name.
@@ -65,13 +66,6 @@ class VanillaInput extends HTMLElement {
         return 'vanilla-input';
     }
     
-    /**
-     * Style tag element in template.
-     * @property {CSSStyleSheet} $style
-     * @public
-     */
-    $style; 
-
     /**
      * ID #root-element in template.
      * @property {HTMLElement} $root
@@ -215,7 +209,6 @@ class VanillaInput extends HTMLElement {
         const clondedTemplate = template.content.cloneNode(true);
         
         // Access cloned DOM elements.
-        this.$style = clondedTemplate.querySelector('style');
         this.$root = clondedTemplate.getElementById('root-element');
         this.$innerContainer = clondedTemplate.getElementById('inner-container-element');
         this.$input = clondedTemplate.getElementById('input-element');
@@ -238,7 +231,17 @@ class VanillaInput extends HTMLElement {
             this.attributeChanged(node.name, node.value, node.value);
         }
 
-        this.shadowRoot.appendChild(this.$style);
+        const css = document.createElement('style');
+        
+        if(css.styleSheet) {
+            css.styleSheet.cssText = CSS;
+        } 
+        else {
+            const textNode = document.createTextNode(CSS);
+            css.appendChild(textNode);
+        }
+            
+        this.shadowRoot.appendChild(css);
         this.shadowRoot.appendChild(this.$root);
 
         this.$root.classList.remove(CLASS.PENDING_INIT);
