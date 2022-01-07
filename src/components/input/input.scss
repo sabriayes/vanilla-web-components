@@ -1,75 +1,7 @@
-@import './../../partials/scss/_input';
-
-:host { 
-    display: flex;
-    flex-direction: column;
-    min-width: 10rem;
-}
-:host *[class] {
-    position: relative;
-    font-family: inherit;
-    color: inherit;
-    box-sizing: border-box;
-}
-
-.icon-container {
-    display: flex;
-    align-items: stretch;
-    justify-content: stretch;
-}
-.icon-container > slot[name="icon"] {
-    display: flex;
-    align-items: stretch;
-    justify-content: stretch;
-    min-width: 1rem;
-}
-.icon-container > slot[name="icon"]::slotted(span) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    width: 2.5rem;
-    color: var(--icon-color, #a6a6ab);
-}
-
-.indicator-container {
-    display: flex;
-    align-items: stretch;
-    justify-content: stretch;
-    text-decoration: none;
-}
-.indicator-container > slot[name="indicator"] {
-    display: flex;
-    align-items: stretch;
-    justify-content: stretch;
-    min-width: 1rem;
-}
-.indicator-container > slot[name="indicator"]::slotted(span) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    width: 2.5rem;
-    color: var(--icon-color, #a6a6ab);
-}
-.indicator-container > slot[name="indicator"]::slotted(.success) {
-    color: var(--success-color, #68ca8e);
-}
-.indicator-container > slot[name="indicator"]::slotted(.info) {
-    color: var(--info-color, #62aeda);
-}
-.indicator-container > slot[name="indicator"]::slotted(.danger) {
-    color: var(--danger-color, #dd8080);
-}
-
-.input-text-container .inner-container {
-    width: 100%;
-    height: auto;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
+@import './../../partials/scss/host';
+@import './../../partials/scss/input';
+@import './../../partials/scss/icons';
+@import './../../partials/scss/hint';
 
 .input-text-container:focus-within .main-wrapper {
     border: 1px solid var(--accent-color, #222);
@@ -97,8 +29,9 @@
     transition: all 180ms ease-in-out;
     transform-origin: 0% 100%;
 }
+
 :host([invalid]) .label-container > label,
-:host([invalid]) .icon-container > slot[name="icon"]::slotted(span) { 
+:host([invalid]) .icon-container > slot[name="leading-icon"]::slotted(span) { 
     color: var(--danger-color, #dd8080);
 }
 
@@ -154,59 +87,6 @@ input[type="text"]:placeholder-shown {
     color: var(--accent-color, #000);
 }
 
-/** HINTS **/
-.hints-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* height: .75rem; */
-    margin-top: .2rem;
-    z-index: 1;
-    overflow: hidden;
-}
-.hints-container > slot {
-    display: inline-block;
-}
-.hints-container:empty {
-    display: none;
-}
-.hints-container > slot[name="hint"] {
-    transform: translateY(0);
-    opacity: 1;
-}
-.hints-container > slot[name="errors"] {
-    transform: translateY(-1rem);
-    opacity: 0;
-}
-
-/** :host[invalid] */
-:host(:is(:not([invalid]))) .hints-container > slot[name="errors"],
-:host([invalid]) .hints-container > slot[name="hint"] {
-    transform: translateY(-1rem);
-    opacity: 0;
-}
-:host(:is(:not([invalid]))) .hints-container > slot[name="hint"],
-:host([invalid]) .hints-container > slot[name="errors"] {
-    transform: translateY(0rem);
-    opacity: 1;
-}
-
-.hints-container > slot[name="hint"],
-.hints-container > slot[name="errors"] {
-    font-size: .65rem;
-    color: var(--label-color, #a6a6ab);
-    font-weight: 300;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-}
-.hints-container > slot[name="errors"]::slotted([hidden]) {
-    display: none !important;
-}
-.hints-container > slot[name="errors"]::slotted(span) {
-    color: var(--danger-color, #dd8080);
-}
 .initialized .hints-container > slot {
     transition-property: transform, opacity;
     transition: 180ms linear;

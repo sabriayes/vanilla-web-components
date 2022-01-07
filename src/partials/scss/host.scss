@@ -1,0 +1,11 @@
+:host { 
+    display: flex;
+    flex-direction: column;
+    min-width: 10rem;
+}
+:host *[class] {
+    position: relative;
+    font-family: inherit;
+    color: inherit;
+    box-sizing: border-box;
+}
