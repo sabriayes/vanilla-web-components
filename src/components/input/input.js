@@ -10,45 +10,47 @@ template.innerHTML = HTML;
 
 /**
  * CSS classes name.
- * @property {string} HAS_LABEL     - Element has a label.
- * @property {string} HAS_VALUE     - Input contains truly value.
- * @property {string} HAS_ICON      - slot[name='icon'] has any element.
- * @property {string} INIT          - Element init completed.
- * @property {string} PENDING_INIT  - Element not initialized yet.
+ * @property {string} hasLabel    - Element has a label.
+ * @property {string} hasValue    - Input contains truly value.
+ * @property {string} init        - Element init completed.
+ * @property {string} pendingInit - Element not initialized yet.
  * @readonly
  */
-const CLASS = {
-    HAS_LABEL: 'has-label',
-    HAS_VALUE: 'has-value',
-    PENDING_INIT: 'pending-init',
-    INIT: 'initialized'
+const CLASSES = {
+    hasLabel: 'has-label',
+    hasValue: 'has-value',
+    pendingInit: 'pending-init',
+    init: 'initialized'
 }
 
 /**
  * Custom component attribues.
- * @property {string} LABEL - Label attribute alias.
+ * @property {string} label       - Alias of label attr.
+ * @property {string} placeholder - Alias of placeholder attr.
+ * @property {string} value       - Alias of value attr.
  * @readonly
  */
 const ATTRS = {
-    LABEL: 'label',
-    PLACEHOLDER: 'placeholder',
-    VALUE: 'value'
+    label: 'label',
+    placeholder: 'placeholder',
+    value: 'value'
 }
 
 /**
  * Event list.
- * @property {string} CHANGE - Change event alias.
- * @property {string} CLICK  - Click event alias.
+ * @property {string} change     - Alias change event.
+ * @property {string} click      - Alias click event.
+ * @property {string} slotChange - Alias slot change event.
  * @readonly
  */
  const EVENTS = {
-     CHANGE: 'change',
-     CLICK: 'click',
-     SLOT_CHANGE: 'slotchange'
+     change: 'change',
+     click: 'click',
+     slotChange: 'slotchange'
 }
 
 /**
- * Custom text input element class.
+ * Custom text input element classES.
  * HTML tags is <vanilla-input>
  * 
  * @class
@@ -123,7 +125,7 @@ class VanillaInput extends HTMLElement {
      * @return {string}
      */
     get label() {
-        return this.getAttribute(ATTRS.LABEL);
+        return this.getAttribute(ATTRS.label);
     }
 
     /**
@@ -132,7 +134,7 @@ class VanillaInput extends HTMLElement {
      * @return {void}
      */
     set label(value) {
-        this.setAttribute(ATTRS.LABEL, value);
+        this.setAttribute(ATTRS.label, value);
     }
 
     static get observedAttributes() {
@@ -171,14 +173,14 @@ class VanillaInput extends HTMLElement {
         if(value === null) return;
 
         switch(name) {
-            case ATTRS.LABEL:
+            case ATTRS.label:
                 // Invoke when change label attr/property value.
                 this.generateLabelElement(newValue);
             break;
 
             case ATTRS.VALUE:
                 // Dispatch change event with fake event.
-                const fakeEvent = new Event(EVENTS.CHANGE);
+                const fakeEvent = new Event(EVENTS.change);
                 this.$input?.setAttribute(name, newValue);
                 this.$input?.dispatchEvent(fakeEvent);
             break;
@@ -195,11 +197,11 @@ class VanillaInput extends HTMLElement {
     disconnectedCallback() {
 
         this.$input?.removeEventListener(
-            EVENTS.CHANGE, 
+            EVENTS.change, 
             this.eventChangedInputValue.bind(this)
         );
         this.$root?.removeEventListener(
-            EVENTS.CLICK,
+            EVENTS.click,
             this.eventClickedToRoot.bind(this)
         );
     }
@@ -218,11 +220,11 @@ class VanillaInput extends HTMLElement {
 
         // Attach events.
         this.$input.addEventListener(
-            EVENTS.CHANGE, 
+            EVENTS.change, 
             this.eventChangedInputValue.bind(this)
         );
         this.$root.addEventListener(
-            EVENTS.CLICK,
+            EVENTS.click,
             this.eventClickedToRoot.bind(this)
         );
         
@@ -244,13 +246,13 @@ class VanillaInput extends HTMLElement {
         this.shadowRoot.appendChild(css);
         this.shadowRoot.appendChild(this.$root);
 
-        this.$root.classList.remove(CLASS.PENDING_INIT);
-        this.$root.classList.add(CLASS.INIT);
+        this.$root.classList.remove(CLASSES.pendingInit);
+        this.$root.classList.add(CLASSES.init);
     }
 
     /**
-     * Update label container element state.
-     * If value is falsy remove label conatiner
+     * Update state of label container element.
+     * If value is falsy remove label container
      * in root.
      * 
      * @param {string} value - Label text value.
@@ -260,7 +262,7 @@ class VanillaInput extends HTMLElement {
 
         if(Boolean(value)) {
 
-            this.$root.classList.add(CLASS.HAS_LABEL);
+            this.$root.classList.add(CLASSES.hasLabel);
             this.$innerContainer.insertBefore(
                 this.$labelContainer,
                 this.$innerContainer.firstChild
@@ -273,14 +275,14 @@ class VanillaInput extends HTMLElement {
             this.$label.innerHTML = value;    
         }
         else {
-            this.$root.classList.remove(CLASS.HAS_LABEL);
+            this.$root.classList.remove(CLASSES.hasLabel);
             this.$labelContainer.remove();
         }
     }
     
     /**
      * Invoked when input value change.
-     * If input has any content, add HAS_VALUE class
+     * If input has any content, add hasValue class
      * to container element.
      * 
      * @param {Event} $event 
@@ -289,9 +291,12 @@ class VanillaInput extends HTMLElement {
     eventChangedInputValue($event) {
 
         const value = $event.target.value;
-        Boolean(value) ? 
-            this.$root.classList.add(CLASS.HAS_VALUE) : 
-            this.$root.classList.remove(CLASS.HAS_VALUE);
+        if(Boolean(value)) {
+            this.$root.classList.add(CLASSES.hasValue)
+        }
+        else {
+            this.$root.classList.remove(CLASSES.hasValue);
+        }            
     }
 
     /**
