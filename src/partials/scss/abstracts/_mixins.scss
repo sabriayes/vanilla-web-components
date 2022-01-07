@@ -1,0 +1,21 @@
+/* Mixins for hints. */
+
+@mixin hint-element {
+    font-size: .65rem;
+    color: var(--label-color, $label-color);
+    font-weight: 300;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+@mixin hide-errors-and-hints {
+    transform: translateY(-1rem);
+    opacity: 0;
+}
+
+@mixin show-errors-and-hints {
+    transform: translateY(0rem);
+    opacity: 1;
+}

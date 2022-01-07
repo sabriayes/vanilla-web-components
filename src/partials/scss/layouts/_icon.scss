@@ -13,19 +13,19 @@
             justify-content: center;
             font-size: 1.5rem;
             width: 2.5rem;
-            color: var(--icon-color, #a6a6ab);
+            color: var(--icon-color, $icon-color);
         }
     }
     &.trailing-icon {
         text-decoration: none;
         & ::slotted(.success) {
-            color: var(--success-color, #68ca8e) !important;
+            color: var(--success-color, $success-color);
         }
         & ::slotted(.info) {
-            color: var(--info-color, #62aeda);
+            color: var(--info-color, $info-color);
         }
         & ::slotted(.danger) {
-            color: var(--danger-color, #dd8080);
+            color: var(--danger-color, $danger-color);
         }
     }
 }

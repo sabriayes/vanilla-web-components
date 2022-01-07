@@ -1,7 +1,8 @@
-@import './../../partials/scss/host';
-@import './../../partials/scss/input';
-@import './../../partials/scss/icons';
-@import './../../partials/scss/hint';
+@import '~partials/scss/abstracts/variables';
+@import './../../partials/scss/base/host';
+@import './../../partials/scss/layouts/input';
+@import './../../partials/scss/layouts/icon';
+@import './../../partials/scss/layouts/hint';
 
 .input-text-container:focus-within .main-wrapper {
     border: 1px solid var(--accent-color, #222);

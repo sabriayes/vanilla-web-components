@@ -13,7 +13,7 @@ const entries = glob.sync('./src/components/**/**.js').reduce(
 const copyPaths = [
     {
         source: 'dist/**.js',
-        destination: 'demos/assets/js/'
+        destination: 'demos/assets/js/',
     }
 ];
 
@@ -24,33 +24,38 @@ module.exports = {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].min.js',
     },
+    resolve: {
+        alias: {
+            partials: path.resolve(__dirname, './src/partials'),
+        },
+    },
     devServer: {
         static: './demos/',
         port: 3000,
         open: true,
-        hot: true
+        hot: true,
     },
     module: {
         rules: [
             {
                 test: /\.html$/i,
-                use: ['html-loader']
+                use: ['html-loader'],
             },
             {
                 test: /\.s[ac]ss$/i,
                 use: [
                     'sass-to-string',
                     'postcss-loader',
-                    'sass-loader'
-                ]
-            }
+                    'sass-loader',
+                ],
+            },
         ]
     },
     plugins: [
         new FileManagerPlugin({
             events: {
-                onEnd: { copy: copyPaths }
-            }
-        })
-    ]
+                onEnd: { copy: copyPaths },
+            },
+        }),
+    ],
 };

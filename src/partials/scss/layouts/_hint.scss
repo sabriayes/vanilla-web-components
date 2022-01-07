@@ -1,22 +1,4 @@
-@mixin hint-element {
-    font-size: .65rem;
-    color: var(--label-color, #a6a6ab);
-    font-weight: 300;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-}
-
-@mixin hide-errors-and-hints {
-    transform: translateY(-1rem);
-    opacity: 0;
-}
-
-@mixin show-errors-and-hints {
-    transform: translateY(0rem);
-    opacity: 1;
-}
+@import '~partials/scss/abstracts/mixins';
 
 .hints-container {
     display: flex;
@@ -45,7 +27,7 @@
             display: none !important;
         }
         &::slotted(span) {
-            color: var(--danger-color, #dd8080);
+            color: var(--danger-color, $danger-color);
         }
     }
 }
