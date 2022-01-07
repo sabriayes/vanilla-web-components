@@ -75,7 +75,7 @@ Add `invalid` attribute for error mode.
 </vanilla-input>
 ````
 
-##### With Icon
+##### With Leading Icon
 You can use iconic font library or SVG graphic.\
 Add `icon` slot for left icon.\
 Add `indicator` slot for right icon.\
@@ -84,12 +84,12 @@ Add `indicator` slot for right icon.\
 <vanilla-input 
     label="First Name" 
     placeholder="Fill your name">
-    <!-- Tag with slot="icon" attribute for left icon. -->
-    <span slot="icon">
+    <!-- Tag with slot="leading-icon" attribute for icon. -->
+    <span slot="leading-icon">
         <i class="fa fa-user"></i>
     </span>
-    <!-- Tag with slot="indicator" attribute for indicator. -->
-    <span slot="indicator" class="success">
+    <!-- Tag with slot="trailing-icon" attribute for indicator. -->
+    <span slot="trailing-icon" class="success">
         <i class="fa fa-circle-notch"></i>
     </span>
 </vanilla-input>
