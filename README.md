@@ -2,9 +2,7 @@
 
 Library of web components with some useful input elements. 
 It is developed with vanilla `JavaScript` and embedded `CSS` for high performance.
-You can see all input types at ***component list***.
-
-### Component List
+You can see all input types at component list.
 
 ||Component|Description|
 |---|---|---|
@@ -20,9 +18,7 @@ You can see all input types at ***component list***.
 |⌛|`vanilla-radio-btn`|Radio button element.|
 |⌛|`vanilla-toggle`|Toggle option element.|
 
----
-
-### Input Component
+# Input Component
 #### `<vanilla-input>`
 
 `vanilla-input` is custom text field element. It supports all native HTML text input attributes and it has **animated label, errors hint, hint text, icon and indicator**.\
@@ -35,7 +31,7 @@ You can see all custom attributes at **attributes list** with description.
 
 ***All native HTML text input attributes are available.***
 
-##### Usage
+# Usage
 ````html
 <!-- Add script tag. -->
 <script src="dist/input.text.min.js"></script>

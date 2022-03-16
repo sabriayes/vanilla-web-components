@@ -1,14 +1,16 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+# See https://gitlab.com/sabriayes/naylawebs-dev-guideline/-/blob/main/.gitignore for more about ignoring files.
 
 # compiled output
 /dist
 /tmp
 /out-tsc
+
 # Only exists if Bazel was run
 /bazel-out
 
 # dependencies
 /node_modules
+/jspm_packages
 
 # profiling files
 chrome-profiler-events*.json
@@ -32,6 +34,10 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
+/pids
+/lib-cov
+/typings
+/logs
 /.sass-cache
 /connect.lock
 /coverage
@@ -39,12 +45,53 @@ speed-measure-plugin*.json
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
+sw.*
+*.swp
 
 # system files
 .DS_Store
 Thumbs.db
 
 # package files
+.npm
 package-lock.json
 yarn.lock
+.yarn-integrity
+npm-debug.log
+yarn-error.log
+Homestead.json
+Homestead.yaml
+
+# php laravel
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.phpunit.result.cache
+
+# env files
+.env
+.env.backup
+env.*.sh
+
+# vue 2
+.next
+.nuxt
+.vuepress/dist
+.serverless
+build/Release
+bower_components
+*.pid
+*.seed
+*.pid.lock
+.nyc_output
+.grunt
+.lock-wscript
+.eslintcache
+.node_repl_history
+*.tgz
+
+# test
+junit.xml
+e2e-report.xml
+unit-report.xml

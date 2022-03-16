@@ -111,9 +111,9 @@
             </div>
             <div class="row">
                 <div class="column">
-                    <vanilla-input id="identity-no" label="Identiy Number" placeholder="Your ID number">
-                        <span slot="trailing-icon" class="success">
-                            <i class="fa fa-check"></i>
+                    <vanilla-input id="identity-no-with-trailing-icon" label="Identiy Number" placeholder="Your ID number">
+                        <span slot="trailing-icon" id="trailing-icon">
+                            <i class="fa fa-id-card"></i>
                         </span>
                     </vanilla-input>
                 </div>
@@ -136,4 +136,29 @@
         </div>
         
     </body>
+
+    <script>
+        window.onload = function() {
+            
+            const trailingIconElement = document.getElementById('trailing-icon');
+            const component = document.getElementById('identity-no-with-trailing-icon');
+
+            component.$input.addEventListener('keyup', function($event) {
+                
+                const value = $event.target.value;
+                const isValid = /^\d{5,}/.test(value);
+
+                console.log(isValid, value);
+
+                if(isValid) {
+                    trailingIconElement.classList.add('success');
+                    trailingIconElement.innerHTML = `<i class="fa fa-check"></i>`;
+                }
+                else {
+                    trailingIconElement.classList.remove('success');
+                    trailingIconElement.innerHTML = `<i class="fa fa-id-card"></i>`;
+                }
+            });
+        }
+    </script>
 </html>

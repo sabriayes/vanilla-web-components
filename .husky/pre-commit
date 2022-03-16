@@ -1,0 +1,3 @@
+# pre-commit git hook.
+# lint your code before commit.
+npm run lint:fix
