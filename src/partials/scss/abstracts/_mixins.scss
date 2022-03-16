@@ -1,4 +1,20 @@
-/* Mixins for hints. */
+@use "sass:selector";
+
+/* Mixins for host */
+
+@mixin at-invalid-host() {
+    @at-root :host([invalid]) #{&} {
+        @content;
+    }
+}
+
+@mixin at-valid-host() {
+    @at-root :host(:is(:not([invalid]))) #{&} {
+        @content;
+    }
+}
+
+/* Mixins for hints */
 
 @mixin hint-element {
     font-size: .65rem;
