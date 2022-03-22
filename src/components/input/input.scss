@@ -1,11 +1,11 @@
 @import '~partials/scss/abstracts/variables';
 @import '~partials/scss/base/host';
-@import '~partials/scss/layouts/input';
+@import '~partials/scss/layouts/_component';
 @import '~partials/scss/layouts/icon';
 @import '~partials/scss/layouts/hint';
 @import '~partials/scss/abstracts/mixins';
 
-.input-text-container{
+.component-container{
     &:focus-within {
         & .main-wrapper {
             border: 1px solid var(--accent-color, #222);
@@ -107,7 +107,7 @@ input[type="text"] {
 }
 
 .has-value,
-.input-text-container:focus-within  {
+.component-container:focus-within  {
     & .label-container > label {
         transform: translateY(0) scale(.8);
     }
