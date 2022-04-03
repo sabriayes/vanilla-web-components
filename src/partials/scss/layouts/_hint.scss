@@ -18,6 +18,12 @@
         @include hint-element;
         transform: translateY(0);
         opacity: 1;
+        @include at-valid-host {
+            @include show-errors-and-hints;
+        }
+        @include at-invalid-host {
+            @include hide-errors-and-hints;
+        }
     }
     & > slot[name="errors"] {
         @include hint-element;
@@ -29,23 +35,11 @@
         &::slotted(span) {
             color: var(--danger-color, $danger-color);
         }
-    }
-}
-
-:host(:is(:not([invalid]))) {
-    & .hints-container > slot[name="errors"] {
-        @include hide-errors-and-hints;
-    }
-    & .hints-container > slot[name="hint"] {
-        @include show-errors-and-hints;
-    }
-}
-
-:host([invalid]) {
-    & .hints-container > slot[name="hint"] {
-        @include hide-errors-and-hints;
-    }
-    & .hints-container > slot[name="errors"] {
-        @include show-errors-and-hints;
+        @include at-valid-host {
+            @include hide-errors-and-hints;
+        }
+        @include at-invalid-host {
+            @include show-errors-and-hints;
+        }
     }
 }

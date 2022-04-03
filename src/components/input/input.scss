@@ -1,12 +1,12 @@
 @import '~partials/scss/abstracts/variables';
 @import '~partials/scss/base/host';
-@import '~partials/scss/layouts/_component';
+@import '~partials/scss/layouts/component';
 @import '~partials/scss/layouts/icon';
 @import '~partials/scss/layouts/hint';
 @import '~partials/scss/abstracts/mixins';
 
 .component-container{
-    &:focus-within {
+    &:focus-within, &.has-value {
         & .main-wrapper {
             border: 1px solid var(--accent-color, #222);
         }
@@ -78,6 +78,7 @@ input[type="text"] {
     border-radius: 0;
     padding: 0;
     font-weight: 400;
+    -webkit-tap-highlight-color: transparent;
     &:hover,
     &:focus,
     &:active {

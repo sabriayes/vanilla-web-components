@@ -1,3 +1,7 @@
+:root {
+    --accent-color: #696cff;
+    --label-color: #b4bdc6;
+}
 * {
     box-sizing: border-box;
 }
@@ -6,7 +10,7 @@ body {
     position: relative;
     width: 100%;
     font-size: 16px;
-    font-family: "Inter", sans-serif;
+    font-family: "Public Sans", sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
