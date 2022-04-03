@@ -4,14 +4,17 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="theme-color" content="#fff"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="shortcut icon" href="https://naylalabs.com/vanilla/assets/img/favicon.png" type="image/x-png">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public Sans:wght@200;300;400&display=swap">
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
         <link rel="stylesheet" href="assets/css/default.css">
-     
+
+		<base href="/vanilla/">
+
         <title>Vanilla Web Components - Demo</title>
 
         <script src="assets/js/input.min.js"></script>
@@ -21,10 +24,10 @@
         <div class="content-wrapper">
             <div class="column">
                 <a href="#" class="logo-wrapper">
-                    <img src="assets/img/vanilla-logo.png" alt="Vanilla Components" class="logo">
+                    <img src="https://naylalabs.com/vanilla/assets/img/vanilla-logo.png" alt="Vanilla Components" class="logo">
                 </a>
                 <h3>Vanilla Web Components ☕</h3>
-                <p>Web components library with native <u>JavaScript</u>.</p>
+                <p>Library of web componnets with some useful input elements.</p>
             </div>
             
             <!-- DEFAULT MODE -->
@@ -33,21 +36,46 @@
             </div>
             <div class="row">
                 <div class="column">
-                    <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name">
+                    <vanilla-input id="first-name" label="First Name *" placeholder="Enter your name" maxlength="50">
+						<span slot="hint">Max. 50 char(s)</span>
                     </vanilla-input>
                 </div>
                 <div class="column">
-                    <vanilla-input label="Last Name" placeholder="Enter your surname">
+                    <vanilla-input label="Last Name" placeholder="Enter your surname" maxlength="50">
+						<span slot="hint">Max. 50 char(s)</span>
                     </vanilla-input>
                 </div>
             </div>
             <div class="row">
                 <div class="column">
-                    <vanilla-input label="E-mail Address" placeholder="Enter mail address"></vanilla-input>
+                    <vanilla-input label="E-mail Address" placeholder="Enter mail address" maxlength="255">
+						<span slot="leading-icon">
+                            <i class="fa fa-at"></i>
+                        </span>
+						<span slot="hint">Gmail, Outlook, Yandex</span>
+					</vanilla-input>
                 </div>
             </div>
-            
-            <!-- PLACEHOLDER MODE -->
+			<div class="row">
+				<div class="column">
+					<vanilla-input id="phone-number" label="Phone Number" placeholder="Enter your phone number" invalid>
+						<span slot="leading-icon">
+                            <i class="fa fa-mobile"></i>
+                        </span>
+						<span slot="hint">Example +01 555 98301</span>
+						<span slot="errors">Phone number is required</span>
+					</vanilla-input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column flex-center">
+					<a href="https://github.com" target="_blank" class="github-link">
+						<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Github">
+					</a>
+				</div>
+			</div>
+
+			<!--
             <div class="separator">
                 <span>Hint Text</span>
             </div>
@@ -58,8 +86,6 @@
                     </vanilla-input>
                 </div>
             </div>
-
-            <!-- ERROR MODE -->
             <div class="separator">
                 <span>Error Message</span>
             </div>
@@ -72,8 +98,6 @@
                     </vanilla-input>
                 </div>
             </div>
-
-            <!-- ICON MODE -->
             <div class="separator">
                 <span>Left Icon</span>
             </div>
@@ -95,8 +119,6 @@
                     </vanilla-input>
                 </div>
             </div>
-
-            <!-- ICON MODE -->
             <div class="separator">
                 <span>Indicator Icon</span>
             </div>
@@ -131,33 +153,27 @@
                     </vanilla-input>
                 </div>
             </div>
-
-
+			-->
         </div>
         
     </body>
 
     <script>
         window.onload = function() {
-            
-            const trailingIconElement = document.getElementById('trailing-icon');
-            const component = document.getElementById('identity-no-with-trailing-icon');
 
-            component.$input.addEventListener('keyup', function($event) {
-                
-                const value = $event.target.value;
-                const isValid = /^\d{5,}/.test(value);
+            const phoneNumber = document.getElementById('phone-number');
 
-                console.log(isValid, value);
+			phoneNumber.$input.addEventListener('keyup', function($event) {
 
-                if(isValid) {
-                    trailingIconElement.classList.add('success');
-                    trailingIconElement.innerHTML = `<i class="fa fa-check"></i>`;
-                }
-                else {
-                    trailingIconElement.classList.remove('success');
-                    trailingIconElement.innerHTML = `<i class="fa fa-id-card"></i>`;
-                }
+				const value = $event.target.value;
+                const isValid = /^\d+/.test(value);
+
+				if(isValid) {
+					phoneNumber.removeAttribute('invalid');
+					return;
+				}
+
+				phoneNumber.setAttribute('invalid', 'invalid');
             });
         }
     </script>

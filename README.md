@@ -1,4 +1,4 @@
-<img width="280" src="https://www.naylalabs.com/vanilla/src/assets/img/vanilla-logo.png" alt="Screenshot"/>
+<img width="280" src="https://www.naylalabs.com/vanilla/assets/img/vanilla-logo.png" alt="Screenshot"/>
 
 Library of web componnets with some useful input elements. It is developed with vanilla `JavaScript` for high performance.\
 [Live Demo](https://www.naylalabs.com/vanilla/)
