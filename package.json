@@ -15,7 +15,8 @@
 		"postinstall": "husky install .husky",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\"",
-		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix"
+		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
+		"test": "jest --ci --config ./jest-preset.json"
 	},
 	"keywords": [
 		"naylalabs",
