@@ -51,7 +51,7 @@ const EVENTS = {
 
 /**
  * Returns a <style> element with appended styles.
- * @param {string} cssText - CSS style sheet content.
+ * @param {string} cssText - CSS style sheet content
  * @return {HTMLElement}
  */
 const getStyleElement = function (cssText) {
