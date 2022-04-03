@@ -33,7 +33,7 @@
             display: none !important;
         }
         &::slotted(span) {
-            color: var(--danger-color, $danger-color);
+            color: var(--vwc-danger-color, $danger-color);
         }
         @include at-valid-host {
             @include hide-errors-and-hints;

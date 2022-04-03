@@ -8,22 +8,22 @@
 .component-container{
     &:focus-within, &.has-value {
         & .main-wrapper {
-            border: 1px solid var(--accent-color, #222);
+            border: 1px solid var(--vwc-accent-color, $accent-color);
         }
         & .label-container > label {
             @include at-valid-host {
-                color: var(--accent-color, #000);
+                color: var(--vwc-accent-color, $accent-color);
             }
         }
     }
     & .main-wrapper {
         @include at-invalid-host {
-            border: 1px solid var(--danger-color, #dd8080);
+            border: 1px solid var(--vwc-danger-color, $danger-color);
         }
     }
     &:hover .label-container > label {
         @include at-valid-host {
-            color: var(--accent-color, #000);
+            color: var(--vwc-accent-color, $accent-color);
         }
     }
 }
@@ -35,9 +35,9 @@
     & > label {
         width: 100%;
         line-height: 1.2rem;
-        font-size: .9rem;
+        font-size: 1rem;
         font-weight: 500;
-        color: var(--label-color, #a6a6ab);
+        color: var(--vwc-label-color, $label-color);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -45,7 +45,7 @@
         transition: all 180ms ease-in-out;
         transform-origin: 0% 100%;
         @include at-invalid-host {
-            color: var(--danger-color, #dd8080);
+            color: var(--vwc-danger-color, $danger-color);
         }
     }
 }
@@ -53,7 +53,7 @@
 .icon-container {
     & slot[name="leading-icon"]::slotted(span) {
         @include at-invalid-host {
-            color: var(--danger-color, #dd8080);
+            color: var(--vwc-danger-color, $danger-color);
         }
     }
 }

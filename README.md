@@ -1,143 +1,141 @@
 <img width="280" src="https://www.naylalabs.com/vanilla/src/assets/img/vanilla-logo.png" alt="Screenshot"/>
 
-Library of web components with some useful input elements. 
-It is developed with vanilla `JavaScript` and embedded `CSS` for high performance.
-You can see all input types at component list.
+Library of web componnets with some useful input elements. It is developed with vanilla `JavaScript` for high performance.\
+[Live Demo](https://www.naylalabs.com/vanilla/)
 
-||Component|Description|
-|---|---|---|
-|✅|`vanilla-input`|Text field element with animated label, hint, icon and indicator. [View demo](https://www.naylalabs.com/vanilla/)|
-|⌛|`vanilla-number`|Customized `vanilla-input` element for numeric values *(etc. number, currency)*.|
-|⌛|`vanilla-email`|Customized `vanilla-input` element for email.|
-|⌛|`vanilla-tel`|Customized `vanilla-input` element for phone number with country codes.|
-|⌛|`vanilla-currency`|Customized `vanilla-input` element for currency value.|
-|⌛|`vanilla-quantity`|Customized `vanilla-input` element for qantity value.|
-|⌛|`vanilla-search`|Customized `vanilla-input` for searching.|
-|⌛|`vanilla-select`|Dropdown menu element with search field.|
-|⌛|`vanilla-checkbox`|Checkbox element.|
-|⌛|`vanilla-radio-btn`|Radio button element.|
-|⌛|`vanilla-toggle`|Toggle option element.|
+| Status | Element             | Description                                                            |
+|--------|---------------------|------------------------------------------------------------------------|
+| ✅      | `vanilla-input`     | Text field element with animated label, hint, lead and trail icons     |
+| ⌛      | `vanilla-number`    | Customized `vanilla-input` element for numeric values                  |
+| ⌛      | `vanilla-email`     | Customized `vanilla-input` element for email                           |
+| ⌛      | `vanilla-tel`       | Customized `vanilla-input` element for phone number with country codes |
+| ⌛      | `vanilla-currency`  | Customized `vanilla-input` element for currency value                  |
+| ⌛      | `vanilla-quantity`  | Customized `vanilla-input` element for qantity value                   |
+| ⌛      | `vanilla-search`    | Customized `vanilla-input` for searching                               |
+| ⌛      | `vanilla-select`    | Dropdown menu element with search field                                |
+| ⌛      | `vanilla-checkbox`  | Checkbox element                                                       |
+| ⌛      | `vanilla-radio-btn` | Radio button element                                                   |
+| ⌛      | `vanilla-toggle`    | Toggle option element                                                  |
 
-# Input Component
-#### `<vanilla-input>`
-
-`vanilla-input` is custom text field element. It supports all native HTML text input attributes and it has **animated label, errors hint, hint text, icon and indicator**.\
+# `<vanilla-input>`
+`vanilla-input` is custom text field element. It supports all native HTML text input attributes and it has **animated label, errors message, hint text, lead and trail icons**.\
 You can see all custom attributes at **attributes list** with description.
 
-|Custom Attr|Description|
-|---|---|
-|**label**|Sets label text. *(optional)*|
-|**placeholder**|Sets placeholder text for input element . *(optional - native attr)*|
+| Attr            | Description                                                         |
+|-----------------|---------------------------------------------------------------------|
+| **label**       | Sets label text *(optional)*                                        |
+| **placeholder** | Sets placeholder text for input element. *(optional - native attr)* |
 
-***All native HTML text input attributes are available.***
+***NOTE: All native HTML text input attributes are available.***
 
 # Usage
+Basic usage example.
 ````html
-<!-- Add script tag. -->
-<script src="dist/input.text.min.js"></script>
+<!-- Add script tag -->
+<script src="dist/input.min.js"></script>
 
-<!-- Add HTML tag. -->
+<!-- Add HTML tag -->
 <vanilla-input 
-    label="First Name" 
-    placeholder="Fill your name">
+    label="Your Name" 
+    placeholder="Enter your name">
 </vanilla-input>
 ````
 
-##### With Hint
-`maxlength` is native input attribute.
+## Hint Message
+It has hint message element.
 ````html
 <vanilla-input 
-    label="First Name" 
-    placeholder="Fill your name"
+    label="Your Name" 
+    placeholder="Enter your name"
     maxlength="20">
-    <!-- Tag with slot="hint" attribute. -->
-    <span slot="hint">Max. 20 chars</span>
+    <!-- Tag with slot="hint" attribute -->
+    <span slot="hint">Max. 50 chars</span>
 </vanilla-input>
 ````
 
-##### With Error Message
-You can use multiple `errors` slot elements.\
-Add `invalid` attribute for error mode.
+## Error Message
+It can show multiple error messages with `errors` slot elements.\
+Add the `invalid` attribute to enable error display.
 ````html
 <vanilla-input 
     invalid
-    label="First Name" 
-    placeholder="Fill your name"
+    label="Your Name" 
+    placeholder="Enter your name"
     required
-    maxlength="20">
-    <!-- Tag with slot="errors" attribute. -->
+    maxlength="50">
+    <!-- Tags with slot="errors" attribute -->
     <span slot="errors">Field is required</span>
-    <span slot="errors" hidden>Length must be greater than 20</span>
+    <span slot="errors" hidden>Field length must be greater than 50</span>
 </vanilla-input>
 ````
 
-##### With Leading Icon
-You can use iconic font library or SVG graphic.\
-Add `icon` slot for left icon.\
-Add `indicator` slot for right icon.\
-`success|danger|info` classes set indicator color.
+## Lead & Trail Icons
+You can use iconic font library or SVG graphic. Set trailing icon color with `success|danger|info` classes.
 ````html
 <vanilla-input 
-    label="First Name" 
-    placeholder="Fill your name">
-    <!-- Tag with slot="leading-icon" attribute for icon. -->
+    label="Your Name" 
+    placeholder="enter your name">
+    <!-- Tag with slot="leading-icon" attribute for icon -->
     <span slot="leading-icon">
         <i class="fa fa-user"></i>
     </span>
-    <!-- Tag with slot="trailing-icon" attribute for indicator. -->
+    <!-- Tag with slot="trailing-icon" attribute for indicator -->
     <span slot="trailing-icon" class="success">
+        <!-- Font lib or SVG -->
         <i class="fa fa-circle-notch"></i>
     </span>
 </vanilla-input>
 ````
-##### Access Component
+
+## Access Element
 ````html
 <vanilla-input 
-    id="first-name"
-    label="First Name" 
-    placeholder="Fill your name">
+    id="your-name"
+    label="Your Name" 
+    placeholder="Enter your name">
 </vanilla-input>
 
 <script>
-    var component = document.getElementById('first-name');
+    var nameElement = document.getElementById('your-name');
     
     // Get current value.
-    console.log(component.value);
+    console.log(nameElement.value);
 
     // Add event listener.
     // $input - Ref to input text element in shadow DOM.
-    component.$input.addEventListener('change', function($event) {
+	nameElement.$input.addEventListener('change', function($event) {
         console.log($event.target.value);
     });
 </script>
 ````
----
-### Styling
-This library use global CSS varaibales for themes.
+
+# Styling
+It use global CSS varaiables for styling.
 ````scss
 :root {
-    // Default theme
-    --background-color: #fcfcfc;
-    --border-color: #e6e7e9;
-    --label-color: #a6a6ab;
-    --icon-color: #a6a6ab;
-    --accent-color: #ffbeab;
-    --danger-color: #dd8080;
-    --success-color: #68ca8e;
-    --info-color: #62aeda;
+    --vwc-background-color: #fcfcfc;
+    --vwc-border-color: #b4bdc6;
+    --vwc-label-color: #b4bdc6;
+    --vwc-icon-color: #a6a6ab;
+    --vwc-accent-color: #696cff;
+    --vwc-danger-color: #fd6868;
+    --vwc-success-color: #68ff9d;
+    --vwc-info-color: #69bffc;
 }
 ````
----
-### Development Mode
-#### Requirements
+
+# Development
+### Requirements
 
 - **NodeJs** (v12.9.1)
 - **NPM** (v6.14.8)
 
-#### Folder Structure
+### Folder Structure
 
 - `src` is root folder. `src/components` contains component files.
-- Each component consists of two files. (`.html` and `.js`)
+- `partilas` folder contains styles and script files.
+
+Each component consists of two files. (`.html` and `.js`)
 - `.html` file contains DOM and style codes.
 - `.js` file contains some logic.
 
@@ -146,9 +144,8 @@ This library use global CSS varaibales for themes.
 │   ├── components
 │   │   ├── {component-name}.html
 │   │   ├── {component-name}.js
-├── demos
-│   ├── assets
-│   ├── index.html
+├── partials
+│   ├── scss (styles)
 ├── dist (for build)
 ```
 
@@ -165,3 +162,6 @@ npm run build:dev
 npm run start:dev
 #http://localhost:3000
 ```
+
+# License 
+Vanilla Web Components is MIT Licensed.

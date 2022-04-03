@@ -18,7 +18,7 @@
 
 @mixin hint-element {
     font-size: .65rem;
-    color: var(--label-color, $label-color);
+    color: var(--vwc-label-color, $label-color);
     font-weight: 300;
     white-space: nowrap; 
     overflow: hidden;
