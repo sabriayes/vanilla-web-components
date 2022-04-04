@@ -16,6 +16,7 @@
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\"",
 		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
+		"test": "jest --ci --verbose"
 	},
 	"keywords": [
 		"naylalabs",
@@ -29,15 +30,20 @@
 	"devDependencies": {
 		"@babel/core": "^7.17.7",
 		"@babel/eslint-parser": "^7.5.4",
+		"@babel/preset-env": "^7.16.11",
+		"babel-jest": "^27.5.1",
 		"css-loader": "^6.5.1",
 		"eslint": "^8.0.1",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"filemanager-webpack-plugin": "^6.1.7",
 		"glob": "^7.2.0",
-		"happy-dom": "^2.55.0",
 		"html-loader": "^3.0.1",
+		"html-loader-jest": "^0.2.1",
 		"husky": "^7.0.4",
+		"jest": "^27.5.1",
+		"jest-css-modules-transform": "^4.3.0",
+		"jest-junit": "^13.0.0",
 		"path": "^0.12.7",
 		"postcss": "^8.4.5",
 		"postcss-loader": "^6.2.1",
@@ -49,5 +55,32 @@
 		"webpack": "^5.64.1",
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.5.0"
+	},
+	"jest": {
+		"moduleFileExtensions": [
+			"js",
+			"json",
+			"ts"
+		],
+		"reporters": [
+			"default",
+			"jest-junit"
+		],
+		"testResultsProcessor": "jest-junit",
+		"rootDir": ".",
+		"testRegex": ".*\\.spec\\.js$",
+		"transform": {
+			"^.+\\.js$": "babel-jest",
+			".+\\.html$": "html-loader-jest",
+			".+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform"
+		},
+		"collectCoverageFrom": [
+			"**/*.js"
+		],
+		"coverageDirectory": "../coverage",
+		"testEnvironment": "node",
+		"moduleNameMapper": {
+			"^@components(.*)$": "<rootDir>/src/$1"
+		}
 	}
 }

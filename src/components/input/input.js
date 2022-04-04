@@ -1,6 +1,6 @@
 import HTML from './input.html';
 import CSS from './input.scss';
-import createStyleElement from 'partials/js/utils/create-style-element';
+import createStyleElement from './../../partials/js/utils/create-style-element';
 
 /**
  * HTML template content.
@@ -56,7 +56,7 @@ const EVENTS = {
  * @extends {HTMLElement}
  * @constructor
  */
-class VanillaInput extends HTMLElement {
+export default class VanillaInput extends HTMLElement {
 	/**
 	 * Tag name of custom element.
 	 * @property {string} tagName

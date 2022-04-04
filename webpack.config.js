@@ -61,6 +61,6 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-	config.watch = argv.mode === 'development';
+	config.watch = argv && argv.mode === 'development';
 	return config;
 };
