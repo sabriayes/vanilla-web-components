@@ -1,4 +1,4 @@
-# Vanilla Web Component
+# Vanilla Web Components
 Library of web components with some useful input elements. It is developed with vanilla `JavaScript` for high performance.\
 [Live Demo](https://www.naylalabs.com/vanilla/)
 
