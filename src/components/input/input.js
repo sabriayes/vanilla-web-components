@@ -54,7 +54,7 @@ const EVENTS = {
  * @param {string} cssText - CSS style sheet content
  * @return {HTMLElement}
  */
-const getStyleElement = function (cssText) {
+const createStyleElement = function (cssText) {
 	const styleElement = document.createElement('style');
 	if (styleElement.styleSheet) {
 		styleElement.styleSheet.cssText = cssText;
@@ -250,7 +250,7 @@ class VanillaInput extends HTMLElement {
 		}
 
 		// Append styles to root element
-		this.shadowRoot.appendChild(getStyleElement(CSS));
+		this.shadowRoot.appendChild(createStyleElement(CSS));
 
 		this.shadowRoot.appendChild(this.$root);
 		this.$root.classList.remove(CLASSES.pendingInit);
