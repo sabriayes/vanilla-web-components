@@ -56,7 +56,7 @@ const EVENTS = {
  * @extends {HTMLElement}
  * @constructor
  */
-export default class VanillaInput extends HTMLElement {
+class VanillaInput extends HTMLElement {
 	/**
 	 * Tag name of custom element.
 	 * @property {string} tagName

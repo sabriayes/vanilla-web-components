@@ -1,9 +1,9 @@
-@import './../../partials/scss/abstracts/variables';
-@import './../../partials/scss/base/host';
-@import './../../partials/scss/layouts/component';
-@import './../../partials/scss/layouts/icon';
-@import './../../partials/scss/layouts/hint';
-@import './../../partials/scss/abstracts/mixins';
+@import '~partials/scss/abstracts/variables';
+@import '~partials/scss/base/host';
+@import '~partials/scss/layouts/component';
+@import '~partials/scss/layouts/icon';
+@import '~partials/scss/layouts/hint';
+@import '~partials/scss/abstracts/mixins';
 
 .component-container{
     &:focus-within, &.has-value {

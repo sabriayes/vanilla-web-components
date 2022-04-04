@@ -41,9 +41,6 @@
 		"html-loader": "^3.0.1",
 		"html-loader-jest": "^0.2.1",
 		"husky": "^7.0.4",
-		"jest": "^27.5.1",
-		"jest-css-modules-transform": "^4.3.0",
-		"jest-junit": "^13.0.0",
 		"path": "^0.12.7",
 		"postcss": "^8.4.5",
 		"postcss-loader": "^6.2.1",
@@ -55,32 +52,5 @@
 		"webpack": "^5.64.1",
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.5.0"
-	},
-	"jest": {
-		"moduleFileExtensions": [
-			"js",
-			"json",
-			"ts"
-		],
-		"reporters": [
-			"default",
-			"jest-junit"
-		],
-		"testResultsProcessor": "jest-junit",
-		"rootDir": ".",
-		"testRegex": ".*\\.spec\\.js$",
-		"transform": {
-			"^.+\\.js$": "babel-jest",
-			".+\\.html$": "html-loader-jest",
-			".+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform"
-		},
-		"collectCoverageFrom": [
-			"**/*.js"
-		],
-		"coverageDirectory": "../coverage",
-		"testEnvironment": "node",
-		"moduleNameMapper": {
-			"^@components(.*)$": "<rootDir>/src/$1"
-		}
 	}
 }
