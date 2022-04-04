@@ -1,4 +1,5 @@
 {
+	"displayName": "web-components-tests",
 	"moduleFileExtensions": [
 		"js",
 		"json"
@@ -9,8 +10,9 @@
 	],
 	"testResultsProcessor": "jest-junit",
 	"rootDir": ".",
-	"testEnvironment": "node",
-	"testRegex": ".test.js$",
+	"testEnvironment": "@happy-dom/jest-environment",
+	"setupFilesAfterEnv": ["<rootDir>/jest-setup.js"],
+	"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.js?$",
 	"moduleNameMapper": {
 		"^@components(.*)$": "<rootDir>/src/components/$1"
 	}

@@ -3,7 +3,7 @@
  * @param {string} cssText - CSS style sheet content
  * @return {HTMLElement}
  */
-export const createStyleElement = function (cssText) {
+const createStyleElement = function (cssText) {
 	const styleElement = document.createElement('style');
 	if (styleElement.styleSheet) {
 		styleElement.styleSheet.cssText = cssText;
@@ -13,3 +13,5 @@ export const createStyleElement = function (cssText) {
 	styleElement.appendChild(textNode);
 	return styleElement;
 };
+
+module.exports = createStyleElement;
