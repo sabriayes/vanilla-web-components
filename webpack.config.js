@@ -17,8 +17,8 @@ const copyPaths = [
     }
 ];
 
-module.exports = {
-    watch: true,
+const config = {
+    watch: false,
     entry: entries,
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -58,4 +58,9 @@ module.exports = {
             },
         }),
     ],
+};
+
+module.exports = (env, argv) => {
+	config.watch = argv.mode === 'development';
+	return config;
 };
