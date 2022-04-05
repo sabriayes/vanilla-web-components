@@ -1,6 +1,6 @@
 import HTML from './input.html';
 import CSS from './input.scss';
-import createStyleElement from 'partials/js/utils/create-style-element';
+import createStyleElement from './../../partials/js/utils/create-style-element';
 
 /**
  * HTML template content.

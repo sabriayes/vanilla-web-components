@@ -16,6 +16,7 @@
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\"",
 		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
+		"test": "jest --ci --verbose"
 	},
 	"keywords": [
 		"naylalabs",
@@ -29,14 +30,16 @@
 	"devDependencies": {
 		"@babel/core": "^7.17.7",
 		"@babel/eslint-parser": "^7.5.4",
+		"@babel/preset-env": "^7.16.11",
+		"babel-jest": "^27.5.1",
 		"css-loader": "^6.5.1",
 		"eslint": "^8.0.1",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"filemanager-webpack-plugin": "^6.1.7",
 		"glob": "^7.2.0",
-		"happy-dom": "^2.55.0",
 		"html-loader": "^3.0.1",
+		"html-loader-jest": "^0.2.1",
 		"husky": "^7.0.4",
 		"path": "^0.12.7",
 		"postcss": "^8.4.5",
