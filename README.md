@@ -146,6 +146,7 @@ Each component consists of two files. (`.html` and `.js`)
 │   │   ├── {component-name}.html
 │   │   ├── {component-name}.js
 ├── partials
+|   ├── js (scripts)
 │   ├── scss (styles)
 ├── dist (for build)
 ```
