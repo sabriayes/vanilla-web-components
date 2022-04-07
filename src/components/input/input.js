@@ -1,6 +1,6 @@
 import HTML from './input.html';
 import CSS from './input.scss';
-import createStyleElement from './../../partials/js/utils/create-style-element';
+import { createStyleElement, getAttributes } from 'partials/js/utils/index';
 
 /**
  * HTML template content.
@@ -230,7 +230,7 @@ class VanillaInput extends HTMLElement {
 			this._eventClickedToRoot.bind(this),
 		);
 
-		for (const node of this.attributes) {
+		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
 		}
 

@@ -29,7 +29,7 @@ module.exports = (env, argv) => ({
 	},
 	resolve: {
 		alias: {
-			partials: path.resolve(__dirname, './src/partials'),
+			partials: path.resolve(__dirname, 'src/partials'),
 		},
 	},
 	devServer: {
@@ -41,7 +41,7 @@ module.exports = (env, argv) => ({
 	module: {
 		rules: [
 			{
-				test: /\.m?js$/,
+				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
 				use: {
 					loader: 'babel-loader',
