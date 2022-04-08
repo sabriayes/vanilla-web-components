@@ -4,19 +4,19 @@
 	"description": "Web components library with vanilla JavaScript.",
 	"repository": {
 		"type": "git",
-		"url": "git@gitlab.com:naylalabs/web/vanilla-web-components.git"
+		"url": "git@github.com:sabriayes/vanilla-web-components.git"
 	},
-	"main": "./dist/index.html",
+	"main": "./dist",
 	"typings": "./dist",
 	"scripts": {
+		"postinstall": "npm run build:prod",
 		"build:prod": "webpack --mode production",
 		"build:dev": "webpack --mode development",
 		"start:dev": "webpack-dev-server --mode development",
-		"postinstall": "husky install .husky",
+		"install:husky": "husky install .husky",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\"",
-		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
-		"test": "jest --ci --verbose"
+		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix"
 	},
 	"keywords": [
 		"naylalabs",
