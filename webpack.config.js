@@ -35,8 +35,8 @@ module.exports = (env, argv) => ({
 	devServer: {
 		static: './demos/',
 		port: 3000,
-		open: true,
-		hot: true,
+		open: isMode(argv, DEV_MODE),
+		hot: isMode(argv, DEV_MODE),
 	},
 	module: {
 		rules: [
