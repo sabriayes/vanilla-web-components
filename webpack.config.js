@@ -1,6 +1,6 @@
-import path from 'path';
-import glob from 'glob';
-import FileManagerPlugin from 'filemanager-webpack-plugin';
+const path = require('path');
+const glob = require('glob');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 const DEV_MODE = 'development';
 
