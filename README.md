@@ -148,6 +148,8 @@ Each component consists of two files. (`.html` and `.js`)
 ├── partials
 │   ├── js (scripts)
 │   ├── scss (styles)
+├── tests
+│   ├── *.test.js
 ├── dist (for build)
 ```
 
