@@ -1,6 +1,9 @@
-import HTML from './input.html';
-import CSS from './input.scss';
-import { createStyleElement, getAttributes } from 'partials/js/utils/index';
+const HTML = require('./input.html');
+const CSS = require('./input.scss');
+const {
+	createStyleElement,
+	getAttributes,
+} = require('partials/js/utils/index');
 
 /**
  * HTML template content.
@@ -300,3 +303,4 @@ class VanillaInput extends HTMLElement {
 }
 
 window.customElements.define(VanillaInput.tagName, VanillaInput);
+module.exports = VanillaInput;

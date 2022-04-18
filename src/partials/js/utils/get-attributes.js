@@ -3,8 +3,10 @@
  * @param {HTMLElement} element - HTML element
  * @return {Object[]} 			- Array like [{ name: string, value: string }]
  */
-export default function getAttributes(element) {
+const getAttributes = function (element) {
 	return element
 		.getAttributeNames()
 		.map((name) => ({ name, value: element.getAttribute(name) }));
-}
+};
+
+module.exports = getAttributes;

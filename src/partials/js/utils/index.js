@@ -1,4 +1,4 @@
-import createStyleElement from './create-style-element';
-import getAttributes from './get-attributes';
+const createStyleElement = require('./create-style-element');
+const getAttributes = require('./get-attributes');
 
-export { createStyleElement, getAttributes };
+module.exports = { createStyleElement, getAttributes };
