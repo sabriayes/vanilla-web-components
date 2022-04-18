@@ -10,7 +10,7 @@ const {
  * @var {HTMLElement} template
  */
 const template = document.createElement('template');
-template.innerHTML = HTML;
+template.innerHTML = HTML.toString();
 
 /**
  * CSS classes.
@@ -238,7 +238,7 @@ class VanillaInput extends HTMLElement {
 		}
 
 		// Append styles to root element
-		this.shadowRoot.appendChild(createStyleElement(CSS));
+		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
 
 		this.shadowRoot.appendChild(this.$root);
 		this.$root.classList.remove(CLASSES.pendingInit);
