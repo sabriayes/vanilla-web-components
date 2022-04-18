@@ -1,6 +1,9 @@
-import HTML from './input.html';
-import CSS from './input.scss';
-import createStyleElement from './../../partials/js/utils/create-style-element';
+const HTML = require('./input.html');
+const CSS = require('./input.scss');
+const {
+	createStyleElement,
+	getAttributes,
+} = require('partials/js/utils/index');
 
 /**
  * HTML template content.
@@ -230,7 +233,7 @@ class VanillaInput extends HTMLElement {
 			this._eventClickedToRoot.bind(this),
 		);
 
-		for (const node of this.attributes) {
+		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
 		}
 
@@ -300,3 +303,4 @@ class VanillaInput extends HTMLElement {
 }
 
 window.customElements.define(VanillaInput.tagName, VanillaInput);
+module.exports = VanillaInput;

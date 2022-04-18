@@ -1,10 +1,6 @@
 const path = require('path');
 const glob = require('glob');
-const FileManagerPlugin = require('filemanager-webpack-plugin');
 const WebpackBar = require('webpackbar');
-
-const DEV_MODE = 'development';
-const isMode = (argv, mode) => (argv?.mode || DEV_MODE) === mode;
 
 const entries = glob
 	.sync('./src/components/**/**.js')
@@ -13,15 +9,10 @@ const entries = glob
 		return obj;
 	}, {});
 
-const copyPaths = [
-	{
-		source: 'dist/**.js',
-		destination: 'demos/assets/js/',
-	},
-];
-
 module.exports = (env, argv) => ({
-	watch: isMode(argv, DEV_MODE),
+	mode: 'development',
+	devtool: 'eval-source-map',
+	watch: false,
 	entry: entries,
 	output: {
 		path: path.resolve(__dirname, './dist'),
@@ -32,11 +23,6 @@ module.exports = (env, argv) => ({
 			partials: path.resolve(__dirname, 'src/partials'),
 			components: path.resolve(__dirname, 'src/components'),
 		},
-	},
-	devServer: {
-		static: './demos/',
-		port: 3000,
-		hot: isMode(argv, DEV_MODE),
 	},
 	module: {
 		rules: [
@@ -55,32 +41,24 @@ module.exports = (env, argv) => ({
 					{
 						loader: 'css-loader',
 						options: {
-							sourceMap: isMode(argv, DEV_MODE),
+							sourceMap: true,
 						},
 					},
 					{
 						loader: 'postcss-loader',
 						options: {
-							sourceMap: isMode(argv, DEV_MODE),
+							sourceMap: true,
 						},
 					},
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: isMode(argv, DEV_MODE),
+							sourceMap: true,
 						},
 					},
 				],
 			},
 		],
 	},
-	plugins: [
-		new WebpackBar(),
-		new FileManagerPlugin({
-			events: {
-				onEnd: { copy: copyPaths },
-			},
-		}),
-	],
-	...(isMode(argv, DEV_MODE) ? { devtool: 'eval-source-map' } : {}),
+	plugins: [new WebpackBar()],
 });

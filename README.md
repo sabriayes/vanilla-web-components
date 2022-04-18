@@ -146,20 +146,22 @@ Each component consists of two files. (`.html` and `.js`)
 │   │   ├── {component-name}.html
 │   │   ├── {component-name}.js
 ├── partials
-|   ├── js (scripts)
+│   ├── js (scripts)
 │   ├── scss (styles)
+├── tests
+│   ├── *.test.js
 ├── dist (for build)
 ```
 
 ```bash
-# Clone repository.
+# Clone repository
 git clone git@gitlab.com:naylalabs/web/vanilla-web-components.git
 cd vanilla-web-components
 
-# Install npm packages.
+# Install npm packages
 npm install
 
-# Run development mode.
+# Run development mode
 npm run build:dev
 npm run start:dev
 #http://localhost:3000

@@ -4,19 +4,20 @@
 	"description": "Web components library with vanilla JavaScript.",
 	"repository": {
 		"type": "git",
-		"url": "git@gitlab.com:naylalabs/web/vanilla-web-components.git"
+		"url": "git@github.com:sabriayes/vanilla-web-components.git"
 	},
-	"main": "./dist/index.html",
+	"main": "./dist",
 	"typings": "./dist",
 	"scripts": {
+		"postinstall": "npm run build:prod",
 		"build:prod": "webpack --mode production",
 		"build:dev": "webpack --mode development",
 		"start:dev": "webpack-dev-server --mode development",
-		"postinstall": "husky install .husky",
+		"install:husky": "husky install .husky",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\"",
 		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
-		"test": "jest --ci --verbose"
+		"test": "instant-mocha --webpack-config ./webpack-test.config.js ./tests/*.test.js"
 	},
 	"keywords": [
 		"naylalabs",
@@ -26,15 +27,15 @@
 	],
 	"author": "Sabri Ayes <sabri@naylalabs.com>",
 	"license": "MIT",
-	"dependencies": {
-		"css-to-string-loader": "^0.1.3",
-		"style-loader": "^3.3.1"
-	},
+	"dependencies": {},
 	"devDependencies": {
+		"@babel/cli": "^7.17.6",
 		"@babel/core": "^7.17.7",
 		"@babel/eslint-parser": "^7.5.4",
 		"@babel/preset-env": "^7.16.11",
+		"@happy-dom/global-registrator": "^2.55.0",
 		"babel-loader": "^8.2.4",
+		"chai": "^4.3.6",
 		"css-loader": "^6.7.1",
 		"eslint": "^8.0.1",
 		"eslint-config-prettier": "^8.3.0",
@@ -43,6 +44,9 @@
 		"glob": "^7.2.0",
 		"html-loader": "^3.0.1",
 		"husky": "^7.0.4",
+		"instant-mocha": "^1.4.1",
+		"mocha": "^9.2.2",
+		"mocha-webpack": "^1.1.0",
 		"path": "^0.12.7",
 		"postcss": "^8.4.5",
 		"postcss-loader": "^6.2.1",
@@ -51,6 +55,7 @@
 		"sass-loader": "^12.4.0",
 		"webpack": "^5.64.1",
 		"webpack-cli": "^4.9.1",
-		"webpack-dev-server": "^4.5.0"
+		"webpack-dev-server": "^4.5.0",
+		"webpackbar": "^5.0.2"
 	}
 }
