@@ -303,4 +303,3 @@ class VanillaInput extends HTMLElement {
 }
 
 window.customElements.define(VanillaInput.tagName, VanillaInput);
-module.exports = VanillaInput;
