@@ -10,6 +10,7 @@ const entries = glob
 	}, {});
 
 module.exports = (_env, _argv) => ({
+	mode: 'development',
 	watch: false,
 	entry: entries,
 	devtool: 'eval-source-map',
@@ -27,6 +28,7 @@ module.exports = (_env, _argv) => ({
 		static: './dist/',
 		port: 3003,
 		hot: false,
+		liveReload: false
 	},
 	module: {
 		rules: [

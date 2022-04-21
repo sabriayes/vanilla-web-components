@@ -13,6 +13,7 @@
 		"build:prod": "webpack --mode production",
 		"build:dev": "webpack --mode development",
 		"start:dev": "webpack-dev-server --mode development",
+		"start:test": "webpack serve --config ./webpack.test.config.js",
 		"husky": "husky install .husky",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\"",
