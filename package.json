@@ -18,7 +18,7 @@
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.js\"",
 		"lint": "eslint \"{src,apps,libs,test}/**/*.js\"",
 		"lint:fix": "eslint \"{src,apps,libs,test}/**/*.js\" --fix",
-		"test": ""
+		"test": "playwright test"
 	},
 	"keywords": [
 		"naylalabs",

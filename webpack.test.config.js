@@ -28,7 +28,7 @@ module.exports = (_env, _argv) => ({
 		static: './dist/',
 		port: 3003,
 		hot: false,
-		liveReload: false
+		liveReload: false,
 	},
 	module: {
 		rules: [
