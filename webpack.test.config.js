@@ -13,6 +13,7 @@ module.exports = (_env, _argv) => ({
 	mode: 'development',
 	watch: false,
 	entry: entries,
+	stats: 'minimal',
 	devtool: 'eval-source-map',
 	output: {
 		path: path.resolve(__dirname, './dist'),
@@ -23,12 +24,6 @@ module.exports = (_env, _argv) => ({
 			partials: path.resolve(__dirname, 'src/partials'),
 			components: path.resolve(__dirname, 'src/components'),
 		},
-	},
-	devServer: {
-		static: './dist/',
-		port: 3003,
-		hot: false,
-		liveReload: false,
 	},
 	module: {
 		rules: [

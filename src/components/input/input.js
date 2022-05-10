@@ -1,5 +1,6 @@
 const HTML = require('./input.html');
 const CSS = require('./input.scss');
+const { Attrs, Classes, Events } = require('partials/js/consts/index');
 const {
 	createStyleElement,
 	getAttributes,
@@ -13,47 +14,6 @@ const template = document.createElement('template');
 template.innerHTML = HTML.toString();
 
 /**
- * CSS classes.
- * @property {string} hasLabel    - Element has a label
- * @property {string} hasValue    - Input contains truly value
- * @property {string} init        - Element init completed
- * @property {string} pendingInit - Element not initialized yet
- * @readonly
- */
-const CLASSES = {
-	hasLabel: 'has-label',
-	hasValue: 'has-value',
-	pendingInit: 'pending-init',
-	initialized: 'initialized',
-};
-
-/**
- * All custom attributes.
- * @property {string} label       - Alias of label attr
- * @property {string} placeholder - Alias of placeholder attr
- * @property {string} value       - Alias of value attr
- * @readonly
- */
-const ATTRS = {
-	label: 'label',
-	placeholder: 'placeholder',
-	value: 'value',
-};
-
-/**
- * All event aliases.
- * @property {string} change     - Alias of change event
- * @property {string} click      - Alias of click event
- * @property {string} slotChange - Alias of slot change event
- * @readonly
- */
-const EVENTS = {
-	change: 'change',
-	click: 'click',
-	slotChange: 'slotchange',
-};
-
-/**
  * Custom text input element class. HTML tag is <vanilla-input>
  * @class
  * @extends {HTMLElement}
@@ -61,7 +21,6 @@ const EVENTS = {
  */
 class VanillaInput extends HTMLElement {
 	/**
-	 * Tag name of custom element.
 	 * @property {string} tagName
 	 * @static
 	 */
@@ -70,42 +29,41 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * ID #root-element in template.
+	 * #root-element
 	 * @property {HTMLElement} $root
 	 * @public
 	 */
 	$root;
 
 	/**
-	 * ID #inner-container-element in template.
+	 * #inner-container-element
 	 * @property {HTMLElement} $innerContainer
 	 * @public
 	 */
 	$innerContainer;
 
 	/**
-	 * ID #input-element in template.
+	 * #input-element
 	 * @property {HTMLElement} $input
 	 * @input
 	 */
 	$input;
 
 	/**
-	 * ID #label-container-element in template.
+	 * #label-container-element
 	 * @property {HTMLElement} $labelContainer
 	 * @public
 	 */
 	$labelContainer;
 
 	/**
-	 * ID #label-element in template.
+	 * #label-element
 	 * @property {HTMLElement} $label
 	 * @public
 	 */
 	$label;
 
 	/**
-	 * Getter method for input value.
 	 * @return {string}
 	 */
 	get value() {
@@ -113,7 +71,6 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * Setter method for input value.
 	 * @return {void}
 	 */
 	set value(val) {
@@ -123,35 +80,52 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * Getter method for label property.
 	 * @return {string}
 	 */
 	get label() {
-		return this.getAttribute(ATTRS.label);
+		return this.getAttribute(Attrs.LABEL);
 	}
 
 	/**
-	 * Setter method for label property.
 	 * @param {string} value
 	 * @return {void}
 	 */
 	set label(value) {
-		this.setAttribute(ATTRS.label, value);
-	}
-
-	static get observedAttributes() {
-		return Object.values(ATTRS);
+		this.setAttribute(Attrs.LABEL, value);
 	}
 
 	constructor() {
 		super();
-		this.attachShadow({ mode: 'open' });
+		this.attachShadow({
+			mode: 'open',
+			delegatesFocus: true,
+		});
+	}
+
+	connectedCallback() {
+		this.init();
+	}
+
+	disconnectedCallback() {
+		this.$input.removeEventListener(
+			Events.CHANGE,
+			this._eventChangedInputValue.bind(this),
+		);
+		this.$root.removeEventListener(
+			Events.CLICK,
+			this._eventClickedToRoot.bind(this),
+		);
+		this.$root.removeEventListener(
+			Events.FOCUS,
+			this._eventFocusedToRoot.bind(this),
+		);
+	}
+
+	static get observedAttributes() {
+		return Object.values(Attrs);
 	}
 
 	/**
-	 * Invoked when change/update attributes that defined
-	 * at observedAttributes() function.
-	 *
 	 * @param {string} name     - Attribute name
 	 * @param {string} value    - Attribute current value
 	 * @param {string} newValue - Attribute updated value
@@ -162,11 +136,8 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * Helper function that called by init() and
-	 * attributeChangedCallback()
-	 *
-	 * @param {string} name     - Attribute name
-	 * @param {string} value    - Attribute current value
+	 * @param {string} name - Attribute name
+	 * @param {string} value - Attribute current value
 	 * @param {string} newValue - Attribute updated value
 	 * @return {void}
 	 */
@@ -176,14 +147,14 @@ class VanillaInput extends HTMLElement {
 		}
 
 		switch (name) {
-			case ATTRS.label:
+			case Attrs.LABEL:
 				// Invoke when change value of label attr/property
 				this.updateLabelElement(newValue);
 				break;
 
-			case ATTRS.value:
+			case Attrs.VALUE:
 				// Dispatch change event with fake event object
-				const fakeEvent = new Event(EVENTS.change);
+				const fakeEvent = new Event(Events.CHANGE);
 				this.$input.setAttribute(name, newValue);
 				this.$input.dispatchEvent(fakeEvent);
 				break;
@@ -191,21 +162,6 @@ class VanillaInput extends HTMLElement {
 			default:
 				this.$input.setAttribute(name, newValue);
 		}
-	}
-
-	connectedCallback() {
-		this.init();
-	}
-
-	disconnectedCallback() {
-		this.$input.removeEventListener(
-			EVENTS.change,
-			this._eventChangedInputValue.bind(this),
-		);
-		this.$root.removeEventListener(
-			EVENTS.click,
-			this._eventClickedToRoot.bind(this),
-		);
 	}
 
 	init() {
@@ -225,12 +181,16 @@ class VanillaInput extends HTMLElement {
 
 		// Bind all event listeners
 		this.$input.addEventListener(
-			EVENTS.change,
+			Events.CHANGE,
 			this._eventChangedInputValue.bind(this),
 		);
 		this.$root.addEventListener(
-			EVENTS.click,
+			Events.CLICK,
 			this._eventClickedToRoot.bind(this),
+		);
+		this.$root.addEventListener(
+			Events.FOCUS,
+			this._eventFocusedToRoot.bind(this),
 		);
 
 		for (const node of getAttributes(this)) {
@@ -241,8 +201,8 @@ class VanillaInput extends HTMLElement {
 		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
 
 		this.shadowRoot.appendChild(this.$root);
-		this.$root.classList.remove(CLASSES.pendingInit);
-		this.$root.classList.add(CLASSES.initialized);
+		this.$root.classList.remove(Classes.PENDING_INIT);
+		this.$root.classList.add(Classes.INITIALIZED);
 	}
 
 	/**
@@ -255,7 +215,7 @@ class VanillaInput extends HTMLElement {
 	 */
 	updateLabelElement(value) {
 		if (Boolean(value)) {
-			this.$root.classList.add(CLASSES.hasLabel);
+			this.$root.classList.add(Classes.HAS_LABEL);
 			this.$innerContainer.insertBefore(
 				this.$labelContainer,
 				this.$innerContainer.firstChild,
@@ -268,35 +228,37 @@ class VanillaInput extends HTMLElement {
 			this.$label.innerHTML = value;
 			return;
 		}
-		this.$root.classList.remove(CLASSES.hasLabel);
+		this.$root.classList.remove(Classes.HAS_LABEL);
 		this.$labelContainer.remove();
 	}
 
 	/**
-	 * Invoked when input value change.
-	 * If input has any content, add hasValue class
-	 * to container element.
-	 *
 	 * @param {Event} $event
 	 * @return {void}
 	 */
 	_eventChangedInputValue($event) {
 		const value = $event.target.value;
 		if (Boolean(value)) {
-			this.$root.classList.add(CLASSES.hasValue);
+			this.$root.classList.add(Classes.HAS_VALUE);
 			return;
 		}
-		this.$root.classList.remove(CLASSES.hasValue);
+		this.$root.classList.remove(Classes.HAS_VALUE);
 	}
 
 	/**
-	 * Invoked run when click to root element.
-	 * Focus to input element.
-	 *
 	 * @param {Event} $event
 	 * @return {void}
 	 */
 	_eventClickedToRoot($event) {
+		$event.preventDefault();
+		this.$input.focus();
+	}
+
+	/**
+	 * @param {Event} $event
+	 * @return {void}
+	 */
+	_eventFocusedToRoot($event) {
 		$event.preventDefault();
 		this.$input.focus();
 	}

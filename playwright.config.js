@@ -1,13 +1,24 @@
-const SECONDS_30 = 30 * 1000;
+const { devices } = require('@playwright/test');
+
+const SECONDS_5 = 5000; // x 1000 miliseconds
+const SECONDS_30 = 30 * 1000; // x 1000 miliseconds
 
 module.exports = {
-	webServer: {
-		command: 'npm run start:test',
-		url: 'http://localhost:3003/',
-		reuseExistingServer: false,
-		timeout: SECONDS_30,
-	},
+	timeout: SECONDS_30,
+	expect: { timeout: SECONDS_5 },
+	workers: process.env.CI ? 1 : undefined,
 	use: {
-		baseURL: 'http://localhost:3003/',
+		headless: false,
+		channel: 'chrome',
+		actionTimeout: 0,
+		trace: 'on-first-retry',
 	},
+	projects: [
+		{
+			name: 'chromium',
+			use: {
+				...devices['Desktop Chrome'],
+			},
+		},
+	],
 };
