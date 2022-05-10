@@ -9,11 +9,12 @@ const entries = glob
 		return obj;
 	}, {});
 
-module.exports = (env, argv) => ({
+module.exports = (_env, _argv) => ({
 	mode: 'development',
-	devtool: 'eval-source-map',
 	watch: false,
 	entry: entries,
+	stats: 'minimal',
+	devtool: 'eval-source-map',
 	output: {
 		path: path.resolve(__dirname, './dist'),
 		filename: '[name].min.js',

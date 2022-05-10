@@ -37,6 +37,8 @@ module.exports = (env, argv) => ({
 		static: './demos/',
 		port: 3000,
 		hot: isMode(argv, DEV_MODE),
+		liveReload: isMode(argv, DEV_MODE),
+		watchFiles: ['src/**/*.js', 'src/**/*.html', 'src/**/*.scss'],
 	},
 	module: {
 		rules: [

@@ -10,6 +10,14 @@
 		]
 	],
 	"plugins": [
-		"transform-require-default"
+		[
+			"transform-require-default",
+			{
+				"exclude": "/node_modules/"
+			}
+		]
+	],
+	"ignore": [
+		"/node_modules/"
 	]
 }
