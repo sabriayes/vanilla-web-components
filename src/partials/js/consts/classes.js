@@ -1,9 +1,7 @@
 /**
- * @property {string} hasLabel - Element has a label
- * @property {string} hasValue - Input contains truly value
- * @property {string} init - Element init completed
- * @property {string} pendingInit - Element not initialized yet
+ * Enum for style classes used in the HTML template.
  * @readonly
+ * @enum {string}
  */
 const Classes = Object.freeze({
 	HAS_LABEL: 'has-label',

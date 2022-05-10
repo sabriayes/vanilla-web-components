@@ -126,9 +126,9 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * @param {string} name     - Attribute name
-	 * @param {string} value    - Attribute current value
-	 * @param {string} newValue - Attribute updated value
+	 * @param {string} name - Attribute name
+	 * @param {string} value - Current value
+	 * @param {string} newValue - Updated value
 	 * @return {void}
 	 */
 	attributeChangedCallback(name, value, newValue) {
@@ -137,8 +137,8 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * @param {string} name - Attribute name
-	 * @param {string} value - Attribute current value
-	 * @param {string} newValue - Attribute updated value
+	 * @param {string} value - Current value
+	 * @param {string} newValue - Updated value
 	 * @return {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
