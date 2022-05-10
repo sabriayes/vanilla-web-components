@@ -1,8 +1,7 @@
 /**
- * @property {string} change
- * @property {string} click
- * @property {string} slotChange
+ * Enum for event names used on the input element.
  * @readonly
+ * @enum {string}
  */
 const Events = Object.freeze({
 	CHANGE: 'change',

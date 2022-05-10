@@ -1,8 +1,7 @@
 /**
- * @property {string} label
- * @property {string} placeholder
- * @property {string} value
+ * Enum for attribute names used on the input element.
  * @readonly
+ * @enum {string}
  */
 const Attrs = Object.freeze({
 	LABEL: 'label',
