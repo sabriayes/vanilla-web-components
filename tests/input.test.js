@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { Classes } = require('./../src/partials/js/consts');
 
 const WAIT_UNTIL = { waitUntil: 'domcontentloaded' };
 
@@ -11,6 +12,14 @@ test.describe('The VanillaInput instance', () => {
 
 	test.describe('when define basically', () => {
 		test('should be defined on DOM', async ({ page }) => {
+			const rawHTML = `<vanilla-input></vanilla-input>`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			await expect(
+				page.locator('vanilla-input #root-element'),
+			).toHaveClass(new RegExp(Classes.INITIALIZED));
+		});
+
+		test('should have [initialized] class', async ({ page }) => {
 			const rawHTML = `<vanilla-input></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const inputElem = await page.waitForSelector('vanilla-input');
@@ -28,6 +37,13 @@ test.describe('The VanillaInput instance', () => {
 	});
 
 	test.describe('when define with label', () => {
+		test('should have [has-label] class', async ({ page }) => {
+			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const rootElem = page.locator('vanilla-input #root-element');
+			await expect(rootElem).toHaveClass(new RegExp(Classes.HAS_LABEL));
+		});
+
 		test('should label element be visible', async ({ page }) => {
 			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
@@ -107,6 +123,30 @@ test.describe('The VanillaInput instance', () => {
 				'vanilla-input #trailing-icon-slot',
 			);
 			await expect(iconSlotElem).toBeVisible();
+		});
+	});
+
+	test.describe('when type any text', () => {
+		test('should have [has-value] class', async ({ page }) => {
+			const rawHTML = `<vanilla-input></vanilla-input>`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const inputElem = page.locator('vanilla-input');
+			await inputElem.focus();
+			await inputElem.type('TEXT');
+			await page.locator('body').click(); // For blur input element
+			const rootElem = inputElem.locator('#root-element');
+			await expect(rootElem).toHaveClass(new RegExp(Classes.HAS_VALUE));
+		});
+
+		test('should return text value', async ({ page }) => {
+			const text = 'TEXT';
+			const rawHTML = `<vanilla-input></vanilla-input>`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const inputElem = page.locator('vanilla-input');
+			await inputElem.focus();
+			await inputElem.type(text);
+			const inputValue = await inputElem.evaluate((elem) => elem.value);
+			await expect(inputValue).toBe(text);
 		});
 	});
 });
