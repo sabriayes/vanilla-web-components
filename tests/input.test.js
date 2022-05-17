@@ -17,7 +17,7 @@ test.describe('The VanillaInput instance', () => {
 			expect(inputElem).toBeDefined();
 		});
 
-		test('should label element is removed', async ({ page }) => {
+		test('should label element be removed', async ({ page }) => {
 			const rawHTML = `<vanilla-input></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const labelElem = await page.$eval('vanilla-input', (elem) =>
@@ -28,14 +28,14 @@ test.describe('The VanillaInput instance', () => {
 	});
 
 	test.describe('when define with label', () => {
-		test('should label element is visible', async ({ page }) => {
+		test('should label element be visible', async ({ page }) => {
 			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const labelElem = page.locator('vanilla-input #label-element');
 			await expect(labelElem).toBeVisible();
 		});
 
-		test('should label has a text', async ({ page }) => {
+		test('should label element has a text', async ({ page }) => {
 			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const labelElem = page.locator('vanilla-input #label-element');
@@ -43,9 +43,70 @@ test.describe('The VanillaInput instance', () => {
 		});
 	});
 
-	test.describe('when define with error message', () => {});
+	test.describe('when define with invalid attribute', () => {
+		test('should error messages element be visible', async ({ page }) => {
+			const rawHTML = `
+				<vanilla-input invalid>
+					<span slot="errors">ERR MSG</span>
+				</vanilla-input>
+			`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const errSlotElem = page.locator(
+				'vanilla-input #error-messages-slot',
+			);
+			await expect(errSlotElem).toBeVisible();
+		});
 
-	test.describe('when define with hint message', () => {});
+		test('should hint text element be hidden', async ({ page }) => {
+			const rawHTML = `<vanilla-input invalid></vanilla-input>`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const hintSlotElem = page.locator('vanilla-input #hint-text-slot');
+			await expect(hintSlotElem).not.toBeVisible();
+		});
+	});
 
-	test.describe('when define with icons', () => {});
+	test.describe('when define with hint text', () => {
+		test('should hint text element be visible', async ({ page }) => {
+			const rawHTML = `
+				<vanilla-input>
+					<span slot="hint">HINT TXT</span>
+				</vanilla-input>
+			`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const hintSlotElem = page.locator('vanilla-input #hint-text-slot');
+			await expect(hintSlotElem).toBeVisible();
+		});
+	});
+
+	test.describe('when define with icons', () => {
+		test('should leading icon element be visible', async ({ page }) => {
+			const rawHTML = `
+				<vanilla-input>
+					<span slot="leading-icon">
+        				<i class="fa fa-user"></i>
+    				</span>
+				</vanilla-input>
+			`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const iconSlotElem = page.locator(
+				'vanilla-input #leading-icon-slot',
+			);
+			await expect(iconSlotElem).toBeVisible();
+		});
+
+		test('should trailing icon element be visible', async ({ page }) => {
+			const rawHTML = `
+				<vanilla-input>
+					<span slot="trailing-icon">
+        				<i class="fa fa-user"></i>
+    				</span>
+				</vanilla-input>
+			`;
+			await page.setContent(rawHTML, WAIT_UNTIL);
+			const iconSlotElem = page.locator(
+				'vanilla-input #trailing-icon-slot',
+			);
+			await expect(iconSlotElem).toBeVisible();
+		});
+	});
 });
