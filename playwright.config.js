@@ -8,7 +8,7 @@ module.exports = {
 	expect: { timeout: SECONDS_5 },
 	workers: process.env.CI ? 1 : undefined,
 	use: {
-		headless: false,
+		headless: true,
 		channel: 'chrome',
 		actionTimeout: 0,
 		trace: 'on-first-retry',
