@@ -133,7 +133,6 @@ test.describe('The VanillaInput instance', () => {
 			const inputElem = page.locator('vanilla-input');
 			await inputElem.focus();
 			await inputElem.type('TEXT');
-			await page.locator('body').click(); // For blur input element
 			const rootElem = inputElem.locator('#root-element');
 			await expect(rootElem).toHaveClass(new RegExp(Classes.HAS_VALUE));
 		});

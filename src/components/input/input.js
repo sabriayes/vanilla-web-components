@@ -94,6 +94,22 @@ class VanillaInput extends HTMLElement {
 		this.setAttribute(Attrs.LABEL, value);
 	}
 
+	/**
+	 * Return event fixture.
+	 * @return {Object.<{ [p:string]: Event|Function }>}
+	 * @example ```js
+	 * 	{ click: function ($event) { } }
+	 * ```
+	 */
+	get events() {
+		return {
+			[Events.CLICK]: this.onClickToRoot,
+			[Events.CHANGE]: this.onChangeInputValue,
+			[Events.FOCUS]: this.onFocusToRoot,
+			[Events.INPUT]: this.onChangeInputValue,
+		};
+	}
+
 	constructor() {
 		super();
 		this.attachShadow({
@@ -107,18 +123,9 @@ class VanillaInput extends HTMLElement {
 	}
 
 	disconnectedCallback() {
-		this.$input.removeEventListener(
-			Events.CHANGE,
-			this._eventChangedInputValue.bind(this),
-		);
-		this.$root.removeEventListener(
-			Events.CLICK,
-			this._eventClickedToRoot.bind(this),
-		);
-		this.$root.removeEventListener(
-			Events.FOCUS,
-			this._eventFocusedToRoot.bind(this),
-		);
+		Object.entries(this.events).forEach(([event, func]) => {
+			this.removeEventListener(event, func.bind(this));
+		});
 	}
 
 	static get observedAttributes() {
@@ -180,18 +187,9 @@ class VanillaInput extends HTMLElement {
 		this.$labelContainer.remove();
 
 		// Bind all event listeners
-		this.$input.addEventListener(
-			Events.CHANGE,
-			this._eventChangedInputValue.bind(this),
-		);
-		this.$root.addEventListener(
-			Events.CLICK,
-			this._eventClickedToRoot.bind(this),
-		);
-		this.$root.addEventListener(
-			Events.FOCUS,
-			this._eventFocusedToRoot.bind(this),
-		);
+		Object.entries(this.events).forEach(([event, func]) => {
+			this.addEventListener(event, func.bind(this));
+		});
 
 		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
@@ -236,7 +234,7 @@ class VanillaInput extends HTMLElement {
 	 * @param {Event} $event
 	 * @return {void}
 	 */
-	_eventChangedInputValue($event) {
+	onChangeInputValue($event) {
 		const value = $event.target.value;
 		if (Boolean(value)) {
 			this.$root.classList.add(Classes.HAS_VALUE);
@@ -249,16 +247,15 @@ class VanillaInput extends HTMLElement {
 	 * @param {Event} $event
 	 * @return {void}
 	 */
-	_eventClickedToRoot($event) {
-		$event.preventDefault();
-		this.$input.focus();
+	onClickToRoot($event) {
+		this.onFocusToRoot($event);
 	}
 
 	/**
 	 * @param {Event} $event
 	 * @return {void}
 	 */
-	_eventFocusedToRoot($event) {
+	onFocusToRoot($event) {
 		$event.preventDefault();
 		this.$input.focus();
 	}
