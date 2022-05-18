@@ -103,10 +103,10 @@ class VanillaInput extends HTMLElement {
 	 */
 	get events() {
 		return {
-			[Events.CLICK]: this._eventClickedToRoot,
-			[Events.CHANGE]: this._eventChangedInputValue,
-			[Events.FOCUS]: this._eventFocusedToRoot,
-			[Events.INPUT]: this._eventChangedInputValue,
+			[Events.CLICK]: this.onClickToRoot,
+			[Events.CHANGE]: this.onChangeInputValue,
+			[Events.FOCUS]: this.onFocusToRoot,
+			[Events.INPUT]: this.onChangeInputValue,
 		};
 	}
 
@@ -234,7 +234,7 @@ class VanillaInput extends HTMLElement {
 	 * @param {Event} $event
 	 * @return {void}
 	 */
-	_eventChangedInputValue($event) {
+	onChangeInputValue($event) {
 		const value = $event.target.value;
 		if (Boolean(value)) {
 			this.$root.classList.add(Classes.HAS_VALUE);
@@ -247,16 +247,15 @@ class VanillaInput extends HTMLElement {
 	 * @param {Event} $event
 	 * @return {void}
 	 */
-	_eventClickedToRoot($event) {
-		$event.preventDefault();
-		this.$input.focus();
+	onClickToRoot($event) {
+		this.onFocusToRoot($event);
 	}
 
 	/**
 	 * @param {Event} $event
 	 * @return {void}
 	 */
-	_eventFocusedToRoot($event) {
+	onFocusToRoot($event) {
 		$event.preventDefault();
 		this.$input.focus();
 	}
