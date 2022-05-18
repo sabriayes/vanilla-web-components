@@ -7,6 +7,7 @@ Library of web components with some useful input elements. It is developed with 
 | Status | Element             | Description                                                            |
 |--------|---------------------|------------------------------------------------------------------------|
 | ✅      | `vanilla-input`     | Text field element with animated label, hint, lead and trail icons     |
+| ⌛      | `vanilla-password`  | Customized `vanilla-input` element for password                        |
 | ⌛      | `vanilla-number`    | Customized `vanilla-input` element for numeric values                  |
 | ⌛      | `vanilla-email`     | Customized `vanilla-input` element for email                           |
 | ⌛      | `vanilla-tel`       | Customized `vanilla-input` element for phone number with country codes |
@@ -75,7 +76,7 @@ You can use iconic font library or SVG graphic. Set trailing icon color with `su
 ````html
 <vanilla-input 
     label="Your Name" 
-    placeholder="enter your name">
+    placeholder="Enter your name">
     <!-- Tag with slot="leading-icon" attribute for icon -->
     <span slot="leading-icon">
         <i class="fa fa-user"></i>
