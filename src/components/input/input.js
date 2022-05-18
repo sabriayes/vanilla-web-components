@@ -124,7 +124,9 @@ class VanillaInput extends HTMLElement {
 
 	disconnectedCallback() {
 		Object.entries(this.events).forEach(([event, func]) => {
-			this.removeEventListener(event, func.bind(this));
+			this.removeEventListener(event, function ($event) {
+				func.call(this, $event);
+			});
 		});
 	}
 
@@ -188,7 +190,9 @@ class VanillaInput extends HTMLElement {
 
 		// Bind all event listeners
 		Object.entries(this.events).forEach(([event, func]) => {
-			this.addEventListener(event, func.bind(this));
+			this.addEventListener(event, function ($event) {
+				func.call(this, $event);
+			});
 		});
 
 		for (const node of getAttributes(this)) {
