@@ -30,7 +30,6 @@ template.innerHTML = HTML.toString();
  * @property {HTMLElement} $input 			- Reference of input[type="text"]
  * @property {HTMLElement} $labelContainer	- Reference of container with label
  * @property {HTMLElement} $label			- Reference of label
- *
  */
 class VanillaInput extends HTMLElement {
 	/**
