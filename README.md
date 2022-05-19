@@ -144,9 +144,10 @@ Each component consists of two files. (`.html` and `.js`)
 ```bash
 ├── src
 │   ├── components
-│   │   ├── {component-name}.scss
-│   │   ├── {component-name}.html
-│   │   ├── {component-name}.js
+│   │   ├── {component-name}
+│   │   │   ├── {component-name}.scss
+│   │   │   ├── {component-name}.html
+│   │   │   ├── {component-name}.js
 ├── partials
 │   ├── js
 │   ├── scss
