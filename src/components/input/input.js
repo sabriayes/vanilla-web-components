@@ -1,3 +1,9 @@
+/**
+ * @file input.js is the root file for VanillaInput element
+ * @author Sabri Ayeş <sabri@naylalabs.com>
+ * @see <a href="https://naylalabs.com/vanilla">Vanilla Web Components</a>
+ */
+
 const HTML = require('./input.html');
 const CSS = require('./input.scss');
 const { Attrs, Classes, Events } = require('partials/js/consts/index');
@@ -8,86 +14,108 @@ const {
 
 /**
  * HTML template content.
- * @var {HTMLElement} template
+ * @const {HTMLElementTagNameMap[string]} template
  */
 const template = document.createElement('template');
 template.innerHTML = HTML.toString();
 
 /**
- * Custom text input element class. HTML tag is <vanilla-input>
+ * Class of custom text input element. HTML tag is [vanilla-input]
  * @class
  * @extends {HTMLElement}
  * @constructor
+ * @property {string} tagName 				- Getter for tag of custom element
+ * @property {HTMLElement} $root 			- Reference of main container div
+ * @property {HTMLElement} $innerContainer 	- Reference of secondary container div
+ * @property {HTMLElement} $input 			- Reference of input[type="text"]
+ * @property {HTMLElement} $labelContainer	- Reference of container with label
+ * @property {HTMLElement} $label			- Reference of label
+ *
  */
 class VanillaInput extends HTMLElement {
 	/**
-	 * @property {string} tagName
+	 * @function {string} tagName
 	 * @static
+	 * @readonly
 	 */
 	static get tagName() {
 		return 'vanilla-input';
 	}
 
 	/**
-	 * #root-element
+	 * [id="root-element"]
 	 * @property {HTMLElement} $root
 	 * @public
+	 * @readonly
 	 */
 	$root;
 
 	/**
-	 * #inner-container-element
+	 * [id="inner-container-element"]
 	 * @property {HTMLElement} $innerContainer
 	 * @public
+	 * @readonly
 	 */
 	$innerContainer;
 
 	/**
-	 * #input-element
+	 * [id="input-element"]
 	 * @property {HTMLElement} $input
-	 * @input
+	 * @public
+	 * @readonly
 	 */
 	$input;
 
 	/**
-	 * #label-container-element
+	 * [id="label-container-element"]
 	 * @property {HTMLElement} $labelContainer
 	 * @public
+	 * @readonly
 	 */
 	$labelContainer;
 
 	/**
-	 * #label-element
+	 * [id="label-element"]
 	 * @property {HTMLElement} $label
 	 * @public
+	 * @readonly
 	 */
 	$label;
 
 	/**
-	 * @return {string}
+	 * Getter for current value.
+	 * @public
+	 * @return {string} - Return value of current state
 	 */
 	get value() {
 		return this.$input.value || '';
 	}
 
 	/**
+	 * Setter for value changing.
+	 * @public
+	 * @param {string} value
 	 * @return {void}
 	 */
-	set value(val) {
+	set value(value) {
 		if (this.$input) {
-			this.$input.value = val;
+			this.$input.value = value;
 		}
 	}
 
 	/**
-	 * @return {string}
+	 * Getter for text of label.
+	 * @public
+	 * @return {string} - Return text of label [$label]
 	 */
 	get label() {
 		return this.getAttribute(Attrs.LABEL);
 	}
 
 	/**
+	 * Setter for label text changing.
 	 * @param {string} value
+	 * @public
 	 * @return {void}
 	 */
 	set label(value) {
@@ -95,10 +123,12 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * Return event fixture.
-	 * @return {Object.<{ [p:string]: Event|Function }>}
+	 * Getter for event list with handler functions.
+	 * @return {Object.<{ [p:string]: Event|Function }>} - Return event fixture
+	 * @private
+	 * @readonly
 	 * @example ```js
-	 * 	{ click: function ($event) { } }
+	 * 	{ click: [object Function] }
 	 * ```
 	 */
 	get events() {
@@ -134,20 +164,14 @@ class VanillaInput extends HTMLElement {
 		return Object.values(Attrs);
 	}
 
-	/**
-	 * @param {string} name - Attribute name
-	 * @param {string} value - Current value
-	 * @param {string} newValue - Updated value
-	 * @return {void}
-	 */
 	attributeChangedCallback(name, value, newValue) {
 		this.changeAttributeValue(name, value, newValue);
 	}
 
 	/**
-	 * @param {string} name - Attribute name
-	 * @param {string} value - Current value
-	 * @param {string} newValue - Updated value
+	 * @param {string} name 	- Name of attribute
+	 * @param {string} value 	- Value of current state
+	 * @param {string} newValue - Value of new state
 	 * @return {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
@@ -162,10 +186,8 @@ class VanillaInput extends HTMLElement {
 				break;
 
 			case Attrs.VALUE:
-				// Dispatch change event with fake event object
-				const fakeEvent = new Event(Events.CHANGE);
 				this.$input.setAttribute(name, newValue);
-				this.$input.dispatchEvent(fakeEvent);
+				this.$input.dispatchEvent(new Event(Events.CHANGE));
 				break;
 
 			default:
@@ -212,7 +234,8 @@ class VanillaInput extends HTMLElement {
 	 * If value is falsy remove label container
 	 * in root.
 	 *
-	 * @param {string} value - Label text value
+	 * @param {string} value
+	 * @private
 	 * @returns {void}
 	 */
 	updateLabelElement(value) {
@@ -235,11 +258,11 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * @param {Event} $event
+	 * @param {string} value
+	 * @private
 	 * @return {void}
 	 */
-	onChange($event) {
-		const value = $event.target.value;
+	toggleValueClass(value) {
 		if (Boolean(value)) {
 			this.$root.classList.add(Classes.HAS_VALUE);
 			return;
@@ -248,20 +271,40 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * @param {Event} $event
+	 * @private
 	 * @return {void}
 	 */
-	onClick($event) {
-		this.onFocusToRoot($event);
+	focusToInput() {
+		this.$input.focus();
 	}
 
 	/**
 	 * @param {Event} $event
+	 * @private
+	 * @return {void}
+	 */
+	onChange($event) {
+		this.toggleValueClass($event.target.value);
+	}
+
+	/**
+	 * @param {Event} $event
+	 * @private
+	 * @return {void}
+	 */
+	onClick($event) {
+		$event.preventDefault();
+		this.focusToInput();
+	}
+
+	/**
+	 * @param {Event} $event
+	 * @private
 	 * @return {void}
 	 */
 	onFocus($event) {
 		$event.preventDefault();
-		this.$input.focus();
+		this.focusToInput();
 	}
 }
 
