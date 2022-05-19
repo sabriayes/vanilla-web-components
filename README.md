@@ -1,6 +1,6 @@
 # Vanilla Web Component
 Library of web components with some useful input elements. It is developed with vanilla `JavaScript` for high performance.\
-[Live Demo](https://www.naylalabs.com/vanilla/)
+[Live Demo](https://sabriayes.github.io/vanilla-web-components/)
 
 **NOTE: This project is still work-in-progress.**
 
@@ -144,11 +144,12 @@ Each component consists of two files. (`.html` and `.js`)
 ```bash
 ├── src
 │   ├── components
+│   │   ├── {component-name}.scss
 │   │   ├── {component-name}.html
 │   │   ├── {component-name}.js
 ├── partials
-│   ├── js (scripts)
-│   ├── scss (styles)
+│   ├── js
+│   ├── scss
 ├── tests
 │   ├── *.test.js
 ├── dist (for build)
