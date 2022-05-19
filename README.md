@@ -134,12 +134,12 @@ It use global CSS varaiables for styling.
 
 ### Folder Structure
 
-- `src` is root folder. `src/components` contains component files.
-- `partilas` folder contains styles and script files.
+- `src` is root folder. `src/components` contains component files
+- `partilas` folder contains styles and script files
 
 Each component consists of two files. (`.html` and `.js`)
-- `.html` file contains DOM and style codes.
-- `.js` file contains some logic.
+- `.html` file contains DOM and style codes
+- `.js` file contains some logic
 
 ```bash
 ├── src
