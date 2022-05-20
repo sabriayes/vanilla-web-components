@@ -1,5 +1,6 @@
 /**
  * Enum for attribute names used on the input element.
+ *
  * @readonly
  * @enum {string}
  */

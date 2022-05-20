@@ -3,8 +3,11 @@ module.exports = {
 	parserOptions: {
 		requireConfigFile: false
 	},
-	plugins: [],
-	extends: ['plugin:prettier/recommended'],
+	plugins: ['jsdoc'],
+	extends: [
+		'plugin:prettier/recommended',
+		'plugin:jsdoc/recommended',
+	],
 	root: true,
 	env: {
 		node: true,
@@ -19,5 +22,9 @@ module.exports = {
 		'object-curly-spacing': ['error', 'always'],
 		'array-bracket-spacing': ['error', 'never'],
 		'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+		'jsdoc/no-undefined-types': 0,
+		'jsdoc/require-returns-description': 0,
+		'jsdoc/require-property-description': 0,
+		'jsdoc/require-param-description': 0,
 	},
 };

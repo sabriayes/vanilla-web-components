@@ -1,5 +1,6 @@
 /**
  * Enum for event names used on the input element.
+ *
  * @readonly
  * @enum {string}
  */

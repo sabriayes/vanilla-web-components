@@ -1,5 +1,6 @@
 /**
  * Enum for style classes used in the HTML template.
+ *
  * @readonly
  * @enum {string}
  */

@@ -14,16 +14,17 @@ const {
 
 /**
  * HTML template content.
- * @const {HTMLElementTagNameMap[string]} template
+ *
+ * @constant {HTMLElementTagNameMap[string]} template
  */
 const template = document.createElement('template');
 template.innerHTML = HTML.toString();
 
 /**
  * Class of custom text input element. HTML tag is [vanilla-input]
+ *
  * @class
- * @extends {HTMLElement}
- * @constructor
+ * @augments HTMLElement
  * @property {string} tagName 				- Getter for tag of custom element
  * @property {HTMLElement} $root 			- Reference of main container div
  * @property {HTMLElement} $innerContainer 	- Reference of secondary container div
@@ -33,9 +34,9 @@ template.innerHTML = HTML.toString();
  */
 class VanillaInput extends HTMLElement {
 	/**
-	 * @function {string} tagName
 	 * @static
 	 * @readonly
+	 * @returns {string} - Return tag name
 	 */
 	static get tagName() {
 		return 'vanilla-input';
@@ -43,48 +44,54 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * [id="root-element"]
-	 * @property {HTMLElement} $root
+	 *
 	 * @public
 	 * @readonly
+	 * @property {HTMLElement} $root
 	 */
 	$root;
 
 	/**
 	 * [id="inner-container-element"]
-	 * @property {HTMLElement} $innerContainer
+	 *
 	 * @public
 	 * @readonly
+	 * @property {HTMLElement} $innerContainer
 	 */
 	$innerContainer;
 
 	/**
 	 * [id="input-element"]
-	 * @property {HTMLElement} $input
+	 *
 	 * @public
 	 * @readonly
+	 * @property {HTMLElement} $input
 	 */
 	$input;
 
 	/**
 	 * [id="label-container-element"]
-	 * @property {HTMLElement} $labelContainer
+	 *
 	 * @public
 	 * @readonly
+	 * @property {HTMLElement} $labelContainer
 	 */
 	$labelContainer;
 
 	/**
 	 * [id="label-element"]
-	 * @property {HTMLElement} $label
+	 *
 	 * @public
 	 * @readonly
+	 * @property {HTMLElement} $label
 	 */
 	$label;
 
 	/**
 	 * Getter for current value.
+	 *
 	 * @public
-	 * @return {string} - Return value of current state
+	 * @returns {string}
 	 */
 	get value() {
 		return this.$input.value || '';
@@ -92,9 +99,10 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * Setter for value changing.
+	 *
 	 * @public
 	 * @param {string} value
-	 * @return {void}
+	 * @returns {void}
 	 */
 	set value(value) {
 		if (this.$input) {
@@ -104,8 +112,9 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * Getter for text of label.
+	 *
 	 * @public
-	 * @return {string} - Return text of label [$label]
+	 * @returns {string}
 	 */
 	get label() {
 		return this.getAttribute(Attrs.LABEL);
@@ -113,9 +122,10 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * Setter for label text changing.
-	 * @param {string} value
+	 *
 	 * @public
-	 * @return {void}
+	 * @param {string} value
+	 * @returns {void}
 	 */
 	set label(value) {
 		this.setAttribute(Attrs.LABEL, value);
@@ -123,9 +133,10 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * Getter for event list with handler functions.
-	 * @return {Object.<{ [p:string]: Event|Function }>} - Return event fixture
+	 *
 	 * @private
 	 * @readonly
+	 * @returns {Object<string, Event|Function>} - Return event fixture
 	 * @example ```js
 	 * 	{ click: [object Function] }
 	 * ```
@@ -171,7 +182,7 @@ class VanillaInput extends HTMLElement {
 	 * @param {string} name 	- Name of attribute
 	 * @param {string} value 	- Value of current state
 	 * @param {string} newValue - Value of new state
-	 * @return {void}
+	 * @returns {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
 		if (!newValue) {
@@ -230,11 +241,10 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * Update state of label container element.
-	 * If value is falsy remove label container
-	 * in root.
+	 * If value is falsy remove label container in root.
 	 *
-	 * @param {string} value
 	 * @private
+	 * @param {string} value
 	 * @returns {void}
 	 */
 	updateLabelElement(value) {
@@ -257,9 +267,9 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * @param {string} value
 	 * @private
-	 * @return {void}
+	 * @param {string} value
+	 * @returns {void}
 	 */
 	toggleValueClass(value) {
 		if (Boolean(value)) {
@@ -271,25 +281,25 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * @private
-	 * @return {void}
+	 * @returns {void}
 	 */
 	focusToInput() {
 		this.$input.focus();
 	}
 
 	/**
-	 * @param {Event} $event
 	 * @private
-	 * @return {void}
+	 * @param {Event} $event
+	 * @returns {void}
 	 */
 	onChange($event) {
 		this.toggleValueClass($event.target.value);
 	}
 
 	/**
-	 * @param {Event} $event
 	 * @private
-	 * @return {void}
+	 * @param {Event} $event
+	 * @returns {void}
 	 */
 	onClick($event) {
 		$event.preventDefault();
@@ -297,9 +307,9 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * @param {Event} $event
 	 * @private
-	 * @return {void}
+	 * @param {Event} $event
+	 * @returns {void}
 	 */
 	onFocus($event) {
 		$event.preventDefault();
