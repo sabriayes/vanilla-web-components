@@ -16,7 +16,7 @@ const entries = glob
 const copyPaths = [
 	{
 		source: 'dist/**.js',
-		destination: 'demos/assets/js/',
+		destination: 'docs/assets/js/',
 	},
 ];
 
