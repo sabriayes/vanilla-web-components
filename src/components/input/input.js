@@ -185,7 +185,7 @@ class VanillaInput extends HTMLElement {
 	 * @returns {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
-		if (!newValue) {
+		if (!this.$root) {
 			return;
 		}
 

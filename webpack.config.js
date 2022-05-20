@@ -34,7 +34,7 @@ module.exports = (env, argv) => ({
 		},
 	},
 	devServer: {
-		static: './demos/',
+		static: './docs/',
 		port: 3000,
 		hot: isMode(argv, DEV_MODE),
 		liveReload: isMode(argv, DEV_MODE),
