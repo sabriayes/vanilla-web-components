@@ -1,7 +1,8 @@
 /**
  * Returns a <style> element with appended styles.
+ *
  * @param {string} cssText - CSS style sheet content
- * @return {HTMLElement}
+ * @returns {HTMLElement}
  */
 const createStyleElement = function (cssText) {
 	const styleElement = document.createElement('style');

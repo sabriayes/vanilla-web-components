@@ -1,7 +1,8 @@
 /**
  * Returns all attibutes of the element as an array.
+ *
  * @param {HTMLElement} element - HTML element
- * @return {Object[]} - Array like [{ name: string, value: string }]
+ * @returns {Array<Object<{name: string, value: string}>>}
  */
 const getAttributes = function (element) {
 	return element
