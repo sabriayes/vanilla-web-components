@@ -4,13 +4,10 @@
  * @see <a href="https://naylalabs.com/vanilla">Vanilla Web Components</a>
  */
 
-const HTML = require('./input.html');
-const CSS = require('./input.scss');
-const { Attrs, Classes, Events } = require('partials/js/consts/index');
-const {
-	createStyleElement,
-	getAttributes,
-} = require('partials/js/utils/index');
+import HTML from './input.html';
+import CSS from './input.scss';
+import { Attrs, Classes, Events } from 'partials/js/consts';
+import { createStyleElement, getAttributes } from 'partials/js/utils';
 
 /**
  * HTML template content.
