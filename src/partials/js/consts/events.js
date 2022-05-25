@@ -10,6 +10,7 @@ const Events = Object.freeze({
 	FOCUS: 'focus',
 	INPUT: 'input',
 	SLOT_CHANGE: 'slotchange',
+	TYPE_CHANGE: 'typechange',
 });
 
 module.exports = Events;

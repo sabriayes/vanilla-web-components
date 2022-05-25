@@ -1,4 +1,2 @@
-const createStyleElement = require('./create-style-element');
-const getAttributes = require('./get-attributes');
-
-module.exports = { createStyleElement, getAttributes };
+export { createStyleElement } from './create-style-element';
+export { getAttributes } from './get-attributes';

@@ -10,12 +10,13 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public Sans:wght@200;300;400&display=swap">
-        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
         <link rel="stylesheet" href="assets/css/default.css">
 
         <title>Vanilla Web Components - Demo</title>
 
         <script src="assets/js/input.min.js"></script>
+		<script src="assets/js/password.min.js"></script>
     </head>
     <body>
         
@@ -50,7 +51,7 @@
                 <div class="column">
                     <vanilla-input label="E-mail Address" placeholder="Enter mail address" maxlength="255">
 						<span slot="leading-icon">
-                            <i class="fa fa-at"></i>
+                            <i class="la la-at"></i>
                         </span>
 						<span slot="hint">Gmail, Outlook, Yandex</span>
 					</vanilla-input>
@@ -60,11 +61,26 @@
 				<div class="column">
 					<vanilla-input id="phone-number" label="Phone Number" placeholder="Enter your phone number" invalid>
 						<span slot="leading-icon">
-                            <i class="fa fa-mobile"></i>
+                            <i class="la la-mobile"></i>
                         </span>
 						<span slot="hint">Example +01 555 98301</span>
 						<span slot="errors">Phone number is required</span>
 					</vanilla-input>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<vanilla-password label="Password" pass-icon="la la-eye" placeholder="Type your password" maxlength="32">
+						<span slot="leading-icon">
+                            <i class="la la-lock"></i>
+                        </span>
+						<span slot="switch-btn" password-btn>
+                            <i class="la la-eye"></i>
+                        </span>
+						<span slot="switch-btn" text-btn>
+                            <i class="la la-eye-slash"></i>
+                        </span>
+					</vanilla-password>
 				</div>
 			</div>
 			<div class="row">

@@ -1,11 +1,11 @@
 /**
- * @file input.js is the root file for VanillaInput element
+ * @file password.js is the root file for VanillaPassword element
  * @author Sabri Ayeş <sabri@naylalabs.com>
  * @see <a href="https://naylalabs.com/vanilla">Vanilla Web Components</a>
  */
 
-import HTML from './input.html';
-import CSS from './input.scss';
+import HTML from './password.html';
+import CSS from './password.scss';
 import { Attrs, Classes, Events } from 'partials/js/consts';
 import { createStyleElement, getAttributes } from 'partials/js/utils';
 
@@ -17,26 +17,30 @@ import { createStyleElement, getAttributes } from 'partials/js/utils';
 const template = document.createElement('template');
 template.innerHTML = HTML.toString();
 
+const TEXT = 'text';
+const PASSWORD = 'password';
+
 /**
- * Class of custom text input element. HTML tag is [vanilla-input]
+ * Class of custom password input element. HTML tag is [vanilla-password]
  *
  * @class
  * @augments HTMLElement
- * @property {string} tagName 				- Getter for tag of custom element
- * @property {HTMLElement} $root 			- Reference of main container div
- * @property {HTMLElement} $innerContainer 	- Reference of secondary container div
- * @property {HTMLElement} $input 			- Reference of input[type="text"]
- * @property {HTMLElement} $labelContainer	- Reference of container with label
- * @property {HTMLElement} $label			- Reference of label
+ * @property {string} tagName 					- Getter for tag of custom element
+ * @property {HTMLElement} $root 				- Reference of main container div
+ * @property {HTMLElement} $innerContainer 		- Reference of secondary container div
+ * @property {HTMLElement} $input 				- Reference of input[type="text|password"]
+ * @property {HTMLElement} $labelContainer		- Reference of container with label
+ * @property {HTMLElement} $label				- Reference of label
+ * @property {HTMLElement} $switchBtnContainer	- Reference to switch button container
  */
-class VanillaInput extends HTMLElement {
+class VanillaPassword extends HTMLElement {
 	/**
 	 * @static
 	 * @readonly
 	 * @returns {string} - Return tag name
 	 */
 	static get tagName() {
-		return 'vanilla-input';
+		return 'vanilla-password';
 	}
 
 	/**
@@ -83,6 +87,25 @@ class VanillaInput extends HTMLElement {
 	 * @property {HTMLElement} $label
 	 */
 	$label;
+
+	/**
+	 * [id="switch-btn-container-element"]
+	 *
+	 * @public
+	 * @readonly
+	 * @property {HTMLElement} $switchBtnContainer
+	 */
+	$switchBtnContainer;
+
+	/**
+	 * Flag for input element type.
+	 * If it falsy then input element type will be text.
+	 *
+	 * @private
+	 * @property {boolean} isInputTypePassword
+	 * @default true
+	 */
+	isInputTypePassword = true;
 
 	/**
 	 * Getter for current value.
@@ -144,6 +167,7 @@ class VanillaInput extends HTMLElement {
 			[Events.CHANGE]: this.onChange,
 			[Events.FOCUS]: this.onFocus,
 			[Events.INPUT]: this.onChange,
+			[Events.TYPE_CHANGE]: this.onTypeChange,
 		};
 	}
 
@@ -211,6 +235,22 @@ class VanillaInput extends HTMLElement {
 			'inner-container-element',
 		);
 		this.$input = clondedTemplate.getElementById('input-element');
+
+		this.$switchBtnContainer = clondedTemplate.getElementById(
+			'switch-btn-container-element',
+		);
+		this.$switchBtnContainer.addEventListener(Events.CLICK, () => {
+			this.isInputTypePassword = !this.isInputTypePassword;
+			const type = this.isInputTypePassword ? PASSWORD : TEXT;
+			this.$root.dispatchEvent(
+				new CustomEvent(Events.TYPE_CHANGE, {
+					bubbles: true,
+					composed: true,
+					detail: { type },
+				}),
+			);
+		});
+
 		this.$label = clondedTemplate.getElementById('label-element');
 		this.$labelContainer = clondedTemplate.getElementById(
 			'label-container-element',
@@ -286,6 +326,40 @@ class VanillaInput extends HTMLElement {
 
 	/**
 	 * @private
+	 * @returns {void}
+	 */
+	changeInputTypeAsText() {
+		this.$input.setAttribute(Attrs.TYPE, 'text');
+	}
+
+	/**
+	 * @private
+	 * @returns {void}
+	 */
+	changeInputTypeAsPassword() {
+		this.$input.setAttribute(Attrs.TYPE, 'password');
+	}
+
+	/**
+	 * @private
+	 * @returns {void}
+	 */
+	changeSwitchBtnAsPassword() {
+		this.$switchBtnContainer.classList.remove(Classes.TYPE_TEXT);
+		this.$switchBtnContainer.classList.add(Classes.TYPE_PASSWORD);
+	}
+
+	/**
+	 * @private
+	 * @returns {void}
+	 */
+	changeSwitchBtnAsText() {
+		this.$switchBtnContainer.classList.remove(Classes.TYPE_PASSWORD);
+		this.$switchBtnContainer.classList.add(Classes.TYPE_TEXT);
+	}
+
+	/**
+	 * @private
 	 * @param {Event} $event
 	 * @returns {void}
 	 */
@@ -312,6 +386,26 @@ class VanillaInput extends HTMLElement {
 		$event.preventDefault();
 		this.focusToInput();
 	}
+
+	/**
+	 * @private
+	 * @param {CustomEvent} $event
+	 * @returns {void}
+	 */
+	onTypeChange($event) {
+		const { type } = $event.detail;
+		if (type === TEXT) {
+			this.changeInputTypeAsText();
+			this.changeSwitchBtnAsText();
+			return;
+		}
+
+		if (type === PASSWORD) {
+			this.changeInputTypeAsPassword();
+			this.changeSwitchBtnAsPassword();
+			return;
+		}
+	}
 }
 
-window.customElements.define(VanillaInput.tagName, VanillaInput);
+window.customElements.define(VanillaPassword.tagName, VanillaPassword);

@@ -5,19 +5,19 @@ Library of web components with some useful input elements. It is developed with 
 **NOTE: This project is still work-in-progress.**
 
 | Status | Element             | Description                                                            |
-|--------|---------------------|------------------------------------------------------------------------|
-| ✅      | `vanilla-input`     | Text field element with animated label, hint, lead and trail icons     |
-| ⌛      | `vanilla-password`  | Customized `vanilla-input` element for password                        |
-| ⌛      | `vanilla-number`    | Customized `vanilla-input` element for numeric values                  |
-| ⌛      | `vanilla-email`     | Customized `vanilla-input` element for email                           |
-| ⌛      | `vanilla-tel`       | Customized `vanilla-input` element for phone number with country codes |
-| ⌛      | `vanilla-currency`  | Customized `vanilla-input` element for currency value                  |
-| ⌛      | `vanilla-quantity`  | Customized `vanilla-input` element for qantity value                   |
-| ⌛      | `vanilla-search`    | Customized `vanilla-input` for searching                               |
-| ⌛      | `vanilla-select`    | Dropdown menu element with search field                                |
-| ⌛      | `vanilla-checkbox`  | Checkbox element                                                       |
-| ⌛      | `vanilla-radio-btn` | Radio button element                                                   |
-| ⌛      | `vanilla-toggle`    | Toggle option element                                                  |
+|-------|---------------------|------------------------------------------------------------------------|
+| ✅     | `vanilla-input`     | Text field element with animated label, hint, lead and trail icons     |
+| ✅     | `vanilla-password`  | Customized `vanilla-input` element for password                        |
+| ⌛     | `vanilla-number`    | Customized `vanilla-input` element for numeric values                  |
+| ⌛     | `vanilla-email`     | Customized `vanilla-input` element for email                           |
+| ⌛     | `vanilla-tel`       | Customized `vanilla-input` element for phone number with country codes |
+| ⌛     | `vanilla-currency`  | Customized `vanilla-input` element for currency value                  |
+| ⌛     | `vanilla-quantity`  | Customized `vanilla-input` element for qantity value                   |
+| ⌛     | `vanilla-search`    | Customized `vanilla-input` for searching                               |
+| ⌛     | `vanilla-select`    | Dropdown menu element with search field                                |
+| ⌛     | `vanilla-checkbox`  | Checkbox element                                                       |
+| ⌛     | `vanilla-radio-btn` | Radio button element                                                   |
+| ⌛     | `vanilla-toggle`    | Toggle option element                                                  |
 
 # `<vanilla-input>`
 `vanilla-input` is custom text field element. It supports all native HTML text input attributes and it has **animated label, errors message, hint text, lead and trail icons**.\
