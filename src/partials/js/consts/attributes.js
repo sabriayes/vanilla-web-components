@@ -8,6 +8,7 @@ const Attrs = Object.freeze({
 	LABEL: 'label',
 	PLACEHOLDER: 'placeholder',
 	VALUE: 'value',
+	TYPE: 'type',
 });
 
 module.exports = Attrs;
