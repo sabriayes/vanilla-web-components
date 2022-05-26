@@ -6,6 +6,7 @@
 
 import HTML from './input.html';
 import CSS from './input.scss';
+import { BasicInputElement } from 'partials/js/bases/basic-input';
 import { Attrs, Classes, Events } from 'partials/js/consts';
 import { createStyleElement, getAttributes } from 'partials/js/utils';
 
@@ -21,16 +22,12 @@ template.innerHTML = HTML.toString();
  * Class of custom text input element. HTML tag is [vanilla-input]
  *
  * @class
- * @augments HTMLElement
- * @property {string} tagName 				- Getter for tag of custom element
- * @property {HTMLElement} $root 			- Reference of main container div
- * @property {HTMLElement} $innerContainer 	- Reference of secondary container div
- * @property {HTMLElement} $input 			- Reference of input[type="text"]
- * @property {HTMLElement} $labelContainer	- Reference of container with label
- * @property {HTMLElement} $label			- Reference of label
+ * @augments BasicInputElement
+ * @property {string} tagName 	- Getter for tag of custom element
  */
-class VanillaInput extends HTMLElement {
+class VanillaInput extends BasicInputElement {
 	/**
+	 * @override
 	 * @static
 	 * @readonly
 	 * @returns {string} - Return tag name
@@ -40,97 +37,9 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * [id="root-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $root
-	 */
-	$root;
-
-	/**
-	 * [id="inner-container-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $innerContainer
-	 */
-	$innerContainer;
-
-	/**
-	 * [id="input-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $input
-	 */
-	$input;
-
-	/**
-	 * [id="label-container-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $labelContainer
-	 */
-	$labelContainer;
-
-	/**
-	 * [id="label-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $label
-	 */
-	$label;
-
-	/**
-	 * Getter for current value.
-	 *
-	 * @public
-	 * @returns {string}
-	 */
-	get value() {
-		return this.$input.value || '';
-	}
-
-	/**
-	 * Setter for value changing.
-	 *
-	 * @public
-	 * @param {string} value
-	 * @returns {void}
-	 */
-	set value(value) {
-		if (this.$input) {
-			this.$input.value = value;
-		}
-	}
-
-	/**
-	 * Getter for text of label.
-	 *
-	 * @public
-	 * @returns {string}
-	 */
-	get label() {
-		return this.getAttribute(Attrs.LABEL);
-	}
-
-	/**
-	 * Setter for label text changing.
-	 *
-	 * @public
-	 * @param {string} value
-	 * @returns {void}
-	 */
-	set label(value) {
-		this.setAttribute(Attrs.LABEL, value);
-	}
-
-	/**
 	 * Getter for event list with handler functions.
 	 *
+	 * @override
 	 * @private
 	 * @readonly
 	 * @returns {Object<string, Event|Function>} - Return event fixture
@@ -160,11 +69,7 @@ class VanillaInput extends HTMLElement {
 	}
 
 	disconnectedCallback() {
-		Object.entries(this.events).forEach(([event, func]) => {
-			this.removeEventListener(event, function ($event) {
-				func.call(this, $event);
-			});
-		});
+		this.removeAllEventListeners();
 	}
 
 	static get observedAttributes() {
@@ -218,11 +123,7 @@ class VanillaInput extends HTMLElement {
 		this.$labelContainer.remove();
 
 		// Bind all event listeners
-		Object.entries(this.events).forEach(([event, func]) => {
-			this.addEventListener(event, function ($event) {
-				func.call(this, $event);
-			});
-		});
+		this.addAllEventListeners();
 
 		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
