@@ -31,7 +31,7 @@ export function NodeReferences(superClass) {
 		refs = {};
 
 		/**
-		 * @param {Object} options
+		 * @param {object} options
 		 */
 		constructor(options) {
 			super(options);

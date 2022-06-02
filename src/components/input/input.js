@@ -52,11 +52,16 @@ class VanillaInput extends BasicInputElement {
 		};
 	}
 
+	/**
+	 * @override
+	 * @return {(string)[]}
+	 */
+	static get observedAttributes() {
+		return [Attrs.LABEL, Attrs.VALUE, Attrs.PLACEHOLDER];
+	}
+
 	constructor() {
-		super({
-			template,
-			styleSheets: CSS.toString(),
-		});
+		super({ template });
 		this.attachShadow({
 			mode: 'open',
 			delegatesFocus: true,
@@ -64,8 +69,6 @@ class VanillaInput extends BasicInputElement {
 	}
 
 	connectedCallback() {
-		//this.template = template.content.cloneNode(true);
-
 		this.setRef(Identities.ROOT)
 			.setRef(Identities.INNER_CONTAINER)
 			.setRef(Identities.INPUT)
@@ -74,27 +77,21 @@ class VanillaInput extends BasicInputElement {
 
 		this.getRef(Identities.LABEL_CONTAINER).remove();
 
+		const rootRef = this.getRef(Identities.ROOT);
+		rootRef.classList.remove(Classes.PENDING_INIT);
+		rootRef.classList.add(Classes.INITIALIZED);
+
+		this.shadowRoot.appendChild(rootRef);
+		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
 		this.addAllEventListeners();
 
 		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
 		}
-
-		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
-
-		const rootRef = this.getRef(Identities.ROOT);
-
-		this.shadowRoot.appendChild(rootRef);
-		rootRef.classList.remove(Classes.PENDING_INIT);
-		rootRef.classList.add(Classes.INITIALIZED);
 	}
 
 	disconnectedCallback() {
 		this.removeAllEventListeners();
-	}
-
-	static get observedAttributes() {
-		return Object.values(Attrs);
 	}
 
 	attributeChangedCallback(name, value, newValue) {

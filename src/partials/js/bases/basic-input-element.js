@@ -78,7 +78,7 @@ export class BasicInputElement extends mixer(HTMLElement).with(
 	}
 
 	/**
-	 * @param {Object} options
+	 * @param {object} options
 	 */
 	constructor(options) {
 		super(options);
