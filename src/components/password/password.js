@@ -6,8 +6,9 @@
 
 import HTML from './password.html';
 import CSS from './password.scss';
-import { Attrs, Classes, Events } from '#partials/js/consts';
+import { Attrs, Classes, Events, Identities } from '#partials/js/consts';
 import { createStyleElement, getAttributes } from '#partials/js/utils';
+import { BasicInputElement } from '#partials/js/bases';
 
 /**
  * HTML template content.
@@ -24,79 +25,10 @@ const PASSWORD = 'password';
  * Class of custom password input element. HTML tag is [vanilla-password]
  *
  * @class
- * @augments HTMLElement
- * @property {string} tagName 					- Getter for tag of custom element
- * @property {HTMLElement} $root 				- Reference of main container div
- * @property {HTMLElement} $innerContainer 		- Reference of secondary container div
- * @property {HTMLElement} $input 				- Reference of input[type="text|password"]
- * @property {HTMLElement} $labelContainer		- Reference of container with label
- * @property {HTMLElement} $label				- Reference of label
- * @property {HTMLElement} $switchBtnContainer	- Reference to switch button container
+ * @augments BasicInputElement
+ * @property {string} tagName - Getter for tag of custom element
  */
-class VanillaPassword extends HTMLElement {
-	/**
-	 * @static
-	 * @readonly
-	 * @returns {string} - Return tag name
-	 */
-	static get tagName() {
-		return 'vanilla-password';
-	}
-
-	/**
-	 * [id="root-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $root
-	 */
-	$root;
-
-	/**
-	 * [id="inner-container-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $innerContainer
-	 */
-	$innerContainer;
-
-	/**
-	 * [id="input-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $input
-	 */
-	$input;
-
-	/**
-	 * [id="label-container-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $labelContainer
-	 */
-	$labelContainer;
-
-	/**
-	 * [id="label-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $label
-	 */
-	$label;
-
-	/**
-	 * [id="switch-btn-container-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $switchBtnContainer
-	 */
-	$switchBtnContainer;
-
+class VanillaPassword extends BasicInputElement {
 	/**
 	 * Flag for input element type.
 	 * If it falsy then input element type will be text.
@@ -108,58 +40,21 @@ class VanillaPassword extends HTMLElement {
 	isInputTypePassword = true;
 
 	/**
-	 * Getter for current value.
-	 *
-	 * @public
-	 * @returns {string}
+	 * @override
+	 * @static
+	 * @readonly
+	 * @returns {string} - Return tag name
 	 */
-	get value() {
-		return this.$input.value || '';
-	}
-
-	/**
-	 * Setter for value changing.
-	 *
-	 * @public
-	 * @param {string} value
-	 * @returns {void}
-	 */
-	set value(value) {
-		if (this.$input) {
-			this.$input.value = value;
-		}
-	}
-
-	/**
-	 * Getter for text of label.
-	 *
-	 * @public
-	 * @returns {string}
-	 */
-	get label() {
-		return this.getAttribute(Attrs.LABEL);
-	}
-
-	/**
-	 * Setter for label text changing.
-	 *
-	 * @public
-	 * @param {string} value
-	 * @returns {void}
-	 */
-	set label(value) {
-		this.setAttribute(Attrs.LABEL, value);
+	static get tagName() {
+		return 'vanilla-password';
 	}
 
 	/**
 	 * Getter for event list with handler functions.
 	 *
+	 * @override
 	 * @private
 	 * @readonly
-	 * @returns {Object<string, Event|Function>} - Return event fixture
-	 * @example ```js
-	 * 	{ click: [object Function] }
-	 * ```
 	 */
 	get events() {
 		return {
@@ -171,8 +66,16 @@ class VanillaPassword extends HTMLElement {
 		};
 	}
 
+	/**
+	 * @override
+	 * @return {(string)[]}
+	 */
+	static get observedAttributes() {
+		return [Attrs.VALUE, Attrs.LABEL, Attrs.PLACEHOLDER, Attrs.TYPE];
+	}
+
 	constructor() {
-		super();
+		super({ template });
 		this.attachShadow({
 			mode: 'open',
 			delegatesFocus: true,
@@ -180,19 +83,45 @@ class VanillaPassword extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.init();
+		this.setRef(Identities.ROOT)
+			.setRef(Identities.INNER_CONTAINER)
+			.setRef(Identities.INPUT)
+			.setRef(Identities.LABEL_CONTAINER)
+			.setRef(Identities.LABEL)
+			.setRef(Identities.SWITCH_BTN_CONTAINER);
+
+		this.getRef(Identities.LABEL_CONTAINER).remove();
+
+		this.getRef(Identities.SWITCH_BTN_CONTAINER).addEventListener(
+			Events.CLICK,
+			() => {
+				this.isInputTypePassword = !this.isInputTypePassword;
+				const type = this.isInputTypePassword ? PASSWORD : TEXT;
+				this.getRef(Identities.ROOT).dispatchEvent(
+					new CustomEvent(Events.TYPE_CHANGE, {
+						bubbles: true,
+						composed: true,
+						detail: { type },
+					}),
+				);
+			},
+		);
+
+		const rootRef = this.getRef(Identities.ROOT);
+		rootRef.classList.remove(Classes.PENDING_INIT);
+		rootRef.classList.add(Classes.INITIALIZED);
+
+		this.shadowRoot.appendChild(rootRef);
+		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
+		this.addAllEventListeners();
+
+		for (const node of getAttributes(this)) {
+			this.changeAttributeValue(node.name, node.value, node.value);
+		}
 	}
 
 	disconnectedCallback() {
-		Object.entries(this.events).forEach(([event, func]) => {
-			this.removeEventListener(event, function ($event) {
-				func.call(this, $event);
-			});
-		});
-	}
-
-	static get observedAttributes() {
-		return Object.values(Attrs);
+		this.removeAllEventListeners();
 	}
 
 	attributeChangedCallback(name, value, newValue) {
@@ -200,80 +129,31 @@ class VanillaPassword extends HTMLElement {
 	}
 
 	/**
-	 * @param {string} name 	- Name of attribute
-	 * @param {string} value 	- Value of current state
+	 * @param {string} name - Name of attribute
+	 * @param {string} value - Value of current state
 	 * @param {string} newValue - Value of new state
 	 * @returns {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
-		if (!this.$root) {
+		if (!this.hasRef(Identities.ROOT)) {
 			return;
 		}
 
+		const root = this.getRef(Identities.ROOT);
+
 		switch (name) {
 			case Attrs.LABEL:
-				// Invoke when change value of label attr/property
 				this.updateLabelElement(newValue);
 				break;
 
 			case Attrs.VALUE:
-				this.$input.setAttribute(name, newValue);
-				this.$input.dispatchEvent(new Event(Events.CHANGE));
+				root.setAttribute(name, newValue);
+				root.dispatchEvent(new Event(Events.CHANGE));
 				break;
 
 			default:
-				this.$input.setAttribute(name, newValue);
+				root.setAttribute(name, newValue);
 		}
-	}
-
-	init() {
-		const clondedTemplate = template.content.cloneNode(true);
-
-		// Access cloned DOM elements
-		this.$root = clondedTemplate.getElementById('root-element');
-		this.$innerContainer = clondedTemplate.getElementById(
-			'inner-container-element',
-		);
-		this.$input = clondedTemplate.getElementById('input-element');
-
-		this.$switchBtnContainer = clondedTemplate.getElementById(
-			'switch-btn-container-element',
-		);
-		this.$switchBtnContainer.addEventListener(Events.CLICK, () => {
-			this.isInputTypePassword = !this.isInputTypePassword;
-			const type = this.isInputTypePassword ? PASSWORD : TEXT;
-			this.$root.dispatchEvent(
-				new CustomEvent(Events.TYPE_CHANGE, {
-					bubbles: true,
-					composed: true,
-					detail: { type },
-				}),
-			);
-		});
-
-		this.$label = clondedTemplate.getElementById('label-element');
-		this.$labelContainer = clondedTemplate.getElementById(
-			'label-container-element',
-		);
-		this.$labelContainer.remove();
-
-		// Bind all event listeners
-		Object.entries(this.events).forEach(([event, func]) => {
-			this.addEventListener(event, function ($event) {
-				func.call(this, $event);
-			});
-		});
-
-		for (const node of getAttributes(this)) {
-			this.changeAttributeValue(node.name, node.value, node.value);
-		}
-
-		// Append styles to root element
-		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
-
-		this.shadowRoot.appendChild(this.$root);
-		this.$root.classList.remove(Classes.PENDING_INIT);
-		this.$root.classList.add(Classes.INITIALIZED);
 	}
 
 	/**
@@ -281,85 +161,102 @@ class VanillaPassword extends HTMLElement {
 	 * If value is falsy remove label container in root.
 	 *
 	 * @private
+	 * @function
+	 * @name updateLabelElement
 	 * @param {string} value
 	 * @returns {void}
 	 */
 	updateLabelElement(value) {
-		if (Boolean(value)) {
-			this.$root.classList.add(Classes.HAS_LABEL);
-			this.$innerContainer.insertBefore(
-				this.$labelContainer,
-				this.$innerContainer.firstChild,
-			);
+		const root = this.getRef(Identities.ROOT);
+		const innerContainer = this.getRef(Identities.INNER_CONTAINER);
+		const labelContainer = this.getRef(Identities.LABEL_CONTAINER);
+		const label = this.getRef(Identities.LABEL);
 
-			this.$labelContainer = this.$innerContainer.querySelector(
-				'#label-container-element',
-			);
-			this.$label = this.$innerContainer.querySelector('#label-element');
-			this.$label.innerHTML = value;
+		if (!Boolean(value)) {
+			root.classList.remove(Classes.HAS_LABEL);
+			labelContainer.remove();
 			return;
 		}
-		this.$root.classList.remove(Classes.HAS_LABEL);
-		this.$labelContainer.remove();
+
+		root.classList.add(Classes.HAS_LABEL);
+		innerContainer.insertBefore(labelContainer, innerContainer.firstChild);
+		label.innerHTML = value;
 	}
 
 	/**
 	 * @private
+	 * @function
+	 * @name toggleValueClass
 	 * @param {string} value
 	 * @returns {void}
 	 */
 	toggleValueClass(value) {
+		const root = this.getRef(Identities.ROOT);
 		if (Boolean(value)) {
-			this.$root.classList.add(Classes.HAS_VALUE);
+			root.classList.add(Classes.HAS_VALUE);
 			return;
 		}
-		this.$root.classList.remove(Classes.HAS_VALUE);
+		root.classList.remove(Classes.HAS_VALUE);
 	}
 
 	/**
 	 * @private
+	 * @function
+	 * @name focusToInput
 	 * @returns {void}
 	 */
 	focusToInput() {
-		this.$input.focus();
+		this.getRef(Identities.ROOT).focus();
 	}
 
 	/**
 	 * @private
+	 * @function
+	 * @name changeInputTypeAsText
 	 * @returns {void}
 	 */
 	changeInputTypeAsText() {
-		this.$input.setAttribute(Attrs.TYPE, 'text');
+		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, 'text');
 	}
 
 	/**
 	 * @private
+	 * @function
+	 * @name changeInputTypeAsPassword
 	 * @returns {void}
 	 */
 	changeInputTypeAsPassword() {
-		this.$input.setAttribute(Attrs.TYPE, 'password');
+		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, 'password');
 	}
 
 	/**
 	 * @private
+	 * @function
+	 * @name changeSwitchBtnAsPassword
 	 * @returns {void}
 	 */
 	changeSwitchBtnAsPassword() {
-		this.$switchBtnContainer.classList.remove(Classes.TYPE_TEXT);
-		this.$switchBtnContainer.classList.add(Classes.TYPE_PASSWORD);
+		const switchBtnContainer = this.getRef(Identities.SWITCH_BTN_CONTAINER);
+		switchBtnContainer.classList.remove(Classes.TYPE_TEXT);
+		switchBtnContainer.classList.add(Classes.TYPE_PASSWORD);
 	}
 
 	/**
 	 * @private
+	 * @function
+	 * @name changeSwitchBtnAsText
 	 * @returns {void}
 	 */
 	changeSwitchBtnAsText() {
-		this.$switchBtnContainer.classList.remove(Classes.TYPE_PASSWORD);
-		this.$switchBtnContainer.classList.add(Classes.TYPE_TEXT);
+		const switchBtnContainer = this.getRef(Identities.SWITCH_BTN_CONTAINER);
+		switchBtnContainer.classList.remove(Classes.TYPE_PASSWORD);
+		switchBtnContainer.classList.add(Classes.TYPE_TEXT);
 	}
 
 	/**
 	 * @private
+	 * @function
+	 * @name onChange
 	 * @param {Event} $event
 	 * @returns {void}
 	 */
@@ -369,6 +266,8 @@ class VanillaPassword extends HTMLElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name onClick
 	 * @param {Event} $event
 	 * @returns {void}
 	 */
@@ -379,6 +278,8 @@ class VanillaPassword extends HTMLElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name onFocus
 	 * @param {Event} $event
 	 * @returns {void}
 	 */
@@ -389,6 +290,8 @@ class VanillaPassword extends HTMLElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name onTypeChange
 	 * @param {CustomEvent} $event
 	 * @returns {void}
 	 */
@@ -403,7 +306,6 @@ class VanillaPassword extends HTMLElement {
 		if (type === PASSWORD) {
 			this.changeInputTypeAsPassword();
 			this.changeSwitchBtnAsPassword();
-			return;
 		}
 	}
 }
