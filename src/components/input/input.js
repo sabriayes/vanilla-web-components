@@ -54,8 +54,8 @@ class VanillaInput extends BasicInputElement {
 
 	constructor() {
 		super({
-			template: template,
-			css: CSS.toString(),
+			template,
+			styleSheets: CSS.toString(),
 		});
 		this.attachShadow({
 			mode: 'open',
@@ -64,7 +64,7 @@ class VanillaInput extends BasicInputElement {
 	}
 
 	connectedCallback() {
-		this.template = template.content.cloneNode(true);
+		//this.template = template.content.cloneNode(true);
 
 		this.setRef(Identities.ROOT)
 			.setRef(Identities.INNER_CONTAINER)

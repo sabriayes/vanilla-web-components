@@ -30,14 +30,17 @@ export function NodeReferences(superClass) {
 		 */
 		refs = {};
 
+		/**
+		 * @param {Object} options
+		 */
 		constructor(options) {
 			super(options);
-
-			if (!options.template) {
+			const { template } = options;
+			if (!template) {
 				throw new MissingProperty('template');
 			}
 
-			this.template = options.template.cloneNode(true);
+			this.template = template.content.cloneNode(true);
 		}
 
 		/**
