@@ -23,7 +23,7 @@ template.innerHTML = HTML.toString();
  *
  * @class
  * @augments BasicInputElement
- * @property {string} tagName 	- Getter for tag of custom element
+ * @property {string} tagName - Getter for tag of custom element
  */
 class VanillaInput extends BasicInputElement {
 	/**
@@ -133,6 +133,8 @@ class VanillaInput extends BasicInputElement {
 	 * If value is falsy remove label container in root.
 	 *
 	 * @private
+	 * @function
+	 * @name updateLabelElement
 	 * @param {string} value
 	 * @returns {void}
 	 */
@@ -155,6 +157,8 @@ class VanillaInput extends BasicInputElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name toggleValueClass
 	 * @param {string} value
 	 * @returns {void}
 	 */
@@ -169,6 +173,8 @@ class VanillaInput extends BasicInputElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name focusToInput
 	 * @returns {void}
 	 */
 	focusToInput() {
@@ -177,6 +183,8 @@ class VanillaInput extends BasicInputElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name onChange
 	 * @param {Event} $event
 	 * @returns {void}
 	 */
@@ -186,6 +194,8 @@ class VanillaInput extends BasicInputElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name onClick
 	 * @param {Event} $event
 	 * @returns {void}
 	 */
@@ -196,6 +206,8 @@ class VanillaInput extends BasicInputElement {
 
 	/**
 	 * @private
+	 * @function
+	 * @name onFocus
 	 * @param {Event} $event
 	 * @returns {void}
 	 */
