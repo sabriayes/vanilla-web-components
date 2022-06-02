@@ -6,8 +6,8 @@
 
 import HTML from './input.html';
 import CSS from './input.scss';
-import { BasicInputElement } from 'partials/js/bases/basic-input';
-import { Attrs, Classes, Events } from 'partials/js/consts';
+import { BasicInputElement } from 'partials/js/bases';
+import { Attrs, Events, Classes, Identities } from 'partials/js/consts';
 import { createStyleElement, getAttributes } from 'partials/js/utils';
 
 /**
@@ -44,7 +44,11 @@ class VanillaInput extends BasicInputElement {
 	 * @readonly
 	 * @returns {Object<string, Event|Function>} - Return event fixture
 	 * @example ```js
-	 * 	{ click: [object Function] }
+	 * 	get events() {
+	 * 		return {
+	 * 			[Events.CLICK]: ($event) => {},
+	 * 		};
+	 * 	}
 	 * ```
 	 */
 	get events() {
@@ -65,7 +69,28 @@ class VanillaInput extends BasicInputElement {
 	}
 
 	connectedCallback() {
-		this.init();
+		this.templateNode = template.content.cloneNode(true);
+		this.setRef(Identities.ROOT)
+			.setRef(Identities.INNER_CONTAINER)
+			.setRef(Identities.INPUT)
+			.setRef(Identities.LABEL_CONTAINER)
+			.setRef(Identities.LABEL);
+
+		this.getRef('label-container-element').remove();
+
+		// Bind all event listeners
+		this.addAllEventListeners();
+
+		for (const node of getAttributes(this)) {
+			this.changeAttributeValue(node.name, node.value, node.value);
+		}
+
+		// Append styles to root element
+		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
+
+		this.shadowRoot.appendChild(this.getRef('root-element'));
+		this.getRef('root-element').classList.remove(Classes.PENDING_INIT);
+		this.getRef('root-element').classList.add(Classes.INITIALIZED);
 	}
 
 	disconnectedCallback() {
@@ -87,7 +112,7 @@ class VanillaInput extends BasicInputElement {
 	 * @returns {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
-		if (!this.$root) {
+		if (!this.getRef('root-element')) {
 			return;
 		}
 
@@ -98,43 +123,15 @@ class VanillaInput extends BasicInputElement {
 				break;
 
 			case Attrs.VALUE:
-				this.$input.setAttribute(name, newValue);
-				this.$input.dispatchEvent(new Event(Events.CHANGE));
+				this.getRef('input-element').setAttribute(name, newValue);
+				this.getRef('input-element').dispatchEvent(
+					new Event(Events.CHANGE),
+				);
 				break;
 
 			default:
-				this.$input.setAttribute(name, newValue);
+				this.getRef('input-element').setAttribute(name, newValue);
 		}
-	}
-
-	init() {
-		const clondedTemplate = template.content.cloneNode(true);
-
-		// Access cloned DOM elements
-		this.$root = clondedTemplate.getElementById('root-element');
-		this.$innerContainer = clondedTemplate.getElementById(
-			'inner-container-element',
-		);
-		this.$input = clondedTemplate.getElementById('input-element');
-		this.$label = clondedTemplate.getElementById('label-element');
-		this.$labelContainer = clondedTemplate.getElementById(
-			'label-container-element',
-		);
-		this.$labelContainer.remove();
-
-		// Bind all event listeners
-		this.addAllEventListeners();
-
-		for (const node of getAttributes(this)) {
-			this.changeAttributeValue(node.name, node.value, node.value);
-		}
-
-		// Append styles to root element
-		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
-
-		this.shadowRoot.appendChild(this.$root);
-		this.$root.classList.remove(Classes.PENDING_INIT);
-		this.$root.classList.add(Classes.INITIALIZED);
 	}
 
 	/**
@@ -147,21 +144,20 @@ class VanillaInput extends BasicInputElement {
 	 */
 	updateLabelElement(value) {
 		if (Boolean(value)) {
-			this.$root.classList.add(Classes.HAS_LABEL);
-			this.$innerContainer.insertBefore(
-				this.$labelContainer,
-				this.$innerContainer.firstChild,
+			this.getRef('root-element').classList.add(Classes.HAS_LABEL);
+			this.getRef('inner-container-element').insertBefore(
+				this.getRef('label-container-element'),
+				this.getRef('inner-container-element').firstChild,
 			);
 
-			this.$labelContainer = this.$innerContainer.querySelector(
-				'#label-container-element',
-			);
-			this.$label = this.$innerContainer.querySelector('#label-element');
-			this.$label.innerHTML = value;
+			this.$labelContainer = this.getRef(
+				'inner-container-element',
+			).querySelector('label-container-element');
+			this.getRef('label-element').innerHTML = value;
 			return;
 		}
-		this.$root.classList.remove(Classes.HAS_LABEL);
-		this.$labelContainer.remove();
+		this.getRef('root-element').classList.remove(Classes.HAS_LABEL);
+		this.getRef('label-container-element').remove();
 	}
 
 	/**
@@ -171,10 +167,10 @@ class VanillaInput extends BasicInputElement {
 	 */
 	toggleValueClass(value) {
 		if (Boolean(value)) {
-			this.$root.classList.add(Classes.HAS_VALUE);
+			this.getRef('root-element').classList.add(Classes.HAS_VALUE);
 			return;
 		}
-		this.$root.classList.remove(Classes.HAS_VALUE);
+		this.getRef('root-element').classList.remove(Classes.HAS_VALUE);
 	}
 
 	/**
@@ -182,7 +178,7 @@ class VanillaInput extends BasicInputElement {
 	 * @returns {void}
 	 */
 	focusToInput() {
-		this.$input.focus();
+		this.getRef('input-element').focus();
 	}
 
 	/**

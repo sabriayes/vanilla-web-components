@@ -1,7 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { Classes } = require('./../src/partials/js/consts');
-
-const WAIT_UNTIL = { waitUntil: 'domcontentloaded' };
+const { WAIT_UNTIL, INITIALIZED, HAS_VALUE, HAS_LABEL } = require('./consts');
 
 test.describe('The VanillaInput instance', () => {
 	test.beforeEach(async ({ page }) => {
@@ -16,7 +14,7 @@ test.describe('The VanillaInput instance', () => {
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			await expect(
 				page.locator('vanilla-input #root-element'),
-			).toHaveClass(new RegExp(Classes.INITIALIZED));
+			).toHaveClass(new RegExp(INITIALIZED));
 		});
 
 		test('should have [initialized] class', async ({ page }) => {
@@ -41,7 +39,7 @@ test.describe('The VanillaInput instance', () => {
 			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const rootElem = page.locator('vanilla-input #root-element');
-			await expect(rootElem).toHaveClass(new RegExp(Classes.HAS_LABEL));
+			await expect(rootElem).toHaveClass(new RegExp(HAS_LABEL));
 		});
 
 		test('should label element be visible', async ({ page }) => {
@@ -134,7 +132,7 @@ test.describe('The VanillaInput instance', () => {
 			await inputElem.focus();
 			await inputElem.type('TEXT');
 			const rootElem = inputElem.locator('#root-element');
-			await expect(rootElem).toHaveClass(new RegExp(Classes.HAS_VALUE));
+			await expect(rootElem).toHaveClass(new RegExp(HAS_VALUE));
 		});
 
 		test('should return text value', async ({ page }) => {

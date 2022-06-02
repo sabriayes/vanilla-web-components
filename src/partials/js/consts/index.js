@@ -1,9 +1,4 @@
-const Attrs = require('./attributes');
-const Classes = require('./classes');
-const Events = require('./events');
-
-module.exports = {
-	Classes,
-	Events,
-	Attrs,
-};
+export { Attrs } from './attributes';
+export { Classes } from './classes';
+export { Events } from './events';
+export { Identities } from './identities';
