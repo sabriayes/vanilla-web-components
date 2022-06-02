@@ -8,6 +8,10 @@
 	},
 	"main": "./dist",
 	"typings": "./dist",
+	"imports": {
+		"#partials/*": "./src/partials/*.js",
+		"#components/*": "./src/components/*.js"
+	},
 	"scripts": {
 		"postinstall": "npm run build:prod",
 		"build:prod": "webpack --mode production",
@@ -54,7 +58,6 @@
 		"prettier": "^2.3.2",
 		"sass": "^1.45.1",
 		"sass-loader": "^12.4.0",
-		"url": "^0.11.0",
 		"webpack": "^5.64.1",
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.5.0",

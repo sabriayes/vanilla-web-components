@@ -1,6 +1,7 @@
-import { Attrs, Events, Identities } from 'partials/js/consts';
-import { EventManager, NodeReferences } from 'partials/js/mixins';
-import { mixer } from 'partials/js/utils';
+import { Attrs, Events, Identities } from '#partials/js/consts';
+import { EventManager, NodeReferences } from '#partials/js/mixins';
+import { mixer } from '#partials/js/utils';
+import { NotImplementedMethod } from '#partials/js/errors';
 
 /**
  * @class
@@ -29,7 +30,7 @@ export class BasicInputElement extends mixer(HTMLElement).with(
 	 * ```
 	 */
 	static get tagName() {
-		throw new NotImplementedError('tagName()');
+		throw new NotImplementedMethod('tagName()');
 	}
 
 	/**

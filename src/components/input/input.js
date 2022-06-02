@@ -6,9 +6,9 @@
 
 import HTML from './input.html';
 import CSS from './input.scss';
-import { BasicInputElement } from 'partials/js/bases';
-import { Attrs, Events, Classes, Identities } from 'partials/js/consts';
-import { createStyleElement, getAttributes } from 'partials/js/utils';
+import { BasicInputElement } from '#partials/js/bases';
+import { Attrs, Events, Classes, Identities } from '#partials/js/consts';
+import { createStyleElement, getAttributes } from '#partials/js/utils';
 
 /**
  * HTML template content.
@@ -88,9 +88,9 @@ class VanillaInput extends BasicInputElement {
 		// Append styles to root element
 		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
 
-		this.shadowRoot.appendChild(this.getRef('root-element'));
-		this.getRef('root-element').classList.remove(Classes.PENDING_INIT);
-		this.getRef('root-element').classList.add(Classes.INITIALIZED);
+		this.shadowRoot.appendChild(this.getRef(Identities.ROOT));
+		this.getRef(Identities.ROOT).classList.remove(Classes.PENDING_INIT);
+		this.getRef(Identities.ROOT).classList.add(Classes.INITIALIZED);
 	}
 
 	disconnectedCallback() {

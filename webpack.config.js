@@ -29,8 +29,8 @@ module.exports = (env, argv) => ({
 	},
 	resolve: {
 		alias: {
-			partials: path.resolve(__dirname, 'src/partials'),
-			components: path.resolve(__dirname, 'src/components'),
+			'#partials': path.resolve(__dirname, 'src/partials'),
+			'#components': path.resolve(__dirname, 'src/components'),
 		},
 	},
 	devServer: {

@@ -1,4 +1,4 @@
-import { NotImplementedMethod } from 'partials/js/errors';
+import { NotImplementedMethod } from '#partials/js/errors';
 
 /**
  * @template T

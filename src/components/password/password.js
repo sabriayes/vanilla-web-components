@@ -6,8 +6,8 @@
 
 import HTML from './password.html';
 import CSS from './password.scss';
-import { Attrs, Classes, Events } from 'partials/js/consts';
-import { createStyleElement, getAttributes } from 'partials/js/utils';
+import { Attrs, Classes, Events } from '#partials/js/consts';
+import { createStyleElement, getAttributes } from '#partials/js/utils';
 
 /**
  * HTML template content.

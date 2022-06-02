@@ -1,4 +1,4 @@
-import { ReferenceNotFound, DuplicatedReference } from 'partials/js/errors';
+import { ReferenceNotFound, DuplicatedReference } from '#partials/js/errors';
 
 /**
  * @template T
