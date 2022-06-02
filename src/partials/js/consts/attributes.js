@@ -4,11 +4,9 @@
  * @readonly
  * @enum {string}
  */
-const Attrs = Object.freeze({
+export const Attrs = Object.freeze({
 	LABEL: 'label',
 	PLACEHOLDER: 'placeholder',
 	VALUE: 'value',
 	TYPE: 'type',
 });
-
-module.exports = Attrs;

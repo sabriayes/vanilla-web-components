@@ -1,6 +1,8 @@
 /**
  * Returns all attributes of the element as an array.
  *
+ * @function
+ * @name getAttributes
  * @param {HTMLElement} element - HTML element
  * @returns {Array<Object<{name: string, value: string}>>}
  */

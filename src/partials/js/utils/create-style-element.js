@@ -1,6 +1,8 @@
 /**
  * Returns a <style> element with appended styles.
  *
+ * @function
+ * @name createStyleElement
  * @param {string} cssText - CSS style sheet content
  * @returns {HTMLElement}
  */

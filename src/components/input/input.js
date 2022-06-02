@@ -6,8 +6,9 @@
 
 import HTML from './input.html';
 import CSS from './input.scss';
-import { Attrs, Classes, Events } from 'partials/js/consts';
-import { createStyleElement, getAttributes } from 'partials/js/utils';
+import { BasicInputElement } from '#partials/js/bases';
+import { Attrs, Events, Classes, Identities } from '#partials/js/consts';
+import { createStyleElement, getAttributes } from '#partials/js/utils';
 
 /**
  * HTML template content.
@@ -21,16 +22,12 @@ template.innerHTML = HTML.toString();
  * Class of custom text input element. HTML tag is [vanilla-input]
  *
  * @class
- * @augments HTMLElement
- * @property {string} tagName 				- Getter for tag of custom element
- * @property {HTMLElement} $root 			- Reference of main container div
- * @property {HTMLElement} $innerContainer 	- Reference of secondary container div
- * @property {HTMLElement} $input 			- Reference of input[type="text"]
- * @property {HTMLElement} $labelContainer	- Reference of container with label
- * @property {HTMLElement} $label			- Reference of label
+ * @augments BasicInputElement
+ * @property {string} tagName 	- Getter for tag of custom element
  */
-class VanillaInput extends HTMLElement {
+class VanillaInput extends BasicInputElement {
 	/**
+	 * @override
 	 * @static
 	 * @readonly
 	 * @returns {string} - Return tag name
@@ -40,103 +37,11 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * [id="root-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $root
-	 */
-	$root;
-
-	/**
-	 * [id="inner-container-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $innerContainer
-	 */
-	$innerContainer;
-
-	/**
-	 * [id="input-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $input
-	 */
-	$input;
-
-	/**
-	 * [id="label-container-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $labelContainer
-	 */
-	$labelContainer;
-
-	/**
-	 * [id="label-element"]
-	 *
-	 * @public
-	 * @readonly
-	 * @property {HTMLElement} $label
-	 */
-	$label;
-
-	/**
-	 * Getter for current value.
-	 *
-	 * @public
-	 * @returns {string}
-	 */
-	get value() {
-		return this.$input.value || '';
-	}
-
-	/**
-	 * Setter for value changing.
-	 *
-	 * @public
-	 * @param {string} value
-	 * @returns {void}
-	 */
-	set value(value) {
-		if (this.$input) {
-			this.$input.value = value;
-		}
-	}
-
-	/**
-	 * Getter for text of label.
-	 *
-	 * @public
-	 * @returns {string}
-	 */
-	get label() {
-		return this.getAttribute(Attrs.LABEL);
-	}
-
-	/**
-	 * Setter for label text changing.
-	 *
-	 * @public
-	 * @param {string} value
-	 * @returns {void}
-	 */
-	set label(value) {
-		this.setAttribute(Attrs.LABEL, value);
-	}
-
-	/**
 	 * Getter for event list with handler functions.
 	 *
+	 * @override
 	 * @private
 	 * @readonly
-	 * @returns {Object<string, Event|Function>} - Return event fixture
-	 * @example ```js
-	 * 	{ click: [object Function] }
-	 * ```
 	 */
 	get events() {
 		return {
@@ -147,8 +52,16 @@ class VanillaInput extends HTMLElement {
 		};
 	}
 
+	/**
+	 * @override
+	 * @return {(string)[]}
+	 */
+	static get observedAttributes() {
+		return [Attrs.LABEL, Attrs.VALUE, Attrs.PLACEHOLDER];
+	}
+
 	constructor() {
-		super();
+		super({ template });
 		this.attachShadow({
 			mode: 'open',
 			delegatesFocus: true,
@@ -156,19 +69,29 @@ class VanillaInput extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.init();
+		this.setRef(Identities.ROOT)
+			.setRef(Identities.INNER_CONTAINER)
+			.setRef(Identities.INPUT)
+			.setRef(Identities.LABEL_CONTAINER)
+			.setRef(Identities.LABEL);
+
+		this.getRef(Identities.LABEL_CONTAINER).remove();
+
+		const rootRef = this.getRef(Identities.ROOT);
+		rootRef.classList.remove(Classes.PENDING_INIT);
+		rootRef.classList.add(Classes.INITIALIZED);
+
+		this.shadowRoot.appendChild(rootRef);
+		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
+		this.addAllEventListeners();
+
+		for (const node of getAttributes(this)) {
+			this.changeAttributeValue(node.name, node.value, node.value);
+		}
 	}
 
 	disconnectedCallback() {
-		Object.entries(this.events).forEach(([event, func]) => {
-			this.removeEventListener(event, function ($event) {
-				func.call(this, $event);
-			});
-		});
-	}
-
-	static get observedAttributes() {
-		return Object.values(Attrs);
+		this.removeAllEventListeners();
 	}
 
 	attributeChangedCallback(name, value, newValue) {
@@ -176,64 +99,33 @@ class VanillaInput extends HTMLElement {
 	}
 
 	/**
-	 * @param {string} name 	- Name of attribute
-	 * @param {string} value 	- Value of current state
+	 * @function
+	 * @name changeAttributeValue
+	 * @param {string} name - Name of attribute
+	 * @param {string} value - Value of current state
 	 * @param {string} newValue - Value of new state
 	 * @returns {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
-		if (!this.$root) {
+		if (!this.hasRef(Identities.ROOT)) {
 			return;
 		}
 
+		const root = this.getRef(Identities.ROOT);
+
 		switch (name) {
 			case Attrs.LABEL:
-				// Invoke when change value of label attr/property
 				this.updateLabelElement(newValue);
 				break;
 
 			case Attrs.VALUE:
-				this.$input.setAttribute(name, newValue);
-				this.$input.dispatchEvent(new Event(Events.CHANGE));
+				root.setAttribute(name, newValue);
+				root.dispatchEvent(new Event(Events.CHANGE));
 				break;
 
 			default:
-				this.$input.setAttribute(name, newValue);
+				root.setAttribute(name, newValue);
 		}
-	}
-
-	init() {
-		const clondedTemplate = template.content.cloneNode(true);
-
-		// Access cloned DOM elements
-		this.$root = clondedTemplate.getElementById('root-element');
-		this.$innerContainer = clondedTemplate.getElementById(
-			'inner-container-element',
-		);
-		this.$input = clondedTemplate.getElementById('input-element');
-		this.$label = clondedTemplate.getElementById('label-element');
-		this.$labelContainer = clondedTemplate.getElementById(
-			'label-container-element',
-		);
-		this.$labelContainer.remove();
-
-		// Bind all event listeners
-		Object.entries(this.events).forEach(([event, func]) => {
-			this.addEventListener(event, function ($event) {
-				func.call(this, $event);
-			});
-		});
-
-		for (const node of getAttributes(this)) {
-			this.changeAttributeValue(node.name, node.value, node.value);
-		}
-
-		// Append styles to root element
-		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
-
-		this.shadowRoot.appendChild(this.$root);
-		this.$root.classList.remove(Classes.PENDING_INIT);
-		this.$root.classList.add(Classes.INITIALIZED);
 	}
 
 	/**
@@ -245,22 +137,20 @@ class VanillaInput extends HTMLElement {
 	 * @returns {void}
 	 */
 	updateLabelElement(value) {
-		if (Boolean(value)) {
-			this.$root.classList.add(Classes.HAS_LABEL);
-			this.$innerContainer.insertBefore(
-				this.$labelContainer,
-				this.$innerContainer.firstChild,
-			);
+		const root = this.getRef(Identities.ROOT);
+		const innerContainer = this.getRef(Identities.INNER_CONTAINER);
+		const labelContainer = this.getRef(Identities.LABEL_CONTAINER);
+		const label = this.getRef(Identities.LABEL);
 
-			this.$labelContainer = this.$innerContainer.querySelector(
-				'#label-container-element',
-			);
-			this.$label = this.$innerContainer.querySelector('#label-element');
-			this.$label.innerHTML = value;
+		if (!Boolean(value)) {
+			root.classList.remove(Classes.HAS_LABEL);
+			labelContainer.remove();
 			return;
 		}
-		this.$root.classList.remove(Classes.HAS_LABEL);
-		this.$labelContainer.remove();
+
+		root.classList.add(Classes.HAS_LABEL);
+		innerContainer.insertBefore(labelContainer, innerContainer.firstChild);
+		label.innerHTML = value;
 	}
 
 	/**
@@ -269,11 +159,12 @@ class VanillaInput extends HTMLElement {
 	 * @returns {void}
 	 */
 	toggleValueClass(value) {
+		const root = this.getRef(Identities.ROOT);
 		if (Boolean(value)) {
-			this.$root.classList.add(Classes.HAS_VALUE);
+			root.classList.add(Classes.HAS_VALUE);
 			return;
 		}
-		this.$root.classList.remove(Classes.HAS_VALUE);
+		root.classList.remove(Classes.HAS_VALUE);
 	}
 
 	/**
@@ -281,7 +172,7 @@ class VanillaInput extends HTMLElement {
 	 * @returns {void}
 	 */
 	focusToInput() {
-		this.$input.focus();
+		this.getRef(Identities.INPUT).focus();
 	}
 
 	/**

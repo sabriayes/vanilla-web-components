@@ -4,7 +4,7 @@
  * @readonly
  * @enum {string}
  */
-const Events = Object.freeze({
+export const Events = Object.freeze({
 	CHANGE: 'change',
 	CLICK: 'click',
 	FOCUS: 'focus',
@@ -12,5 +12,3 @@ const Events = Object.freeze({
 	SLOT_CHANGE: 'slotchange',
 	TYPE_CHANGE: 'typechange',
 });
-
-module.exports = Events;
