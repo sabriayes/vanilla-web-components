@@ -42,14 +42,6 @@ class VanillaInput extends BasicInputElement {
 	 * @override
 	 * @private
 	 * @readonly
-	 * @returns {Object<string, Event|Function>} - Return event fixture
-	 * @example ```js
-	 * 	get events() {
-	 * 		return {
-	 * 			[Events.CLICK]: ($event) => {},
-	 * 		};
-	 * 	}
-	 * ```
 	 */
 	get events() {
 		return {
@@ -61,7 +53,10 @@ class VanillaInput extends BasicInputElement {
 	}
 
 	constructor() {
-		super();
+		super({
+			template: template,
+			css: CSS.toString(),
+		});
 		this.attachShadow({
 			mode: 'open',
 			delegatesFocus: true,
@@ -69,28 +64,29 @@ class VanillaInput extends BasicInputElement {
 	}
 
 	connectedCallback() {
-		this.templateNode = template.content.cloneNode(true);
+		this.template = template.content.cloneNode(true);
+
 		this.setRef(Identities.ROOT)
 			.setRef(Identities.INNER_CONTAINER)
 			.setRef(Identities.INPUT)
 			.setRef(Identities.LABEL_CONTAINER)
 			.setRef(Identities.LABEL);
 
-		this.getRef('label-container-element').remove();
+		this.getRef(Identities.LABEL_CONTAINER).remove();
 
-		// Bind all event listeners
 		this.addAllEventListeners();
 
 		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
 		}
 
-		// Append styles to root element
 		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
 
-		this.shadowRoot.appendChild(this.getRef(Identities.ROOT));
-		this.getRef(Identities.ROOT).classList.remove(Classes.PENDING_INIT);
-		this.getRef(Identities.ROOT).classList.add(Classes.INITIALIZED);
+		const rootRef = this.getRef(Identities.ROOT);
+
+		this.shadowRoot.appendChild(rootRef);
+		rootRef.classList.remove(Classes.PENDING_INIT);
+		rootRef.classList.add(Classes.INITIALIZED);
 	}
 
 	disconnectedCallback() {
@@ -106,31 +102,32 @@ class VanillaInput extends BasicInputElement {
 	}
 
 	/**
-	 * @param {string} name 	- Name of attribute
-	 * @param {string} value 	- Value of current state
+	 * @function
+	 * @name changeAttributeValue
+	 * @param {string} name - Name of attribute
+	 * @param {string} value - Value of current state
 	 * @param {string} newValue - Value of new state
 	 * @returns {void}
 	 */
 	changeAttributeValue(name, value, newValue) {
-		if (!this.getRef('root-element')) {
+		if (!this.hasRef(Identities.ROOT)) {
 			return;
 		}
 
+		const root = this.getRef(Identities.ROOT);
+
 		switch (name) {
 			case Attrs.LABEL:
-				// Invoke when change value of label attr/property
 				this.updateLabelElement(newValue);
 				break;
 
 			case Attrs.VALUE:
-				this.getRef('input-element').setAttribute(name, newValue);
-				this.getRef('input-element').dispatchEvent(
-					new Event(Events.CHANGE),
-				);
+				root.setAttribute(name, newValue);
+				root.dispatchEvent(new Event(Events.CHANGE));
 				break;
 
 			default:
-				this.getRef('input-element').setAttribute(name, newValue);
+				root.setAttribute(name, newValue);
 		}
 	}
 
@@ -143,21 +140,20 @@ class VanillaInput extends BasicInputElement {
 	 * @returns {void}
 	 */
 	updateLabelElement(value) {
-		if (Boolean(value)) {
-			this.getRef('root-element').classList.add(Classes.HAS_LABEL);
-			this.getRef('inner-container-element').insertBefore(
-				this.getRef('label-container-element'),
-				this.getRef('inner-container-element').firstChild,
-			);
+		const root = this.getRef(Identities.ROOT);
+		const innerContainer = this.getRef(Identities.INNER_CONTAINER);
+		const labelContainer = this.getRef(Identities.LABEL_CONTAINER);
+		const label = this.getRef(Identities.LABEL);
 
-			this.$labelContainer = this.getRef(
-				'inner-container-element',
-			).querySelector('label-container-element');
-			this.getRef('label-element').innerHTML = value;
+		if (!Boolean(value)) {
+			root.classList.remove(Classes.HAS_LABEL);
+			labelContainer.remove();
 			return;
 		}
-		this.getRef('root-element').classList.remove(Classes.HAS_LABEL);
-		this.getRef('label-container-element').remove();
+
+		root.classList.add(Classes.HAS_LABEL);
+		innerContainer.insertBefore(labelContainer, innerContainer.firstChild);
+		label.innerHTML = value;
 	}
 
 	/**
@@ -166,11 +162,12 @@ class VanillaInput extends BasicInputElement {
 	 * @returns {void}
 	 */
 	toggleValueClass(value) {
+		const root = this.getRef(Identities.ROOT);
 		if (Boolean(value)) {
-			this.getRef('root-element').classList.add(Classes.HAS_VALUE);
+			root.classList.add(Classes.HAS_VALUE);
 			return;
 		}
-		this.getRef('root-element').classList.remove(Classes.HAS_VALUE);
+		root.classList.remove(Classes.HAS_VALUE);
 	}
 
 	/**
@@ -178,7 +175,7 @@ class VanillaInput extends BasicInputElement {
 	 * @returns {void}
 	 */
 	focusToInput() {
-		this.getRef('input-element').focus();
+		this.getRef(Identities.INPUT).focus();
 	}
 
 	/**

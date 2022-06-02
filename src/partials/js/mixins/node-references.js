@@ -1,4 +1,8 @@
-import { ReferenceNotFound, DuplicatedReference } from '#partials/js/errors';
+import {
+	ReferenceNotFound,
+	DuplicatedReference,
+	MissingProperty,
+} from '#partials/js/errors';
 
 /**
  * @template T
@@ -16,7 +20,7 @@ export function NodeReferences(superClass) {
 		 * @readonly
 		 * @type {Node}
 		 */
-		templateNode;
+		template;
 
 		/**
 		 * @private
@@ -26,8 +30,14 @@ export function NodeReferences(superClass) {
 		 */
 		refs = {};
 
-		constructor() {
-			super();
+		constructor(options) {
+			super(options);
+
+			if (!options.template) {
+				throw new MissingProperty('template');
+			}
+
+			this.template = options.template.cloneNode(true);
 		}
 
 		/**
@@ -67,7 +77,7 @@ export function NodeReferences(superClass) {
 			if (this.refs[query]) {
 				throw new DuplicatedReference(query);
 			}
-			const foundElement = this.templateNode.getElementById(query);
+			const foundElement = this.template.getElementById(query);
 			if (!foundElement) {
 				throw new ReferenceNotFound(query);
 			}

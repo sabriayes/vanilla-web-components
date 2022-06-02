@@ -77,7 +77,10 @@ export class BasicInputElement extends mixer(HTMLElement).with(
 		this.setAttribute(Attrs.LABEL, value);
 	}
 
-	constructor() {
-		super();
+	/**
+	 * @param {object} options
+	 */
+	constructor(options) {
+		super(options);
 	}
 }
