@@ -1,6 +1,6 @@
 :root {
-    --accent-color: #696cff;
-    --label-color: #b4bdc6;
+    --accent-color: rgba(105, 108, 255, 1);
+    --label-color: rgba(180, 189, 198, 1);
 }
 * {
     box-sizing: border-box;
