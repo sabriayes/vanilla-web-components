@@ -1,4 +1,4 @@
-import { Attrs, Events, Identities } from '#partials/js/consts';
+import {Attrs, Classes, Events, Identities} from '#partials/js/consts';
 import { EventManager, NodeReferences } from '#partials/js/mixins';
 import { mixer } from '#partials/js/utils';
 import { NotImplementedMethod } from '#partials/js/errors';
@@ -82,5 +82,76 @@ export class BasicInputElement extends mixer(HTMLElement).with(
 	 */
 	constructor(options) {
 		super(options);
+	}
+
+	/**
+	 * @param {string} name - Name of attribute
+	 * @param {string} value - Value of current state
+	 * @param {string} newValue - Value of new state
+	 * @returns {void}
+	 */
+	changeAttributeValue(name, value, newValue) {
+		if (!this.hasRef(Identities.ROOT)) {
+			return;
+		}
+
+		const root = this.getRef(Identities.ROOT);
+
+		switch (name) {
+			case Attrs.LABEL:
+				this.updateLabelElement(newValue);
+				break;
+
+			case Attrs.VALUE:
+				root.setAttribute(name, newValue);
+				root.dispatchEvent(new Event(Events.CHANGE));
+				break;
+
+			default:
+				root.setAttribute(name, newValue);
+		}
+	}
+
+	/**
+	 * Update state of label container element.
+	 * If value is falsy remove label container in root.
+	 *
+	 * @private
+	 * @function
+	 * @name updateLabelElement
+	 * @param {string} value
+	 * @returns {void}
+	 */
+	updateLabelElement(value) {
+		const root = this.getRef(Identities.ROOT);
+		const innerContainer = this.getRef(Identities.INNER_CONTAINER);
+		const labelContainer = this.getRef(Identities.LABEL_CONTAINER);
+		const label = this.getRef(Identities.LABEL);
+
+		if (!Boolean(value)) {
+			root.classList.remove(Classes.HAS_LABEL);
+			labelContainer.remove();
+			return;
+		}
+
+		root.classList.add(Classes.HAS_LABEL);
+		innerContainer.insertBefore(labelContainer, innerContainer.firstChild);
+		label.innerHTML = value;
+	}
+
+	/**
+	 * @private
+	 * @function
+	 * @name toggleValueClass
+	 * @param {string} value
+	 * @returns {void}
+	 */
+	toggleValueClass(value) {
+		const root = this.getRef(Identities.ROOT);
+		if (Boolean(value)) {
+			root.classList.add(Classes.HAS_VALUE);
+			return;
+		}
+		root.classList.remove(Classes.HAS_VALUE);
 	}
 }
