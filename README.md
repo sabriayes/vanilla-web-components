@@ -104,8 +104,7 @@ You can use iconic font library or SVG graphic. Set trailing icon color with `su
     console.log(nameElement.value);
 
     // Add event listener.
-    // $input - Ref to input text element in shadow DOM.
-	nameElement.$input.addEventListener('change', function($event) {
+	nameElement.addEventListener('change', function($event) {
         console.log($event.target.value);
     });
 </script>

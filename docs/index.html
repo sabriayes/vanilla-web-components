@@ -179,7 +179,7 @@
 
             const phoneNumber = document.getElementById('phone-number');
 
-			phoneNumber.$input.addEventListener('keyup', function($event) {
+			phoneNumber.addEventListener('keyup', function($event) {
 
 				const value = $event.target.value;
                 const isValid = /^\d+/.test(value);

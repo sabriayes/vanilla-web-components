@@ -1,0 +1,122 @@
+@import '~#partials/scss/abstracts/variables';
+@import '~#partials/scss/abstracts/mixins';
+@import '~#partials/scss/base/host';
+@import '~#partials/scss/layouts/component';
+@import '~#partials/scss/layouts/icon';
+@import '~#partials/scss/layouts/hint';
+
+.component-container{
+    &:focus-within, &.has-value {
+        & .main-wrapper {
+            border: 1px solid var(--vwc-accent-color, $accent-color);
+        }
+        & .label-container > label {
+            @include at-valid-host {
+                color: var(--vwc-accent-color, $accent-color);
+            }
+        }
+    }
+    & .main-wrapper {
+        @include at-invalid-host {
+            border: 1px solid var(--vwc-danger-color, $danger-color);
+        }
+    }
+    &:hover .label-container > label {
+        @include at-valid-host {
+            color: var(--vwc-accent-color, $accent-color);
+        }
+    }
+}
+
+.label-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    & > label {
+        width: 100%;
+        line-height: 1.2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--vwc-label-color, $label-color);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transform: translateY(.75rem);
+        transition: all 180ms ease-in-out;
+        transform-origin: 0% 100%;
+        @include at-invalid-host {
+            color: var(--vwc-danger-color, $danger-color);
+        }
+    }
+}
+
+.icon-container {
+    & slot[name="leading-icon"]::slotted(span) {
+        @include at-invalid-host {
+            color: var(--vwc-danger-color, $danger-color);
+        }
+    }
+}
+
+/** INPUT **/
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+input:is([type="text"], [type="password"]) {
+    width: 100%;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    border-radius: 0;
+    padding: 0;
+    font-weight: 400;
+    &:hover,
+    &:focus,
+    &:active {
+        border: none;
+        outline: none;
+    }
+    &:placeholder-shown {
+        font-size: 1rem;
+        opacity: .75;
+        line-height: 1.2rem;
+        height: 1.4rem;
+    }
+}
+
+.has-label {
+    & input:is([type="text"], [type="password"]) {
+        line-height: 1.4rem;
+        height: 1.6rem;
+        &:placeholder-shown {
+            opacity: 0;
+            transition: opacity 180ms ease-in-out;
+        }
+        &:focus:placeholder-shown {
+            opacity: .75;
+        }
+        &:focus-within:placeholder-shown {
+            opacity: .75;
+        }
+    }
+}
+
+.has-value,
+.component-container:focus-within  {
+    & .label-container > label {
+        transform: translateY(0) scale(.8);
+    }
+}
+
+.initialized .hints-container > slot {
+    transition-property: transform, opacity;
+    transition: 180ms linear;
+}
