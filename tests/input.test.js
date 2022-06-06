@@ -1,5 +1,18 @@
 const { test, expect } = require('@playwright/test');
-const { WAIT_UNTIL, INITIALIZED, HAS_VALUE, HAS_LABEL } = require('./consts');
+const { generateLocator, convertIdSelector } = require('./utils');
+const TAG_NAME = 'vanilla-input';
+const {
+	WAIT_UNTIL,
+	INITIALIZED,
+	HAS_VALUE,
+	HAS_LABEL,
+	ROOT,
+	LABEL,
+	ERROR_MESSAGES_SLOT,
+	HINT_TEXT_SLOT,
+	LEADING_ICON_SLOT,
+	TRAILING_ICON_SLOT,
+} = require('./consts');
 
 test.describe('The VanillaInput instance', () => {
 	test.beforeEach(async ({ page }) => {
@@ -12,23 +25,26 @@ test.describe('The VanillaInput instance', () => {
 		test('should be defined on DOM', async ({ page }) => {
 			const rawHTML = `<vanilla-input></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			await expect(
-				page.locator('vanilla-input #root-element'),
-			).toHaveClass(new RegExp(INITIALIZED));
+			const inputElem = await page.waitForSelector(TAG_NAME);
+			expect(inputElem).toBeDefined();
 		});
 
 		test('should have [initialized] class', async ({ page }) => {
 			const rawHTML = `<vanilla-input></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const inputElem = await page.waitForSelector('vanilla-input');
-			expect(inputElem).toBeDefined();
+			await expect(
+				page.locator(generateLocator(TAG_NAME, ROOT)),
+			).toHaveClass(new RegExp(INITIALIZED));
 		});
 
 		test('should label element be removed', async ({ page }) => {
 			const rawHTML = `<vanilla-input></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const labelElem = await page.$eval('vanilla-input', (elem) =>
-				elem.shadowRoot.querySelector('#label-element'),
+			const labelElem = await page.$eval(
+				TAG_NAME,
+				(elem, selector) =>
+					elem.shadowRoot.querySelector(String(selector)),
+				convertIdSelector(LABEL),
 			);
 			await expect(labelElem).toBeNull();
 		});
@@ -38,26 +54,26 @@ test.describe('The VanillaInput instance', () => {
 		test('should have [has-label] class', async ({ page }) => {
 			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const rootElem = page.locator('vanilla-input #root-element');
+			const rootElem = page.locator(generateLocator(TAG_NAME, ROOT));
 			await expect(rootElem).toHaveClass(new RegExp(HAS_LABEL));
 		});
 
 		test('should label element be visible', async ({ page }) => {
 			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const labelElem = page.locator('vanilla-input #label-element');
+			const labelElem = page.locator(generateLocator(TAG_NAME, LABEL));
 			await expect(labelElem).toBeVisible();
 		});
 
 		test('should label element has a text', async ({ page }) => {
 			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const labelElem = page.locator('vanilla-input #label-element');
+			const labelElem = page.locator(generateLocator(TAG_NAME, LABEL));
 			await expect(labelElem).toHaveText(/.*/);
 		});
 	});
 
-	test.describe('when define with invalid attribute', () => {
+	test.describe('when define with [invalid] attribute', () => {
 		test('should error messages element be visible', async ({ page }) => {
 			const rawHTML = `
 				<vanilla-input invalid>
@@ -66,7 +82,7 @@ test.describe('The VanillaInput instance', () => {
 			`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const errSlotElem = page.locator(
-				'vanilla-input #error-messages-slot',
+				generateLocator(TAG_NAME, ERROR_MESSAGES_SLOT),
 			);
 			await expect(errSlotElem).toBeVisible();
 		});
@@ -74,7 +90,9 @@ test.describe('The VanillaInput instance', () => {
 		test('should hint text element be hidden', async ({ page }) => {
 			const rawHTML = `<vanilla-input invalid></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const hintSlotElem = page.locator('vanilla-input #hint-text-slot');
+			const hintSlotElem = page.locator(
+				generateLocator(TAG_NAME, HINT_TEXT_SLOT),
+			);
 			await expect(hintSlotElem).not.toBeVisible();
 		});
 	});
@@ -87,7 +105,9 @@ test.describe('The VanillaInput instance', () => {
 				</vanilla-input>
 			`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const hintSlotElem = page.locator('vanilla-input #hint-text-slot');
+			const hintSlotElem = page.locator(
+				generateLocator(TAG_NAME, HINT_TEXT_SLOT),
+			);
 			await expect(hintSlotElem).toBeVisible();
 		});
 	});
@@ -103,7 +123,7 @@ test.describe('The VanillaInput instance', () => {
 			`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const iconSlotElem = page.locator(
-				'vanilla-input #leading-icon-slot',
+				generateLocator(TAG_NAME, LEADING_ICON_SLOT),
 			);
 			await expect(iconSlotElem).toBeVisible();
 		});
@@ -118,7 +138,7 @@ test.describe('The VanillaInput instance', () => {
 			`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
 			const iconSlotElem = page.locator(
-				'vanilla-input #trailing-icon-slot',
+				generateLocator(TAG_NAME, TRAILING_ICON_SLOT),
 			);
 			await expect(iconSlotElem).toBeVisible();
 		});
@@ -128,10 +148,10 @@ test.describe('The VanillaInput instance', () => {
 		test('should have [has-value] class', async ({ page }) => {
 			const rawHTML = `<vanilla-input></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const inputElem = page.locator('vanilla-input');
+			const inputElem = page.locator(TAG_NAME);
 			await inputElem.focus();
 			await inputElem.type('TEXT');
-			const rootElem = inputElem.locator('#root-element');
+			const rootElem = inputElem.locator(convertIdSelector(ROOT));
 			await expect(rootElem).toHaveClass(new RegExp(HAS_VALUE));
 		});
 
@@ -139,7 +159,7 @@ test.describe('The VanillaInput instance', () => {
 			const text = 'TEXT';
 			const rawHTML = `<vanilla-input></vanilla-input>`;
 			await page.setContent(rawHTML, WAIT_UNTIL);
-			const inputElem = page.locator('vanilla-input');
+			const inputElem = page.locator(TAG_NAME);
 			await inputElem.focus();
 			await inputElem.type(text);
 			const inputValue = await inputElem.evaluate((elem) => elem.value);
