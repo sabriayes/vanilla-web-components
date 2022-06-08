@@ -145,7 +145,7 @@ class VanillaPassword extends BasicInputElement {
 	 * @returns {void}
 	 */
 	changeInputTypeAsText() {
-		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, 'text');
+		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, TEXT);
 	}
 
 	/**
@@ -155,7 +155,7 @@ class VanillaPassword extends BasicInputElement {
 	 * @returns {void}
 	 */
 	changeInputTypeAsPassword() {
-		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, 'password');
+		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, PASSWORD);
 	}
 
 	/**
