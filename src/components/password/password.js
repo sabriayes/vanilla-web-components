@@ -88,24 +88,10 @@ class VanillaPassword extends BasicInputElement {
 			.setRef(Identities.INPUT)
 			.setRef(Identities.LABEL_CONTAINER)
 			.setRef(Identities.LABEL)
-			.setRef(Identities.SWITCH_BTN_CONTAINER);
+			.setRef(Identities.SWITCH_BTN_CONTAINER)
+			.setRef(Identities.SWITCH_BTN_SLOT);
 
 		this.getRef(Identities.LABEL_CONTAINER).remove();
-
-		this.getRef(Identities.SWITCH_BTN_CONTAINER).addEventListener(
-			Events.CLICK,
-			() => {
-				this.isInputTypePassword = !this.isInputTypePassword;
-				const type = this.isInputTypePassword ? PASSWORD : TEXT;
-				this.getRef(Identities.ROOT).dispatchEvent(
-					new CustomEvent(Events.TYPE_CHANGE, {
-						bubbles: true,
-						composed: true,
-						detail: { type },
-					}),
-				);
-			},
-		);
 
 		const rootRef = this.getRef(Identities.ROOT);
 		rootRef.classList.remove(Classes.PENDING_INIT);
@@ -118,6 +104,16 @@ class VanillaPassword extends BasicInputElement {
 		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
 		}
+
+		this.getRef(Identities.SWITCH_BTN_CONTAINER).addEventListener(
+			Events.CLICK,
+			this.onSwitchBtnClick.bind(this),
+		);
+
+		this.getRef(Identities.SWITCH_BTN_SLOT).addEventListener(
+			Events.SLOT_CHANGE,
+			this.onSwitchBtnSlotChange.bind(this),
+		);
 	}
 
 	disconnectedCallback() {
@@ -127,7 +123,7 @@ class VanillaPassword extends BasicInputElement {
 	attributeChangedCallback(name, value, newValue) {
 		this.changeAttributeValue(name, value, newValue);
 	}
-	
+
 	/**
 	 * @private
 	 * @function
@@ -145,7 +141,7 @@ class VanillaPassword extends BasicInputElement {
 	 * @returns {void}
 	 */
 	changeInputTypeAsText() {
-		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, 'text');
+		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, TEXT);
 	}
 
 	/**
@@ -155,7 +151,7 @@ class VanillaPassword extends BasicInputElement {
 	 * @returns {void}
 	 */
 	changeInputTypeAsPassword() {
-		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, 'password');
+		this.getRef(Identities.INPUT).setAttribute(Attrs.TYPE, PASSWORD);
 	}
 
 	/**
@@ -236,6 +232,45 @@ class VanillaPassword extends BasicInputElement {
 			this.changeInputTypeAsPassword();
 			this.changeSwitchBtnAsPassword();
 		}
+	}
+
+	/**
+	 * @private
+	 * @function
+	 * @name onSwitchBtnClick
+	 * @param {Event} $event
+	 * @returns {void}
+	 */
+	onSwitchBtnClick($event) {
+		const switchBtnSlot = this.getRef(Identities.SWITCH_BTN_SLOT);
+		if (!this.hasSlotAnyNodes(switchBtnSlot)) {
+			return;
+		}
+		this.isInputTypePassword = !this.isInputTypePassword;
+		const type = this.isInputTypePassword ? PASSWORD : TEXT;
+		this.getRef(Identities.ROOT).dispatchEvent(
+			new CustomEvent(Events.TYPE_CHANGE, {
+				bubbles: true,
+				composed: true,
+				detail: { type },
+			}),
+		);
+	}
+
+	/**
+	 * @private
+	 * @function
+	 * @name onSwitchBtnSlotChange
+	 * @param {Event} $event
+	 * @returns {void}
+	 */
+	onSwitchBtnSlotChange($event) {
+		const btnContainer = this.getRef(Identities.SWITCH_BTN_CONTAINER);
+		if (!this.hasSlotAnyNodes($event.target)) {
+			btnContainer.classList.remove(Classes.HAS_NODE);
+			return;
+		}
+		btnContainer.classList.add(Classes.HAS_NODE);
 	}
 }
 

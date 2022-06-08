@@ -7,6 +7,7 @@
 export const Classes = Object.freeze({
 	HAS_LABEL: 'has-label',
 	HAS_VALUE: 'has-value',
+	HAS_NODE: 'has-node',
 	PENDING_INIT: 'pending-init',
 	INITIALIZED: 'initialized',
 	TYPE_PASSWORD: 'type-password',

@@ -140,7 +140,7 @@ export class BasicInputElement extends mixer(HTMLElement).with(
 	}
 
 	/**
-	 * @private
+	 * @public
 	 * @function
 	 * @name toggleValueClass
 	 * @param {string} value
@@ -153,5 +153,19 @@ export class BasicInputElement extends mixer(HTMLElement).with(
 			return;
 		}
 		root.classList.remove(Classes.HAS_VALUE);
+	}
+
+	/**
+	 * If the slot element has any node returns true.
+	 *
+	 * @public
+	 * @function
+	 * @name hasSlotAnyNodes
+	 * @param {HTMLSlotElement} slotElem
+	 * @returns {boolean}
+	 */
+	hasSlotAnyNodes(slotElem) {
+		const assignedNodes = slotElem.assignedNodes();
+		return Boolean(assignedNodes.length);
 	}
 }

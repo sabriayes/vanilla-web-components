@@ -12,4 +12,5 @@ export const Identities = Object.freeze({
 	LABEL_CONTAINER: 'label-container-element',
 	LABEL: 'label-element',
 	SWITCH_BTN_CONTAINER: 'switch-btn-container-element',
+	SWITCH_BTN_SLOT: 'switch-btn-slot',
 });
