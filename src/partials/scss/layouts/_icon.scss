@@ -1,7 +1,10 @@
+@import '~#partials/scss/abstracts/mixins';
+
 .icon-container {
     display: flex;
     align-items: stretch;
     justify-content: stretch;
+    /** EMPTY SLOT HERE */
     & > slot:is([name="leading-icon"], [name="trailing-icon"]) {
         display: flex;
         align-items: stretch;
@@ -16,6 +19,7 @@
             color: var(--vwc-icon-color, $icon-color);
         }
     }
+    /*
     &.trailing-icon {
         text-decoration: none;
         & ::slotted(.success) {
@@ -28,4 +32,5 @@
             color: var(--vwc-danger-color, $danger-color);
         }
     }
+    */
 }

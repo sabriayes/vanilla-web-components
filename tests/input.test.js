@@ -1,8 +1,8 @@
-const { test, expect } = require('@playwright/test');
+const { expect } = require('@playwright/test');
+const { test } = require('./bases/input');
 const { generateLocator, convertIdSelector } = require('./utils');
-const TAG_NAME = 'vanilla-input';
+const VanillaInputModel = require('./models/input-element');
 const {
-	WAIT_UNTIL,
 	INITIALIZED,
 	HAS_VALUE,
 	HAS_LABEL,
@@ -15,154 +15,142 @@ const {
 } = require('./consts');
 
 test.describe('The VanillaInput instance', () => {
-	test.beforeEach(async ({ page }) => {
-		await page.addScriptTag({
-			path: './dist/input.min.js',
-		});
+	let componentModel;
+	test.beforeEach(async ({ page, tagName, filePath }) => {
+		componentModel = new VanillaInputModel(page, tagName, filePath);
+		await componentModel.initComponent();
 	});
 
 	test.describe('when define basically', () => {
-		test('should be defined on DOM', async ({ page }) => {
-			const rawHTML = `<vanilla-input></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
-			const inputElem = await page.waitForSelector(TAG_NAME);
-			expect(inputElem).toBeDefined();
+		let inputElement;
+		test.beforeEach(async () => {
+			inputElement = await componentModel.getComponent();
 		});
 
-		test('should have [initialized] class', async ({ page }) => {
-			const rawHTML = `<vanilla-input></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
+		test('should be defined on DOM', async ({ page }) => {
+			expect(inputElement).toBeDefined();
+		});
+
+		test('should have [initialized] class', async ({ page, tagName }) => {
 			await expect(
-				page.locator(generateLocator(TAG_NAME, ROOT)),
+				page.locator(generateLocator(tagName, ROOT)),
 			).toHaveClass(new RegExp(INITIALIZED));
 		});
 
-		test('should label element be removed', async ({ page }) => {
-			const rawHTML = `<vanilla-input></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
+		test('label should be removed', async ({ page, tagName }) => {
 			const labelElem = await page.$eval(
-				TAG_NAME,
+				tagName,
 				(elem, selector) =>
 					elem.shadowRoot.querySelector(String(selector)),
 				convertIdSelector(LABEL),
 			);
 			await expect(labelElem).toBeNull();
 		});
+
+		test('icons should be hidden', async ({ page, tagName }) => {
+			const leadingIconSlotElem = page.locator(
+				generateLocator(tagName, LEADING_ICON_SLOT),
+			);
+			const trailingIconSlotElem = page.locator(
+				generateLocator(tagName, TRAILING_ICON_SLOT),
+			);
+			await expect(leadingIconSlotElem).toBeHidden();
+			await expect(trailingIconSlotElem).toBeHidden();
+		});
 	});
 
 	test.describe('when define with label', () => {
-		test('should have [has-label] class', async ({ page }) => {
-			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
-			const rootElem = page.locator(generateLocator(TAG_NAME, ROOT));
+		test.beforeEach(async () => {
+			await componentModel.getComponentWithLabel();
+		});
+
+		test('should have [has-label] class', async ({ page, tagName }) => {
+			const rootElem = page.locator(generateLocator(tagName, ROOT));
 			await expect(rootElem).toHaveClass(new RegExp(HAS_LABEL));
 		});
 
-		test('should label element be visible', async ({ page }) => {
-			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
-			const labelElem = page.locator(generateLocator(TAG_NAME, LABEL));
+		test('label should be visible', async ({ page, tagName }) => {
+			const labelElem = page.locator(generateLocator(tagName, LABEL));
 			await expect(labelElem).toBeVisible();
 		});
 
-		test('should label element has a text', async ({ page }) => {
-			const rawHTML = `<vanilla-input label="FOO"></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
-			const labelElem = page.locator(generateLocator(TAG_NAME, LABEL));
+		test('label should has some text', async ({ page, tagName }) => {
+			const labelElem = page.locator(generateLocator(tagName, LABEL));
 			await expect(labelElem).toHaveText(/.*/);
 		});
 	});
 
 	test.describe('when define with [invalid] attribute', () => {
-		test('should error messages element be visible', async ({ page }) => {
-			const rawHTML = `
-				<vanilla-input invalid>
-					<span slot="errors">ERR MSG</span>
-				</vanilla-input>
-			`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
+		test.beforeEach(async () => {
+			await componentModel.getComponentWithErrorMessages();
+		});
+
+		test('error messages should be visible', async ({ page, tagName }) => {
 			const errSlotElem = page.locator(
-				generateLocator(TAG_NAME, ERROR_MESSAGES_SLOT),
+				generateLocator(tagName, ERROR_MESSAGES_SLOT),
 			);
 			await expect(errSlotElem).toBeVisible();
 		});
 
-		test('should hint text element be hidden', async ({ page }) => {
-			const rawHTML = `<vanilla-input invalid></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
+		test('hint text should be hidden', async ({ page, tagName }) => {
 			const hintSlotElem = page.locator(
-				generateLocator(TAG_NAME, HINT_TEXT_SLOT),
+				generateLocator(tagName, HINT_TEXT_SLOT),
 			);
-			await expect(hintSlotElem).not.toBeVisible();
+			await expect(hintSlotElem).toBeHidden();
 		});
 	});
 
 	test.describe('when define with hint text', () => {
-		test('should hint text element be visible', async ({ page }) => {
-			const rawHTML = `
-				<vanilla-input>
-					<span slot="hint">HINT TXT</span>
-				</vanilla-input>
-			`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
+		test.beforeEach(async () => {
+			await componentModel.getComponentWithHintText();
+		});
+
+		test('hint text should be visible', async ({ page, tagName }) => {
 			const hintSlotElem = page.locator(
-				generateLocator(TAG_NAME, HINT_TEXT_SLOT),
+				generateLocator(tagName, HINT_TEXT_SLOT),
 			);
 			await expect(hintSlotElem).toBeVisible();
 		});
 	});
 
 	test.describe('when define with icons', () => {
-		test('should leading icon element be visible', async ({ page }) => {
-			const rawHTML = `
-				<vanilla-input>
-					<span slot="leading-icon">
-        				<i class="fa fa-user"></i>
-    				</span>
-				</vanilla-input>
-			`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
+		test('leading icon should be visible', async ({ page, tagName }) => {
+			await componentModel.getComponentWithLeadingIcon();
 			const iconSlotElem = page.locator(
-				generateLocator(TAG_NAME, LEADING_ICON_SLOT),
+				generateLocator(tagName, LEADING_ICON_SLOT),
 			);
 			await expect(iconSlotElem).toBeVisible();
 		});
 
-		test('should trailing icon element be visible', async ({ page }) => {
-			const rawHTML = `
-				<vanilla-input>
-					<span slot="trailing-icon">
-        				<i class="fa fa-user"></i>
-    				</span>
-				</vanilla-input>
-			`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
+		test('trailing icon should be visible', async ({ page, tagName }) => {
+			await componentModel.getComponentWithTrailingIcon();
 			const iconSlotElem = page.locator(
-				generateLocator(TAG_NAME, TRAILING_ICON_SLOT),
+				generateLocator(tagName, TRAILING_ICON_SLOT),
 			);
 			await expect(iconSlotElem).toBeVisible();
 		});
 	});
 
 	test.describe('when type any text', () => {
+		let inputElement;
+		test.beforeEach(async () => {
+			inputElement = await componentModel.getComponent();
+		});
+
 		test('should have [has-value] class', async ({ page }) => {
-			const rawHTML = `<vanilla-input></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
-			const inputElem = page.locator(TAG_NAME);
-			await inputElem.focus();
-			await inputElem.type('TEXT');
-			const rootElem = inputElem.locator(convertIdSelector(ROOT));
+			await inputElement.focus();
+			await inputElement.type('TEXT');
+			const rootElem = inputElement.locator(convertIdSelector(ROOT));
 			await expect(rootElem).toHaveClass(new RegExp(HAS_VALUE));
 		});
 
 		test('should return text value', async ({ page }) => {
 			const text = 'TEXT';
-			const rawHTML = `<vanilla-input></vanilla-input>`;
-			await page.setContent(rawHTML, WAIT_UNTIL);
-			const inputElem = page.locator(TAG_NAME);
-			await inputElem.focus();
-			await inputElem.type(text);
-			const inputValue = await inputElem.evaluate((elem) => elem.value);
+			await inputElement.focus();
+			await inputElement.type(text);
+			const inputValue = await inputElement.evaluate(
+				(elem) => elem.value,
+			);
 			await expect(inputValue).toBe(text);
 		});
 	});

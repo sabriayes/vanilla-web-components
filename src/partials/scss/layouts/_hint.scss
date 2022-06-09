@@ -8,11 +8,9 @@
     z-index: 1;
     overflow: hidden;
     /* height: .75rem; */
-    &:empty {
-        display: none;
-    }
     & > slot {
         display: inline-block;
+        /** EMPTY SLOT HERE */
     }
     & > slot[name="hint"] {
         @include hint-element;

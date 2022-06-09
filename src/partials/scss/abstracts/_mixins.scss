@@ -19,7 +19,7 @@
 @mixin hint-element {
     font-size: .7rem;
     color: var(--vwc-label-color, $label-color);
-    font-weight: 300;
+    font-weight: 400;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -27,6 +27,7 @@
 }
 
 @mixin hide-errors-and-hints {
+    visibility: hidden;
     transform: translateY(-1rem);
     opacity: 0;
 }
