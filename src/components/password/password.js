@@ -186,7 +186,14 @@ class VanillaPassword extends BasicInputElement {
 	 * @returns {void}
 	 */
 	onChange($event) {
-		this.toggleValueClass($event.target.value);
+		const value = $event.target.value;
+		const element = this.getRef(Identities.ROOT);
+		const className = Classes.HAS_VALUE;
+		this.updateClassByFlag({
+			value,
+			element,
+			className,
+		});
 	}
 
 	/**

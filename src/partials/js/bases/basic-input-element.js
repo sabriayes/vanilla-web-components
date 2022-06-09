@@ -1,5 +1,5 @@
 import { Attrs, Classes, Events, Identities } from '#partials/js/consts';
-import { EventManager, NodeReferences } from '#partials/js/mixins';
+import { EventManager, NodeReferences, SlotManager } from '#partials/js/mixins';
 import { mixer } from '#partials/js/utils';
 import { NotImplementedMethod } from '#partials/js/errors';
 
@@ -8,11 +8,13 @@ import { NotImplementedMethod } from '#partials/js/errors';
  * @augments {HTMLElement}
  * @mixes {EventManager}
  * @mixes {NodeReferences}
+ * @mixes {SlotManager}
  * @property {string} tagName - Getter for tag name
  * @property {string} value - Getter for value of input element
  * @property {string} label - Getter for label content
  */
 export class BasicInputElement extends mixer(HTMLElement).with(
+	SlotManager,
 	EventManager,
 	NodeReferences,
 ) {
@@ -142,17 +144,17 @@ export class BasicInputElement extends mixer(HTMLElement).with(
 	/**
 	 * @public
 	 * @function
-	 * @name toggleValueClass
-	 * @param {string} value
+	 * @name updateClassByFlag
+	 * @param {Object<{ element: HTMLElement, className: string, value: * }>} options
 	 * @returns {void}
 	 */
-	toggleValueClass(value) {
-		const root = this.getRef(Identities.ROOT);
+	updateClassByFlag(options) {
+		const { element, value, className } = options;
 		if (Boolean(value)) {
-			root.classList.add(Classes.HAS_VALUE);
+			element.classList.add(className);
 			return;
 		}
-		root.classList.remove(Classes.HAS_VALUE);
+		element.classList.remove(className);
 	}
 
 	/**

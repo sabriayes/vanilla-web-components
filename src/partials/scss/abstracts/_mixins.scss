@@ -36,3 +36,17 @@
     transform: translateY(0rem);
     opacity: 1;
 }
+
+/* Mixins for host */
+
+@mixin at-leading-icon-container() {
+    @at-root .component-container.has-leading-icon #{&} {
+        @content;
+    }
+}
+
+@mixin at-trailing-icon-container() {
+    @at-root .component-container.has-trailing-icon #{&} {
+        @content;
+    }
+}

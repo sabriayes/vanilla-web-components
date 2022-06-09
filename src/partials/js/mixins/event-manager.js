@@ -28,7 +28,7 @@ export function EventManager(superClass) {
 		 * ```
 		 */
 		get events() {
-			throw new NotImplementedMethod('get()');
+			throw new NotImplementedMethod('events()');
 		}
 
 		constructor() {

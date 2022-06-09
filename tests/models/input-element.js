@@ -8,8 +8,8 @@ module.exports = class VanillaInputModel extends BasicInputElementModel {
 	async getComponentWithTrailingIcon() {
 		const rawHTML = `
 			<${this.tagName}>
-				<span slot="leading-icon">
-					<i class="fa fa-user"></i>
+				<span slot="trailing-icon">
+					<i class="fa fa-check"></i>
 				</span>
 			</${this.tagName}>
 		`;

@@ -4,12 +4,12 @@
     display: flex;
     align-items: stretch;
     justify-content: stretch;
-    /** EMPTY SLOT HERE */
     & > slot:is([name="leading-icon"], [name="trailing-icon"]) {
         display: flex;
         align-items: stretch;
         justify-content: stretch;
         min-width: 1rem;
+        visibility: hidden;
         &::slotted(span) {
             display: flex;
             align-items: center;
@@ -17,6 +17,16 @@
             font-size: 1.5rem;
             width: 2.5rem;
             color: var(--vwc-icon-color, $icon-color);
+        }
+    }
+    & > slot:is([name="leading-icon"]) {
+        @include at-leading-icon-container {
+            visibility: visible;
+        }
+    }
+    & > slot:is([name="trailing-icon"]) {
+        @include at-trailing-icon-container {
+            visibility: visible;
         }
     }
     /*
