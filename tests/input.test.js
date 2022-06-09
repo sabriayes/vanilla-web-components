@@ -54,8 +54,8 @@ test.describe('The VanillaInput instance', () => {
 			const trailingIconSlotElem = page.locator(
 				generateLocator(tagName, TRAILING_ICON_SLOT),
 			);
-			await expect(leadingIconSlotElem).toBeHidden();
-			await expect(trailingIconSlotElem).toBeHidden();
+			await expect(leadingIconSlotElem).toBeVisible();
+			await expect(trailingIconSlotElem).toBeVisible();
 		});
 	});
 

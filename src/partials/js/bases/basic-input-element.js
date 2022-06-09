@@ -1,4 +1,4 @@
-import {Attrs, Classes, Events, Identities} from '#partials/js/consts';
+import { Attrs, Classes, Events, Identities } from '#partials/js/consts';
 import { EventManager, NodeReferences } from '#partials/js/mixins';
 import { mixer } from '#partials/js/utils';
 import { NotImplementedMethod } from '#partials/js/errors';
