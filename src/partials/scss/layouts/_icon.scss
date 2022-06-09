@@ -1,3 +1,5 @@
+@import '~#partials/scss/abstracts/mixins';
+
 .icon-container {
     display: flex;
     align-items: stretch;
@@ -7,6 +9,7 @@
         align-items: stretch;
         justify-content: stretch;
         min-width: 1rem;
+        visibility: hidden;
         &::slotted(span) {
             display: flex;
             align-items: center;
@@ -16,6 +19,17 @@
             color: var(--vwc-icon-color, $icon-color);
         }
     }
+    & > slot:is([name="leading-icon"]) {
+        @include at-leading-icon-container {
+            visibility: visible;
+        }
+    }
+    & > slot:is([name="trailing-icon"]) {
+        @include at-trailing-icon-container {
+            visibility: visible;
+        }
+    }
+    /*
     &.trailing-icon {
         text-decoration: none;
         & ::slotted(.success) {
@@ -28,4 +42,5 @@
             color: var(--vwc-danger-color, $danger-color);
         }
     }
+    */
 }

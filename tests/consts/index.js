@@ -9,6 +9,7 @@ module.exports = {
 	INITIALIZED: 'initialized',
 	HAS_VALUE: 'has-value',
 	HAS_LABEL: 'has-label',
+	HAS_NODE: 'has-node',
 
 	// Identities
 	ROOT: 'root-element',
@@ -22,4 +23,5 @@ module.exports = {
 	HINT_TEXT_SLOT: 'hint-text-slot',
 	LEADING_ICON_SLOT: 'leading-icon-slot',
 	TRAILING_ICON_SLOT: 'trailing-icon-slot',
+	SWITCH_BTN_SLOT: 'switch-btn-slot',
 };

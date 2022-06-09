@@ -53,8 +53,35 @@ class VanillaInput extends BasicInputElement {
 	}
 
 	/**
+	 * Getter for slots list with event handler functions.
+	 *
 	 * @override
-	 * @return {(string)[]}
+	 * @private
+	 * @readonly
+	 */
+	get slots() {
+		const leadingSlotElem = this.getRef(Identities.LEADING_ICON_SLOT);
+		const trailingSlotElem = this.getRef(Identities.TRAILING_ICON_SLOT);
+		return [
+			{
+				elem: leadingSlotElem,
+				func: ($event) =>
+					this.onReservedSlotChange($event, Classes.HAS_LEADING_ICON),
+			},
+			{
+				elem: trailingSlotElem,
+				func: ($event) =>
+					this.onReservedSlotChange(
+						$event,
+						Classes.HAS_TRAILING_ICON,
+					),
+			},
+		];
+	}
+
+	/**
+	 * @override
+	 * @returns {(string)[]}
 	 */
 	static get observedAttributes() {
 		return [Attrs.LABEL, Attrs.VALUE, Attrs.PLACEHOLDER];
@@ -73,7 +100,10 @@ class VanillaInput extends BasicInputElement {
 			.setRef(Identities.INNER_CONTAINER)
 			.setRef(Identities.INPUT)
 			.setRef(Identities.LABEL_CONTAINER)
-			.setRef(Identities.LABEL);
+			.setRef(Identities.LABEL)
+			.setRef(Identities.LEADING_ICON_SLOT)
+			.setRef(Identities.TRAILING_ICON_SLOT);
+
 
 		this.getRef(Identities.LABEL_CONTAINER).remove();
 
@@ -84,6 +114,7 @@ class VanillaInput extends BasicInputElement {
 		this.shadowRoot.appendChild(rootRef);
 		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
 		this.addAllEventListeners();
+		this.setSlotHandlers();
 
 		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
@@ -116,7 +147,14 @@ class VanillaInput extends BasicInputElement {
 	 * @returns {void}
 	 */
 	onChange($event) {
-		this.toggleValueClass($event.target.value);
+		const value = $event.target.value;
+		const element = this.getRef(Identities.ROOT);
+		const className = Classes.HAS_VALUE;
+		this.updateClassByFlag({
+			value,
+			element,
+			className,
+		});
 	}
 
 	/**
@@ -141,6 +179,25 @@ class VanillaInput extends BasicInputElement {
 	onFocus($event) {
 		$event.preventDefault();
 		this.focusToInput();
+	}
+
+	/**
+	 * @private
+	 * @function
+	 * @name onReservedSlotChange
+	 * @param {Event} $event
+	 * @param {string} className
+	 * @returns {void}
+	 */
+	onReservedSlotChange($event, className) {
+		$event.preventDefault();
+		const value = this.hasSlotAnyNodes($event.target);
+		const element = this.getRef(Identities.ROOT);
+		this.updateClassByFlag({
+			value,
+			element,
+			className,
+		});
 	}
 }
 
