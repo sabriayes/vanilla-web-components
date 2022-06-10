@@ -67,6 +67,30 @@ class VanillaPassword extends BasicInputElement {
 	}
 
 	/**
+	 * Getter for slots list with event handler functions.
+	 *
+	 * @override
+	 * @private
+	 * @readonly
+	 */
+	get slots() {
+		const leadingSlotElem = this.getRef(Identities.LEADING_ICON_SLOT);
+		const switchBtnSlotElem = this.getRef(Identities.SWITCH_BTN_SLOT);
+		return [
+			{
+				elem: leadingSlotElem,
+				func: ($event) =>
+					this.onReservedSlotChange($event, Classes.HAS_LEADING_ICON),
+			},
+			{
+				elem: switchBtnSlotElem,
+				func: ($event) =>
+					this.onReservedSlotChange($event, Classes.HAS_SWITCH_BTN),
+			},
+		];
+	}
+
+	/**
 	 * @override
 	 * @return {(string)[]}
 	 */
@@ -89,7 +113,8 @@ class VanillaPassword extends BasicInputElement {
 			.setRef(Identities.LABEL_CONTAINER)
 			.setRef(Identities.LABEL)
 			.setRef(Identities.SWITCH_BTN_CONTAINER)
-			.setRef(Identities.SWITCH_BTN_SLOT);
+			.setRef(Identities.SWITCH_BTN_SLOT)
+			.setRef(Identities.LEADING_ICON_SLOT);
 
 		this.getRef(Identities.LABEL_CONTAINER).remove();
 
@@ -100,6 +125,7 @@ class VanillaPassword extends BasicInputElement {
 		this.shadowRoot.appendChild(rootRef);
 		this.shadowRoot.appendChild(createStyleElement(CSS.toString()));
 		this.addAllEventListeners();
+		this.setSlotHandlers();
 
 		for (const node of getAttributes(this)) {
 			this.changeAttributeValue(node.name, node.value, node.value);
@@ -108,11 +134,6 @@ class VanillaPassword extends BasicInputElement {
 		this.getRef(Identities.SWITCH_BTN_CONTAINER).addEventListener(
 			Events.CLICK,
 			this.onSwitchBtnClick.bind(this),
-		);
-
-		this.getRef(Identities.SWITCH_BTN_SLOT).addEventListener(
-			Events.SLOT_CHANGE,
-			this.onSwitchBtnSlotChange.bind(this),
 		);
 	}
 
@@ -267,17 +288,20 @@ class VanillaPassword extends BasicInputElement {
 	/**
 	 * @private
 	 * @function
-	 * @name onSwitchBtnSlotChange
+	 * @name onReservedSlotChange
 	 * @param {Event} $event
+	 * @param {string} className
 	 * @returns {void}
 	 */
-	onSwitchBtnSlotChange($event) {
-		const btnContainer = this.getRef(Identities.SWITCH_BTN_CONTAINER);
-		if (!this.hasSlotAnyNodes($event.target)) {
-			btnContainer.classList.remove(Classes.HAS_NODE);
-			return;
-		}
-		btnContainer.classList.add(Classes.HAS_NODE);
+	onReservedSlotChange($event, className) {
+		$event.preventDefault();
+		const value = this.hasSlotAnyNodes($event.target);
+		const element = this.getRef(Identities.ROOT);
+		this.updateClassByFlag({
+			value,
+			element,
+			className,
+		});
 	}
 }
 
