@@ -85,7 +85,7 @@ class VanillaPassword extends BasicInputElement {
 			{
 				elem: switchBtnSlotElem,
 				func: ($event) =>
-					this.onReservedSlotChange($event, Classes.HAS_SWICTH_BTN),
+					this.onReservedSlotChange($event, Classes.HAS_SWITCH_BTN),
 			},
 		];
 	}

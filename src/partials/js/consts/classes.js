@@ -10,7 +10,7 @@ export const Classes = Object.freeze({
 	HAS_NODE: 'has-node',
 	HAS_LEADING_ICON: 'has-leading-icon',
 	HAS_TRAILING_ICON: 'has-trailing-icon',
-	HAS_SWICTH_BTN: 'has-switch-btn',
+	HAS_SWITCH_BTN: 'has-switch-btn',
 	PENDING_INIT: 'pending-init',
 	INITIALIZED: 'initialized',
 	TYPE_PASSWORD: 'type-password',
